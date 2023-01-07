@@ -9,3 +9,15 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.notInPuzzle {
+  background-color: rgb(173, 173, 173);
+}
+
+.inPuzzle {
+  background-color: rgb(229, 206, 0);
+}
+
+.inPlace {
+  background-color: rgb(17, 157, 4);
+}

@@ -4,7 +4,7 @@ import Header from './Header';
 import KeyboardRu from './KeyboardRu';
 
 export default function App() {
-  const [word, setWord] = useState('пират');
+  const [puzzle, setPuzzle] = useState('кабан');
   const [results, setResults] = useState([
     [
       { value: '', status: '' },
@@ -53,8 +53,47 @@ export default function App() {
   const [currentLetter, setCurrentLetter] = useState(0);
   const [isWin, setIsWin] = useState(false);
 
-  function checkWordsMatch(answer) {
-    if (answer === word) {
+  function checkLettersMatch(word) {
+    const check = [];
+    const matched = [];
+
+    for (let i = 0; i < word.length; i++) {
+      const letter = word[i].value;
+
+      if (!puzzle.includes(letter)) {
+        let res = results;
+        res[currentTry][i].status = 'notInPuzzle';
+        setResults(res);
+      } else if (puzzle.includes(letter) && puzzle[i] === letter) {
+        matched.push(letter);
+        let res = results;
+        res[currentTry][i].status = 'inPlace';
+        setResults(res);
+      } else {
+        check.push({ value: word[i].value, position: i });
+      }
+    }
+
+    for (let i = 0; i < check.length; i++) {
+      const letter = check[i];
+      const countInPuzzle = [...puzzle].filter((symb) => symb === letter.value).length;
+      const countInMatched = [...matched].filter((symb) => symb === letter.value).length;
+
+      if (countInPuzzle > countInMatched) {
+        let res = results;
+        res[currentTry][letter.position].status = 'inPuzzle';
+        setResults(res);
+        matched.push(letter.value);
+      } else {
+        let res = results;
+        res[currentTry][letter.position].status = 'notInPuzzle';
+        setResults(res);
+      }
+    }
+  }
+
+  function checkWordsMatch(word) {
+    if (word === puzzle) {
       setIsWin(true);
       alert('You win!');
       return true;
@@ -62,12 +101,6 @@ export default function App() {
 
     return false;
   }
-
-  // function checkLettersMatch(word) {
-  //   for (let i = 0; i < word.length; i++) {
-  //     const letter = word[i];
-  //   }
-  // }
 
   function submitWord() {
     let word = [];
@@ -80,6 +113,8 @@ export default function App() {
       console.log('Malo bukv!!!!'); //change
       return;
     }
+
+    checkLettersMatch(results[currentTry]);
 
     if (!checkWordsMatch(word.join('')) && currentTry !== 6) {
       setCurrentTry(currentTry + 1);

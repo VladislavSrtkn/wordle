@@ -1,4 +1,4 @@
-export default function LetterContainer({ letter }) {
+export default function LetterContainer({ letter, cssClass }) {
   return (
     <div
       style={{
@@ -11,6 +11,7 @@ export default function LetterContainer({ letter }) {
         textTransform: 'uppercase',
         fontWeight: 'bold',
       }}
+      className={cssClass}
     >
       {letter}
     </div>
