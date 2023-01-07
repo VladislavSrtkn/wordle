@@ -11,13 +11,13 @@ code {
 }
 
 .notInPuzzle {
-  background-color: rgb(173, 173, 173);
+  background-color: rgb(173, 173, 173) !important;
 }
 
 .inPuzzle {
-  background-color: rgb(229, 206, 0);
+  background-color: rgb(229, 206, 0) !important;
 }
 
 .inPlace {
-  background-color: rgb(17, 157, 4);
+  background-color: rgb(17, 157, 4) !important;
 }

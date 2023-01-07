@@ -1,57 +1,114 @@
 import { useState } from 'react';
 import GameField from './Game_field';
 import Header from './Header';
-import KeyboardRu from './KeyboardRu';
+import Keyboard from './Keyboard';
+
+const gameStart = [
+  [
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+  ],
+  [
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+  ],
+  [
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+  ],
+  [
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+  ],
+  [
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+  ],
+  [
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+    { value: '', status: '' },
+  ],
+];
+
+const keyboardRuLang = [
+  [
+    { value: 'й', status: '' },
+    { value: 'ц', status: '' },
+    { value: 'у', status: '' },
+    { value: 'к', status: '' },
+    { value: 'е', status: '' },
+    { value: 'н', status: '' },
+    { value: 'г', status: '' },
+    { value: 'ш', status: '' },
+    { value: 'щ', status: '' },
+    { value: 'з', status: '' },
+    { value: 'х', status: '' },
+    { value: 'ъ', status: '' },
+  ],
+  [
+    { value: 'ф', status: '' },
+    { value: 'ы', status: '' },
+    { value: 'в', status: '' },
+    { value: 'а', status: '' },
+    { value: 'п', status: '' },
+    { value: 'р', status: '' },
+    { value: 'о', status: '' },
+    { value: 'л', status: '' },
+    { value: 'д', status: '' },
+    { value: 'ж', status: '' },
+    { value: 'э', status: '' },
+  ],
+  [
+    { value: 'backSpace', status: '' },
+    { value: 'я', status: '' },
+    { value: 'ч', status: '' },
+    { value: 'с', status: '' },
+    { value: 'м', status: '' },
+    { value: 'и', status: '' },
+    { value: 'т', status: '' },
+    { value: 'ь', status: '' },
+    { value: 'б', status: '' },
+    { value: 'ю', status: '' },
+    { value: 'ввод', status: '' },
+  ],
+];
 
 export default function App() {
   const [puzzle, setPuzzle] = useState('кабан');
-  const [results, setResults] = useState([
-    [
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-    ],
-    [
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-    ],
-    [
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-    ],
-    [
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-    ],
-    [
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-    ],
-    [
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-      { value: '', status: '' },
-    ],
-  ]);
+  const [results, setResults] = useState(gameStart);
   const [currentTry, setCurrentTry] = useState(0);
   const [currentLetter, setCurrentLetter] = useState(0);
   const [isWin, setIsWin] = useState(false);
+  const [keyboard, setKeyboard] = useState(keyboardRuLang);
+
+  function changeKeyboardButtonStatus(name, status) {
+    for (let i = 0; i < keyboard.length; i++) {
+      const keyboardCopy = keyboard;
+      keyboardCopy[i] = keyboardCopy[i].map((item) =>
+        item.value === name && item.status !== 'inPlace' ? { value: name, status: status } : item
+      );
+
+      setKeyboard(keyboardCopy);
+    }
+  }
 
   function checkLettersMatch(word) {
     const check = [];
@@ -61,14 +118,12 @@ export default function App() {
       const letter = word[i].value;
 
       if (!puzzle.includes(letter)) {
-        let res = results;
-        res[currentTry][i].status = 'notInPuzzle';
-        setResults(res);
+        setResults([...results], (results[currentTry][i].status = 'notInPuzzle'));
+        changeKeyboardButtonStatus(letter, 'notInPuzzle');
       } else if (puzzle.includes(letter) && puzzle[i] === letter) {
         matched.push(letter);
-        let res = results;
-        res[currentTry][i].status = 'inPlace';
-        setResults(res);
+        setResults([...results], (results[currentTry][i].status = 'inPlace'));
+        changeKeyboardButtonStatus(letter, 'inPlace');
       } else {
         check.push({ value: word[i].value, position: i });
       }
@@ -80,14 +135,11 @@ export default function App() {
       const countInMatched = [...matched].filter((symb) => symb === letter.value).length;
 
       if (countInPuzzle > countInMatched) {
-        let res = results;
-        res[currentTry][letter.position].status = 'inPuzzle';
-        setResults(res);
+        setResults([...results], (results[currentTry][letter.position].status = 'inPuzzle'));
+        changeKeyboardButtonStatus(letter.value, 'inPuzzle');
         matched.push(letter.value);
       } else {
-        let res = results;
-        res[currentTry][letter.position].status = 'notInPuzzle';
-        setResults(res);
+        setResults([...results], (results[currentTry][letter.position].status = 'notInPuzzle'));
       }
     }
   }
@@ -161,6 +213,8 @@ export default function App() {
   return (
     <div
       style={{
+        padding: '0.5rem',
+        margin: 'auto',
         maxWidth: '28rem',
         display: 'flex',
         flexDirection: 'column',
@@ -170,7 +224,7 @@ export default function App() {
     >
       <Header />
       <GameField result={results} />
-      <KeyboardRu handleClick={handleClick} />
+      <Keyboard handleClick={handleClick} keyboard={keyboard} />
     </div>
   );
 }

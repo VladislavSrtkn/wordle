@@ -1,4 +1,4 @@
-export default function KeyboardButton({ name, handleClick }) {
+export default function KeyboardButton({ name, cssClass, handleClick }) {
   return (
     <button
       onClick={() => handleClick(name)}
@@ -6,12 +6,13 @@ export default function KeyboardButton({ name, handleClick }) {
         backgroundColor: '#d6d5d5',
         margin: '0.25rem 0.125rem',
         borderRadius: '8px',
+        border: 'none',
         height: '56px',
-        padding: '0.5rem',
-        fontSize: '1rem',
+        flex: 1,
         fontWeight: 'bold',
         textTransform: 'uppercase',
       }}
+      className={cssClass}
     >
       {name === 'backSpace' ? '⌫' : name}
     </button>
