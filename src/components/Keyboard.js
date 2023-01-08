@@ -10,7 +10,7 @@ export default function Keyboard({ handleClick, keyboard }) {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        width: '100%',
+        width: '96%',
         gap: '0.3rem',
         paddingTop: '1.5rem',
         paddingBottom: '1.5rem',

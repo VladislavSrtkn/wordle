@@ -1,7 +1,7 @@
 import LetterRow from './LetterRow';
 
 export default function GameField({ result }) {
-  let table = [];
+  const table = [];
 
   for (let i = 0; i < result.length; i++) {
     table.push(<LetterRow key={i} word={result[i]} />);
@@ -13,7 +13,7 @@ export default function GameField({ result }) {
         display: 'flex',
         flexDirection: 'column',
         gap: '0.3rem',
-        width: '100%',
+        width: '96%',
         height: '100%',
         minHeight: '240px',
       }}

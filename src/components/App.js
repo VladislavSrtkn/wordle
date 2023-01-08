@@ -2,6 +2,7 @@ import { useState } from 'react';
 import GameField from './Game_field';
 import Header from './Header';
 import Keyboard from './Keyboard';
+import EndBanner from './EndBanner';
 
 const gameStart = [
   [
@@ -98,6 +99,9 @@ export default function App() {
   const [currentLetter, setCurrentLetter] = useState(0);
   const [isWin, setIsWin] = useState(false);
   const [keyboard, setKeyboard] = useState(keyboardRuLang);
+  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
+
+  const finalResults = results.slice(0, currentTry + 1);
 
   function changeKeyboardButtonStatus(name, status) {
     for (let i = 0; i < keyboard.length; i++) {
@@ -147,7 +151,7 @@ export default function App() {
   function checkWordsMatch(word) {
     if (word === puzzle) {
       setIsWin(true);
-      alert('You win!');
+      setIsVisibleEndBanner(true);
       return true;
     }
 
@@ -210,18 +214,25 @@ export default function App() {
     applySymbol(buttonName);
   }
 
+  function closeEndBanner() {
+    setIsVisibleEndBanner(false);
+  }
+
   return (
     <div
       style={{
-        padding: '0.5rem',
         margin: 'auto',
         maxWidth: '28rem',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         height: '100vh',
+        position: 'relative',
       }}
     >
+      {isVisibleEndBanner && (
+        <EndBanner attempts={currentTry + 1} results={finalResults} closeHandler={closeEndBanner} />
+      )}
       <Header />
       <GameField result={results} />
       <Keyboard handleClick={handleClick} keyboard={keyboard} />

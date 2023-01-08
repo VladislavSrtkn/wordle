@@ -1,7 +1,7 @@
 import LetterContainer from './LetterContainer';
 
 export default function LetterRow({ word }) {
-  let row = [];
+  const row = [];
 
   for (let i = 0; i < word.length; i++) {
     row.push(<LetterContainer key={i} letter={word[i].value} cssClass={word[i].status} />);
