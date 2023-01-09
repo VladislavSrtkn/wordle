@@ -21,7 +21,3 @@ code {
 .inPlace {
   background-color: rgb(17, 157, 4) !important;
 }
-
-.closeBannerBtn :hover {
-  cursor: pointer;
-}

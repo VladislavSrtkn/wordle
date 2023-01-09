@@ -3,94 +3,8 @@ import GameField from './Game_field';
 import Header from './Header';
 import Keyboard from './Keyboard';
 import EndBanner from './EndBanner';
-
-const gameStart = [
-  [
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-  ],
-  [
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-  ],
-  [
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-  ],
-  [
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-  ],
-  [
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-  ],
-  [
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-    { value: '', status: '' },
-  ],
-];
-
-const keyboardRuLang = [
-  [
-    { value: 'й', status: '' },
-    { value: 'ц', status: '' },
-    { value: 'у', status: '' },
-    { value: 'к', status: '' },
-    { value: 'е', status: '' },
-    { value: 'н', status: '' },
-    { value: 'г', status: '' },
-    { value: 'ш', status: '' },
-    { value: 'щ', status: '' },
-    { value: 'з', status: '' },
-    { value: 'х', status: '' },
-    { value: 'ъ', status: '' },
-  ],
-  [
-    { value: 'ф', status: '' },
-    { value: 'ы', status: '' },
-    { value: 'в', status: '' },
-    { value: 'а', status: '' },
-    { value: 'п', status: '' },
-    { value: 'р', status: '' },
-    { value: 'о', status: '' },
-    { value: 'л', status: '' },
-    { value: 'д', status: '' },
-    { value: 'ж', status: '' },
-    { value: 'э', status: '' },
-  ],
-  [
-    { value: 'backSpace', status: '' },
-    { value: 'я', status: '' },
-    { value: 'ч', status: '' },
-    { value: 'с', status: '' },
-    { value: 'м', status: '' },
-    { value: 'и', status: '' },
-    { value: 'т', status: '' },
-    { value: 'ь', status: '' },
-    { value: 'б', status: '' },
-    { value: 'ю', status: '' },
-    { value: 'ввод', status: '' },
-  ],
-];
+import gameStart from '../gameStart';
+import keyboardRuLang from '../keyboardRuLang';
 
 export default function App() {
   const [puzzle, setPuzzle] = useState('кабан');
@@ -172,7 +86,11 @@ export default function App() {
 
     checkLettersMatch(results[currentTry]);
 
-    if (!checkWordsMatch(word.join('')) && currentTry !== 6) {
+    if (currentTry === 5) {
+      setIsVisibleEndBanner(true);
+    }
+
+    if (!checkWordsMatch(word.join('')) && currentTry !== 5) {
       setCurrentTry(currentTry + 1);
       setCurrentLetter(0);
       return;
@@ -231,7 +149,13 @@ export default function App() {
       }}
     >
       {isVisibleEndBanner && (
-        <EndBanner attempts={currentTry + 1} results={finalResults} closeHandler={closeEndBanner} />
+        <EndBanner
+          attempts={currentTry + 1}
+          results={finalResults}
+          isWin={isWin}
+          puzzle={puzzle}
+          closeHandler={closeEndBanner}
+        />
       )}
       <Header />
       <GameField result={results} />
