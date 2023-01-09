@@ -5,15 +5,23 @@ import Keyboard from './Keyboard';
 import EndBanner from './EndBanner';
 import gameStart from '../gameStart';
 import keyboardRuLang from '../keyboardRuLang';
+import wordsRuLang from '../wordsRuLang';
+import differenceInDays from 'date-fns/differenceInDays';
+import checkWordInLibrary from '../checkWordInLibrary';
+import ErrorBanner from './ErrorBanner';
+import RulesBanner from './RulesBanner';
 
 export default function App() {
-  const [puzzle, setPuzzle] = useState('кабан');
+  const [dayNumber, setDayNumber] = useState(differenceInDays(new Date(), new Date(2023, 0, 7)));
+  const [puzzle, setPuzzle] = useState(wordsRuLang[dayNumber].word);
   const [results, setResults] = useState(gameStart);
   const [currentTry, setCurrentTry] = useState(0);
   const [currentLetter, setCurrentLetter] = useState(0);
   const [isWin, setIsWin] = useState(false);
   const [keyboard, setKeyboard] = useState(keyboardRuLang);
   const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
+  const [isVisibleRules, setIsVisibleRules] = useState(false);
+  const [errorBannerText, setErrorBannerText] = useState(null);
 
   const finalResults = results.slice(0, currentTry + 1);
 
@@ -68,7 +76,6 @@ export default function App() {
       setIsVisibleEndBanner(true);
       return true;
     }
-
     return false;
   }
 
@@ -80,7 +87,16 @@ export default function App() {
     }
 
     if (word.includes('')) {
-      console.log('Malo bukv!!!!'); //change
+      setErrorBannerText('В слове не должно быть пустых букв.');
+      setTimeout(() => setErrorBannerText(null), 2000);
+      return;
+    }
+
+    if (!checkWordInLibrary(word.join(''), wordsRuLang)) {
+      setErrorBannerText(
+        'В словаре игры нет такого слова. Попробуйте какое-нибудь другое. Например, АВТОР'
+      );
+      setTimeout(() => setErrorBannerText(null), 2000);
       return;
     }
 
@@ -157,7 +173,9 @@ export default function App() {
           closeHandler={closeEndBanner}
         />
       )}
-      <Header />
+      {errorBannerText && <ErrorBanner text={errorBannerText} />}
+      {isVisibleRules && <RulesBanner closeHandler={() => setIsVisibleRules(false)} />}
+      <Header showRulesHandler={() => setIsVisibleRules(true)} />
       <GameField result={results} />
       <Keyboard handleClick={handleClick} keyboard={keyboard} />
     </div>

@@ -11,7 +11,7 @@ export default function CountdownContainer() {
     60 - timeNow.getSeconds() >= 10 ? 59 - timeNow.getSeconds() : '0' + (60 - timeNow.getSeconds());
 
   useEffect(() => {
-    const timer = setInterval(() => setTimeNow(new Date()), 1000);
+    setInterval(() => setTimeNow(new Date()), 1000);
   }, []);
   return (
     <h4 style={{ textAlign: 'center' }}>

@@ -12,12 +12,21 @@ code {
 
 .notInPuzzle {
   background-color: rgb(173, 173, 173) !important;
+  border: 2px solid rgb(173, 173, 173) !important;
+  color: #fff !important;
+  transition: all 1s ease-in;
 }
 
 .inPuzzle {
   background-color: rgb(229, 206, 0) !important;
+  border: 2px solid rgb(229, 206, 0) !important;
+  color: #fff !important;
+  transition: all 1s ease-in;
 }
 
 .inPlace {
   background-color: rgb(17, 157, 4) !important;
+  border: 2px solid rgb(17, 157, 4) !important;
+  color: #fff !important;
+  transition: all 1s ease-in;
 }
