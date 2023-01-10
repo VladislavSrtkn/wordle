@@ -12,6 +12,7 @@ import saveCurrentProgress from '../saveCurrentProgress';
 import getCurrentProgress from '../getCurrentProgress';
 import saveStatisticsData from '../saveStatisticsData';
 import getStatisticsData from '../getStatisticsData';
+import StatisticsBanner from './StatisticsBanner';
 
 // localStorage.clear();
 
@@ -26,6 +27,7 @@ export default function App() {
   const [keyboard, setKeyboard] = useState(currentProgress.keyboard);
   const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(currentProgress.isVisibleEndBanner);
   const [isVisibleRules, setIsVisibleRules] = useState(false);
+  const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
   const [errorBannerText, setErrorBannerText] = useState(null);
   const [isGameOver, setIsGameOver] = useState(currentProgress.isGameOver);
 
@@ -203,9 +205,19 @@ export default function App() {
           closeHandler={closeEndBanner}
         />
       )}
+
       {errorBannerText && <ErrorBanner text={errorBannerText} />}
+
       {isVisibleRules && <RulesBanner closeHandler={() => setIsVisibleRules(false)} />}
-      <Header showRulesHandler={() => setIsVisibleRules(true)} />
+
+      {isVisibleStatistics && (
+        <StatisticsBanner closeHandler={() => setIsVisibleStatistics(false)} />
+      )}
+
+      <Header
+        showRulesHandler={() => setIsVisibleRules(true)}
+        showStatisticsHandler={() => setIsVisibleStatistics(true)}
+      />
       <GameField result={results} />
       <Keyboard handleClick={handleClick} keyboard={keyboard} />
     </div>
