@@ -3,25 +3,31 @@ import GameField from './Game_field';
 import Header from './Header';
 import Keyboard from './Keyboard';
 import EndBanner from './EndBanner';
-import gameStart from '../gameStart';
-import keyboardRuLang from '../keyboardRuLang';
 import wordsRuLang from '../wordsRuLang';
 import differenceInDays from 'date-fns/differenceInDays';
 import checkWordInLibrary from '../checkWordInLibrary';
 import ErrorBanner from './ErrorBanner';
 import RulesBanner from './RulesBanner';
+import saveCurrentProgress from '../saveCurrentProgress';
+import getCurrentProgress from '../getCurrentProgress';
+import saveStatisticsData from '../saveStatisticsData';
+import getStatisticsData from '../getStatisticsData';
+
+// localStorage.clear();
 
 export default function App() {
   const [dayNumber, setDayNumber] = useState(differenceInDays(new Date(), new Date(2023, 0, 7)));
+  const currentProgress = getCurrentProgress(dayNumber);
   const [puzzle, setPuzzle] = useState(wordsRuLang[dayNumber].word);
-  const [results, setResults] = useState(gameStart);
-  const [currentTry, setCurrentTry] = useState(0);
+  const [results, setResults] = useState(currentProgress.results);
+  const [currentTry, setCurrentTry] = useState(currentProgress.currentTry);
   const [currentLetter, setCurrentLetter] = useState(0);
-  const [isWin, setIsWin] = useState(false);
-  const [keyboard, setKeyboard] = useState(keyboardRuLang);
-  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
+  const [isWin, setIsWin] = useState(currentProgress.isWin);
+  const [keyboard, setKeyboard] = useState(currentProgress.keyboard);
+  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(currentProgress.isVisibleEndBanner);
   const [isVisibleRules, setIsVisibleRules] = useState(false);
   const [errorBannerText, setErrorBannerText] = useState(null);
+  const [isGameOver, setIsGameOver] = useState(currentProgress.isGameOver);
 
   const finalResults = results.slice(0, currentTry + 1);
 
@@ -72,15 +78,13 @@ export default function App() {
 
   function checkWordsMatch(word) {
     if (word === puzzle) {
-      setIsWin(true);
-      setIsVisibleEndBanner(true);
       return true;
     }
     return false;
   }
 
   function submitWord() {
-    let word = [];
+    const word = [];
 
     for (let i = 0; i < results[currentTry].length; i++) {
       word.push(results[currentTry][i].value);
@@ -102,15 +106,37 @@ export default function App() {
 
     checkLettersMatch(results[currentTry]);
 
-    if (currentTry === 5) {
+    if (checkWordsMatch(word.join(''))) {
+      setIsWin(true);
       setIsVisibleEndBanner(true);
-    }
-
-    if (!checkWordsMatch(word.join('')) && currentTry !== 5) {
-      setCurrentTry(currentTry + 1);
-      setCurrentLetter(0);
+      setIsGameOver(true);
+      saveCurrentProgress(dayNumber, results, keyboard, currentTry, true, true, true);
+      saveStatisticsData(true, currentTry + 1);
       return;
     }
+
+    if (currentTry === 5) {
+      setIsVisibleEndBanner(true);
+      setIsGameOver(true);
+      saveCurrentProgress(dayNumber, results, keyboard, currentTry, true, isWin, true);
+      saveStatisticsData(false);
+
+      console.log(getStatisticsData()); //!!!!!!!!!!!!
+      return;
+    }
+
+    setCurrentTry(currentTry + 1);
+    setCurrentLetter(0);
+
+    saveCurrentProgress(
+      dayNumber,
+      results,
+      keyboard,
+      currentTry + 1,
+      isVisibleEndBanner,
+      isWin,
+      isGameOver
+    );
   }
 
   function removeSymbol() {
@@ -131,6 +157,10 @@ export default function App() {
   }
 
   function handleClick(buttonName) {
+    if (isGameOver) {
+      return;
+    }
+
     if (buttonName === 'ввод') {
       submitWord();
       return;

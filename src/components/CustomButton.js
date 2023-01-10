@@ -1,5 +1,3 @@
-import { hover } from '@testing-library/user-event/dist/hover';
-
 export default function CustomButton({ text, clickHandler }) {
   return (
     <span

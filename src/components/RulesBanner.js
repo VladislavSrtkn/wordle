@@ -1,21 +1,9 @@
-import CloseIcon from '@mui/icons-material/Close';
 import LetterContainer from './LetterContainer';
+import Wrapper from './Wrapper';
 
 export default function RulesBanner({ closeHandler }) {
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#fff',
-        zIndex: '99',
-        position: 'absolute',
-      }}
-    >
-      <CloseIcon
-        onClick={closeHandler}
-        sx={{ color: 'grey', position: 'absolute', right: '10px', top: '10px' }}
-      />
+    <Wrapper closeHandler={closeHandler}>
       <h3 style={{ textAlign: 'center' }}>ПРАВИЛА ИГРЫ</h3>
       <div style={{ padding: '0.8rem' }}>
         <p>Угадайте загаданное слово дня в игре Вордли (Wordle) с шести попыток.</p>
@@ -116,6 +104,6 @@ export default function RulesBanner({ closeHandler }) {
         </p>
         <p>Да, каждый день слово для всех одинаковое.</p>
       </div>
-    </div>
+    </Wrapper>
   );
 }

@@ -8,6 +8,7 @@ export default function EndBanner({ attempts, results, closeHandler, isWin, puzz
         height: '100%',
         backgroundColor: '#04042c',
         position: 'absolute',
+        zIndex: 99,
       }}
     >
       <WinDetailsContainer

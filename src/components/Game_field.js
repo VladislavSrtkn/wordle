@@ -12,7 +12,7 @@ export default function GameField({ result }) {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '0.3rem',
+        gap: '0.5rem',
         width: '96%',
         height: '100%',
         minHeight: '240px',
