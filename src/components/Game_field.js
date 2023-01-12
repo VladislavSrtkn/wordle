@@ -16,6 +16,7 @@ export default function GameField({ result }) {
         width: '96%',
         height: '100%',
         minHeight: '240px',
+        maxHeight: '480px',
         fontSize: '1.4rem',
       }}
     >

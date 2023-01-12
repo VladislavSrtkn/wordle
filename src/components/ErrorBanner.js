@@ -12,6 +12,7 @@ export default function ErrorBanner({ text }) {
         padding: '1rem',
         fontWeight: 'bold',
         minHeight: '60px',
+        zIndex: 100,
       }}
     >
       {text}

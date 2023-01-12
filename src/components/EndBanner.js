@@ -1,6 +1,6 @@
 import WinDetailsContainer from './WinDetailsContainer';
 
-export default function EndBanner({ attempts, results, closeHandler, isWin, puzzle }) {
+export default function EndBanner({ attempts, results, closeHandler, isWin, puzzle, dayNum }) {
   return (
     <div
       style={{
@@ -17,6 +17,7 @@ export default function EndBanner({ attempts, results, closeHandler, isWin, puzz
         closeHandler={closeHandler}
         isWin={isWin}
         puzzle={puzzle}
+        dayNum={dayNum}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GameField from './Game_field';
 import Header from './Header';
 import Keyboard from './Keyboard';
@@ -11,7 +11,6 @@ import RulesBanner from './RulesBanner';
 import saveCurrentProgress from '../saveCurrentProgress';
 import getCurrentProgress from '../getCurrentProgress';
 import saveStatisticsData from '../saveStatisticsData';
-import getStatisticsData from '../getStatisticsData';
 import StatisticsBanner from './StatisticsBanner';
 
 // localStorage.clear();
@@ -32,6 +31,11 @@ export default function App() {
   const [isGameOver, setIsGameOver] = useState(currentProgress.isGameOver);
 
   const finalResults = results.slice(0, currentTry + 1);
+
+  useEffect(() => {
+    setIsVisibleEndBanner(false);
+    setTimeout(() => setIsVisibleEndBanner(currentProgress.isVisibleEndBanner), 2000);
+  }, []);
 
   function changeKeyboardButtonStatus(name, status) {
     for (let i = 0; i < keyboard.length; i++) {
@@ -109,8 +113,8 @@ export default function App() {
     checkLettersMatch(results[currentTry]);
 
     if (checkWordsMatch(word.join(''))) {
+      setTimeout(() => setIsVisibleEndBanner(true), 2000);
       setIsWin(true);
-      setIsVisibleEndBanner(true);
       setIsGameOver(true);
       saveCurrentProgress(dayNumber, results, keyboard, currentTry, true, true, true);
       saveStatisticsData(true, currentTry + 1);
@@ -118,12 +122,11 @@ export default function App() {
     }
 
     if (currentTry === 5) {
-      setIsVisibleEndBanner(true);
+      setTimeout(() => setIsVisibleEndBanner(true), 2000);
       setIsGameOver(true);
       saveCurrentProgress(dayNumber, results, keyboard, currentTry, true, isWin, true);
       saveStatisticsData(false);
 
-      console.log(getStatisticsData()); //!!!!!!!!!!!!
       return;
     }
 
@@ -191,6 +194,7 @@ export default function App() {
         maxWidth: '28rem',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'space-between',
         alignItems: 'center',
         height: '100vh',
         position: 'relative',
@@ -203,6 +207,7 @@ export default function App() {
           isWin={isWin}
           puzzle={puzzle}
           closeHandler={closeEndBanner}
+          dayNum={dayNumber}
         />
       )}
 

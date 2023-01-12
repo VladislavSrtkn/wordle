@@ -14,7 +14,7 @@ export default function CountdownContainer() {
     setInterval(() => setTimeNow(new Date()), 1000);
   }, []);
   return (
-    <h4 style={{ textAlign: 'center' }}>
+    <h4 style={{ textAlign: 'center', marginBottom: '3rem' }}>
       СДЕДУЮЩЕЕ СЛОВО ЧЕРЕЗ: <br></br>
       {hoursToNewWord}:{minutesToNewWord}:{secondsToNewWord}
     </h4>

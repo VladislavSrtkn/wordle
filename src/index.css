@@ -13,20 +13,43 @@ code {
 .notInPuzzle {
   background-color: rgb(173, 173, 173) !important;
   border: 2px solid rgb(173, 173, 173) !important;
+}
+
+div.notInPuzzle {
+  transform: rotateX(360deg);
+  transition: 0.9s all;
   color: #fff !important;
-  /* transition: all 1s ease-in; */
+}
+button.notInPuzzle {
+  transition: 0.7s all cubic-bezier(1, 0, 1, 0);
 }
 
 .inPuzzle {
   background-color: rgb(229, 206, 0) !important;
   border: 2px solid rgb(229, 206, 0) !important;
+}
+
+div.inPuzzle {
+  transform: rotateX(360deg);
+  transition: 0.9s all;
   color: #fff !important;
-  /* transition: all 1s ease-in; */
+}
+
+button.inPuzzle {
+  transition: 0.7s all cubic-bezier(1, 0, 1, 0);
 }
 
 .inPlace {
   background-color: rgb(17, 157, 4) !important;
   border: 2px solid rgb(17, 157, 4) !important;
+}
+
+div.inPlace {
+  transform: rotateX(360deg);
+  transition: 0.9s all;
   color: #fff !important;
-  /* transition: all 1s ease-in; */
+}
+
+button.inPlace {
+  transition: 0.7s all cubic-bezier(1, 0, 1, 0);
 }
