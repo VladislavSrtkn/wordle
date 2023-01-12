@@ -36,7 +36,14 @@ export default function WinDetailsContainer({
       <button
         onClick={async () => {
           if (navigator.share !== undefined) {
-            navigator.share({ title: document.title, url: window.location.href });
+            navigator.share({
+              title: document.title,
+              url: window.location.href,
+              text: `Игра Wodrle День #${dayNum} ${attempts}/6 \n
+              #вордли \n
+              Отгадайте слово на \n 
+              https://vladislavsrtkn.github.io/wordle/`,
+            });
           }
         }}
         style={{
