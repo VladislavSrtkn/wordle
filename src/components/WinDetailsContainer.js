@@ -38,11 +38,8 @@ export default function WinDetailsContainer({
           if (navigator.share !== undefined) {
             navigator.share({
               title: document.title,
-              url: window.location.href,
-              text: `Игра Wodrle День #${dayNum} ${attempts}/6 \n
-              #вордли \n
-              Отгадайте слово на \n 
-              https://vladislavsrtkn.github.io/wordle/`,
+              url: 'https://vladislavsrtkn.github.io/wordle/',
+              text: `Игра Wodrle День #${dayNum} ${attempts}/6 \n#вордли \nОтгадайте слово на \nhttps://vladislavsrtkn.github.io/wordle/`,
             });
           }
         }}
