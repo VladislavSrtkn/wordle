@@ -13,11 +13,11 @@ export default function GameField({ result }) {
         display: 'flex',
         flexDirection: 'column',
         gap: '0.5rem',
-        width: '96%',
+        width: '80%',
         height: '100%',
         minHeight: '240px',
         maxHeight: '480px',
-        fontSize: '1.4rem',
+        fontSize: '1.8rem',
       }}
     >
       {table}
