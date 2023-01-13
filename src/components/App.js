@@ -32,6 +32,9 @@ export default function App() {
 
   const finalResults = results.slice(0, currentTry + 1);
 
+  // !!!!!!!
+  const windowHeight = document.documentElement.clientHeight + 'px';
+
   useEffect(() => {
     setIsVisibleEndBanner(false);
     setTimeout(() => setIsVisibleEndBanner(currentProgress.isVisibleEndBanner), 2000);
@@ -196,7 +199,7 @@ export default function App() {
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: '100vh',
+        height: windowHeight,
         position: 'relative',
       }}
     >
