@@ -17,6 +17,8 @@ export default function GameDetailsContainer({
     </span>
   ));
 
+  const emojiString = makeResultsEmojiLayout(results).join(`\n`);
+
   return (
     <div
       style={{
@@ -50,7 +52,7 @@ export default function GameDetailsContainer({
             navigator.share({
               title: document.title,
               url: 'https://vladislavsrtkn.github.io/wordle/',
-              text: `Игра Wodrle День #${dayNum} ${attempts}/6 \n${emojiLayout}\n#вордли \nОтгадайте слово на \nhttps://vladislavsrtkn.github.io/wordle/`,
+              text: `Игра Wodrle День #${dayNum} ${attempts}/6 \n${emojiString}\n#вордли \nОтгадайте слово на \nhttps://vladislavsrtkn.github.io/wordle/`,
             });
           }
         }}

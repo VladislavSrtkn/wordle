@@ -7,6 +7,5 @@ export default function makeResultsEmojiLayout(resultsArray) {
     emojiLayout.push(makeResultsEmojiString(resultsArray[i]));
   }
 
-  console.log(emojiLayout);
   return emojiLayout;
 }
