@@ -4,8 +4,7 @@ export default function Wrapper({ closeHandler, children }) {
   return (
     <div
       style={{
-        width: '100%',
-        height: '100%',
+        minHeight: '100%',
         backgroundColor: '#fff',
         zIndex: '99',
         position: 'absolute',
