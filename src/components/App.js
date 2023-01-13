@@ -32,7 +32,6 @@ export default function App() {
 
   const finalResults = results.slice(0, currentTry + 1);
 
-  // !!!!!!!
   const windowHeight = document.documentElement.clientHeight + 'px';
 
   useEffect(() => {
