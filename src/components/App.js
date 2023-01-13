@@ -196,7 +196,6 @@ export default function App() {
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        maxHeight: '100vh',
         height: '100vh',
         position: 'relative',
       }}
