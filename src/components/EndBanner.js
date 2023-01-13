@@ -1,4 +1,4 @@
-import WinDetailsContainer from './WinDetailsContainer';
+import GameDetailsContainer from './GameDetailsContainer';
 
 export default function EndBanner({ attempts, results, closeHandler, isWin, puzzle, dayNum }) {
   return (
@@ -11,7 +11,7 @@ export default function EndBanner({ attempts, results, closeHandler, isWin, puzz
         zIndex: 99,
       }}
     >
-      <WinDetailsContainer
+      <GameDetailsContainer
         attempts={attempts}
         results={results}
         closeHandler={closeHandler}

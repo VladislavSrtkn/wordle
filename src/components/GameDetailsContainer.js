@@ -1,9 +1,9 @@
 import CountdownContainer from './CountdownContainer';
 import CustomButton from './CustomButton';
 import ShareIcon from '@mui/icons-material/Share';
-import ResultsFieldLayout from './ResultsFieldLayout';
+import makeResultsEmojiLayout from '../makeResultsEmojiLayout';
 
-export default function WinDetailsContainer({
+export default function GameDetailsContainer({
   attempts,
   results,
   closeHandler,
@@ -11,6 +11,12 @@ export default function WinDetailsContainer({
   puzzle,
   dayNum,
 }) {
+  const emojiLayout = makeResultsEmojiLayout(results).map((str, index) => (
+    <span key={index}>
+      {str} <br />
+    </span>
+  ));
+
   return (
     <div
       style={{
@@ -27,19 +33,24 @@ export default function WinDetailsContainer({
       <h3 style={{ textAlign: 'center' }}>
         WORDLE ДЕНЬ #{dayNum} {attempts}/6
       </h3>
-      <ResultsFieldLayout resultsArray={results} />
+
+      <p style={{ textAlign: 'left' }}>{emojiLayout}</p>
+
       {!isWin && <h3 style={{ textAlign: 'center' }}>Загаданное слово: {puzzle}</h3>}
+
       <CountdownContainer />
+
       <h3 style={{ textAlign: 'center' }}>
         <b>Бросьте вызов друзьям!</b>
       </h3>
+
       <button
         onClick={async () => {
           if (navigator.share !== undefined) {
             navigator.share({
               title: document.title,
               url: 'https://vladislavsrtkn.github.io/wordle/',
-              text: `Игра Wodrle День #${dayNum} ${attempts}/6 \n#вордли \nОтгадайте слово на \nhttps://vladislavsrtkn.github.io/wordle/`,
+              text: `Игра Wodrle День #${dayNum} ${attempts}/6 \n${emojiLayout}\n#вордли \nОтгадайте слово на \nhttps://vladislavsrtkn.github.io/wordle/`,
             });
           }
         }}
