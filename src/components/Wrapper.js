@@ -9,11 +9,13 @@ export default function Wrapper({ closeHandler, children }) {
         backgroundColor: '#fff',
         zIndex: '99',
         position: 'absolute',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
       }}
     >
       <CloseIcon
         onClick={closeHandler}
-        sx={{ color: 'grey', position: 'absolute', right: '10px', top: '10px' }}
+        sx={{ color: 'grey', position: 'absolute', right: '20px', top: '10px' }}
       />
       {children}
     </div>

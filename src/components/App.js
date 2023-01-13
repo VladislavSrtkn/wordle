@@ -200,6 +200,7 @@ export default function App() {
         alignItems: 'center',
         height: windowHeight,
         position: 'relative',
+        backgroundColor: '#fff',
       }}
     >
       {isVisibleEndBanner && (
