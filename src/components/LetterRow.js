@@ -8,7 +8,9 @@ export default function LetterRow({ word }) {
   }
 
   return (
-    <div style={{ display: 'flex', gap: '0.3rem', width: '100%', height: '100%', flex: 1 }}>
+    <div
+      style={{ display: 'flex', gap: '0.3rem', width: '100%', height: '100%', flex: '1 1 auto' }}
+    >
       {row}
     </div>
   );
