@@ -18,6 +18,7 @@ export default function GameDetailsContainer({
   ));
 
   const emojiString = makeResultsEmojiLayout(results).join(`\n`);
+  const countOfAttempts = attempts === 6 ? 'X' : attempts;
 
   return (
     <div
@@ -33,7 +34,7 @@ export default function GameDetailsContainer({
     >
       <CustomButton text={'X'} clickHandler={closeHandler} />
       <h3 style={{ textAlign: 'center' }}>
-        WORDLE ДЕНЬ #{dayNum} {attempts}/6
+        WORDLE ДЕНЬ #{dayNum} {countOfAttempts}/6
       </h3>
 
       <p style={{ textAlign: 'left' }}>{emojiLayout}</p>

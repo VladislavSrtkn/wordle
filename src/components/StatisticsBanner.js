@@ -1,11 +1,12 @@
 import Wrapper from './Wrapper';
 import getStatisticsData from '../getStatisticsData';
 import countAttempts from '../countAttempts';
+import AttemptsStatistics from './AttemptsStatistics';
 
 export default function StatisticsBanner({ closeHandler }) {
   const statistics = getStatisticsData();
   const gamesPlayed = statistics.gamesPlayed;
-  const winRate = (statistics.gamesWon / statistics.gamesPlayed) * 100 || 0;
+  const winRate = Math.round((statistics.gamesWon / statistics.gamesPlayed) * 100) || 0;
   const winStreak = statistics.winStreak;
   const maxWinStreak = statistics.maxWinStreak;
   const totalAttempts = countAttempts(statistics);
@@ -60,6 +61,7 @@ export default function StatisticsBanner({ closeHandler }) {
           <span style={{ fontSize: '0.8rem' }}>Подряд максимум</span>
         </div>
       </div>
+      <AttemptsStatistics attemtptsObj={statistics.attempts} />
     </Wrapper>
   );
 }
