@@ -226,6 +226,7 @@ export default function App() {
         showRulesHandler={() => setIsVisibleRules(true)}
         showStatisticsHandler={() => setIsVisibleStatistics(true)}
       />
+
       <GameField result={results} />
       <Keyboard handleClick={handleClick} keyboard={keyboard} />
     </div>
