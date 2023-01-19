@@ -1,4 +1,4 @@
-const gameStart = [
+const emptyField = [
   [
     { value: '', status: '' },
     { value: '', status: '' },
@@ -43,4 +43,4 @@ const gameStart = [
   ],
 ];
 
-export default gameStart;
+export default emptyField;

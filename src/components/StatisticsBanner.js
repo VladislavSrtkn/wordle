@@ -1,4 +1,4 @@
-import Wrapper from './Wrapper';
+import BannersWrapper from './BannersWrapper';
 import getStatisticsData from '../getStatisticsData';
 import countAttempts from '../countAttempts';
 import AttemptsStatistics from './AttemptsStatistics';
@@ -13,7 +13,7 @@ export default function StatisticsBanner({ closeHandler }) {
   const averageAttempts = Math.round(totalAttempts / gamesPlayed) || 0;
 
   return (
-    <Wrapper closeHandler={closeHandler}>
+    <BannersWrapper closeHandler={closeHandler}>
       <h3 style={{ textAlign: 'center' }}>СТАТИСТИКА</h3>
       <div
         style={{
@@ -62,6 +62,6 @@ export default function StatisticsBanner({ closeHandler }) {
         </div>
       </div>
       <AttemptsStatistics attemtptsObj={statistics.attempts} />
-    </Wrapper>
+    </BannersWrapper>
   );
 }

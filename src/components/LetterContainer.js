@@ -9,6 +9,7 @@ export default function LetterContainer({ letter, cssClass }) {
         justifyContent: 'center',
         textTransform: 'uppercase',
         fontWeight: 'bold',
+        minHeight: '37px',
       }}
       className={cssClass}
     >

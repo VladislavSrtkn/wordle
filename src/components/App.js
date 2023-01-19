@@ -12,43 +12,38 @@ import saveCurrentProgress from '../saveCurrentProgress';
 import getCurrentProgress from '../getCurrentProgress';
 import saveStatisticsData from '../saveStatisticsData';
 import StatisticsBanner from './StatisticsBanner';
-
-// localStorage.clear();
+import Wrapper from './Wrapper';
+import _ from 'lodash';
+import changeKeyboardButtonStatus from '../changeKeyboardButtonStatus';
 
 export default function App() {
-  const [dayNumber, setDayNumber] = useState(differenceInDays(new Date(), new Date(2023, 0, 7)));
-  const currentProgress = getCurrentProgress(dayNumber);
-  const [puzzle, setPuzzle] = useState(wordsRuLang[dayNumber].word);
-  const [results, setResults] = useState(currentProgress.results);
-  const [currentTry, setCurrentTry] = useState(currentProgress.currentTry);
+  const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
+  const puzzle = wordsRuLang[dayNumber].word;
+
+  const [currentProgress, setCurrentProgress] = useState(getCurrentProgress(dayNumber));
   const [currentLetter, setCurrentLetter] = useState(0);
-  const [isWin, setIsWin] = useState(currentProgress.isWin);
-  const [keyboard, setKeyboard] = useState(currentProgress.keyboard);
-  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(currentProgress.isVisibleEndBanner);
+
   const [isVisibleRules, setIsVisibleRules] = useState(false);
   const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
+  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(currentProgress.isVisibleEndBanner);
   const [errorBannerText, setErrorBannerText] = useState(null);
-  const [isGameOver, setIsGameOver] = useState(currentProgress.isGameOver);
 
+  const results = currentProgress.results;
+  const currentTry = currentProgress.currentTry;
+  const isWin = currentProgress.isWin;
+  const keyboard = currentProgress.keyboard;
+  const isGameOver = currentProgress.isGameOver;
   const finalResults = results.slice(0, currentTry + 1);
-
-  const windowHeight = document.documentElement.clientHeight + 'px';
+  const progressCopy = _.cloneDeep(currentProgress);
 
   useEffect(() => {
     setIsVisibleEndBanner(false);
     setTimeout(() => setIsVisibleEndBanner(currentProgress.isVisibleEndBanner), 2000);
   }, []);
 
-  function changeKeyboardButtonStatus(name, status) {
-    for (let i = 0; i < keyboard.length; i++) {
-      const keyboardCopy = keyboard;
-      keyboardCopy[i] = keyboardCopy[i].map((item) =>
-        item.value === name && item.status !== 'inPlace' ? { value: name, status: status } : item
-      );
-
-      setKeyboard(keyboardCopy);
-    }
-  }
+  useEffect(() => {
+    setTimeout(() => setErrorBannerText(null), 2000);
+  }, [errorBannerText]);
 
   function checkLettersMatch(word) {
     const check = [];
@@ -56,32 +51,37 @@ export default function App() {
 
     for (let i = 0; i < word.length; i++) {
       const letter = word[i].value;
+      const currentLetter = progressCopy.results[currentTry][i];
 
       if (!puzzle.includes(letter)) {
-        setResults([...results], (results[currentTry][i].status = 'notInPuzzle'));
-        changeKeyboardButtonStatus(letter, 'notInPuzzle');
+        currentLetter.status = 'notInPuzzle';
+
+        changeKeyboardButtonStatus(letter, 'notInPuzzle', progressCopy.keyboard);
       } else if (puzzle.includes(letter) && puzzle[i] === letter) {
         matched.push(letter);
-        setResults([...results], (results[currentTry][i].status = 'inPlace'));
-        changeKeyboardButtonStatus(letter, 'inPlace');
+
+        currentLetter.status = 'inPlace';
+        changeKeyboardButtonStatus(letter, 'inPlace', progressCopy.keyboard);
       } else {
-        check.push({ value: word[i].value, position: i });
+        check.push({ value: letter, position: i });
       }
     }
 
     for (let i = 0; i < check.length; i++) {
       const letter = check[i];
+      const currentLetter = progressCopy.results[currentTry][letter.position];
       const countInPuzzle = [...puzzle].filter((symb) => symb === letter.value).length;
       const countInMatched = [...matched].filter((symb) => symb === letter.value).length;
 
       if (countInPuzzle > countInMatched) {
-        setResults([...results], (results[currentTry][letter.position].status = 'inPuzzle'));
-        changeKeyboardButtonStatus(letter.value, 'inPuzzle');
+        currentLetter.status = 'inPuzzle';
+        changeKeyboardButtonStatus(letter.value, 'inPuzzle', progressCopy.keyboard);
         matched.push(letter.value);
       } else {
-        setResults([...results], (results[currentTry][letter.position].status = 'notInPuzzle'));
+        currentLetter.status = 'notInPuzzle';
       }
     }
+    setCurrentProgress(progressCopy);
   }
 
   function checkWordsMatch(word) {
@@ -100,7 +100,6 @@ export default function App() {
 
     if (word.includes('')) {
       setErrorBannerText('В слове не должно быть пустых букв.');
-      setTimeout(() => setErrorBannerText(null), 2000);
       return;
     }
 
@@ -108,7 +107,6 @@ export default function App() {
       setErrorBannerText(
         'В словаре игры нет такого слова. Попробуйте какое-нибудь другое. Например, АВТОР'
       );
-      setTimeout(() => setErrorBannerText(null), 2000);
       return;
     }
 
@@ -116,57 +114,56 @@ export default function App() {
 
     if (checkWordsMatch(word.join(''))) {
       setTimeout(() => setIsVisibleEndBanner(true), 2000);
-      setIsWin(true);
-      setIsGameOver(true);
-      saveCurrentProgress(dayNumber, results, keyboard, currentTry, true, true, true);
+
+      progressCopy.isWin = true;
+      progressCopy.isGameOver = true;
+      progressCopy.isVisibleEndBanner = true;
+      setCurrentProgress(progressCopy);
+
+      saveCurrentProgress(dayNumber, progressCopy);
       saveStatisticsData(true, currentTry + 1);
+
       return;
     }
 
     if (currentTry === 5) {
       setTimeout(() => setIsVisibleEndBanner(true), 2000);
-      setIsGameOver(true);
-      saveCurrentProgress(dayNumber, results, keyboard, currentTry, true, isWin, true);
+
+      progressCopy.isGameOver = true;
+
+      setCurrentProgress(progressCopy);
+      saveCurrentProgress(dayNumber, progressCopy);
       saveStatisticsData(false);
 
       return;
     }
 
-    setCurrentTry(currentTry + 1);
+    progressCopy.currentTry += 1;
+    setCurrentProgress(progressCopy);
     setCurrentLetter(0);
-
-    saveCurrentProgress(
-      dayNumber,
-      results,
-      keyboard,
-      currentTry + 1,
-      isVisibleEndBanner,
-      isWin,
-      isGameOver
-    );
+    saveCurrentProgress(dayNumber, progressCopy);
   }
 
   function removeSymbol() {
-    if (currentLetter === 0) {
-      return;
-    }
+    if (currentLetter === 0) return;
 
-    let res = results;
-    res[currentTry][currentLetter - 1].value = '';
+    const lastLetter = progressCopy.results[currentTry][currentLetter - 1];
+    lastLetter.value = '';
+
+    setCurrentProgress(progressCopy);
     setCurrentLetter(currentLetter - 1);
   }
 
   function applySymbol(name) {
-    let res = results;
-    res[currentTry][currentLetter].value = name;
-    setResults(res);
+    const currentSquare = progressCopy.results[currentTry][currentLetter];
+    currentSquare.value = name;
+
+    setCurrentProgress(progressCopy);
     setCurrentLetter(currentLetter + 1);
   }
 
   function handleClick(buttonName) {
-    if (isGameOver) {
-      return;
-    }
+    if (isGameOver) return;
 
     if (buttonName === 'ввод') {
       submitWord();
@@ -178,41 +175,19 @@ export default function App() {
       return;
     }
 
-    if (currentLetter === 5) {
-      return;
-    }
+    if (currentLetter === 5) return;
 
     applySymbol(buttonName);
   }
 
-  function closeEndBanner() {
-    setIsVisibleEndBanner(false);
-  }
-
   return (
-    <div
-      style={{
-        margin: 'auto',
-        maxWidth: '28rem',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: windowHeight,
-        position: 'relative',
-        backgroundColor: '#fff',
-      }}
-    >
-      {isVisibleEndBanner && (
-        <EndBanner
-          attempts={currentTry + 1}
-          results={finalResults}
-          isWin={isWin}
-          puzzle={puzzle}
-          closeHandler={closeEndBanner}
-          dayNum={dayNumber}
-        />
-      )}
+    <Wrapper>
+      <Header
+        showRulesHandler={() => setIsVisibleRules(true)}
+        showStatisticsHandler={() => setIsVisibleStatistics(true)}
+      />
+      <GameField result={results} />
+      <Keyboard handleClick={handleClick} keyboard={keyboard} />
 
       {errorBannerText && <ErrorBanner text={errorBannerText} />}
 
@@ -222,13 +197,16 @@ export default function App() {
         <StatisticsBanner closeHandler={() => setIsVisibleStatistics(false)} />
       )}
 
-      <Header
-        showRulesHandler={() => setIsVisibleRules(true)}
-        showStatisticsHandler={() => setIsVisibleStatistics(true)}
-      />
-
-      <GameField result={results} />
-      <Keyboard handleClick={handleClick} keyboard={keyboard} />
-    </div>
+      {isVisibleEndBanner && (
+        <EndBanner
+          attempts={currentTry + 1}
+          results={finalResults}
+          isWin={isWin}
+          puzzle={puzzle}
+          closeHandler={() => setIsVisibleEndBanner(false)}
+          dayNum={dayNumber}
+        />
+      )}
+    </Wrapper>
   );
 }

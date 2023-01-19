@@ -1495,6 +1495,7 @@ const wordsRuLang = [
   { word: 'питье', number: 1494 },
   { word: 'батут', number: 1495 },
   { word: 'раунд', number: 1496 },
+  { word: 'тупик', number: 1497 },
 ];
 
 export default wordsRuLang;

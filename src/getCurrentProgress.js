@@ -1,4 +1,4 @@
-import gameStart from './gameStart';
+import emptyField from './emptyField';
 import keyboardRuLang from './keyboardRuLang';
 
 export default function getCurrentProgress(dayNumber) {
@@ -6,7 +6,7 @@ export default function getCurrentProgress(dayNumber) {
     return JSON.parse(localStorage.getItem(dayNumber));
   } else {
     const gameStartObj = {
-      results: gameStart,
+      results: emptyField,
       keyboard: keyboardRuLang,
       currentTry: 0,
       isVisibleEndBanner: false,

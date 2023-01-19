@@ -1,9 +1,9 @@
 import LetterContainer from './LetterContainer';
-import Wrapper from './Wrapper';
+import BannersWrapper from './BannersWrapper';
 
 export default function RulesBanner({ closeHandler }) {
   return (
-    <Wrapper closeHandler={closeHandler}>
+    <BannersWrapper closeHandler={closeHandler}>
       <h3 style={{ textAlign: 'center' }}>ПРАВИЛА ИГРЫ</h3>
       <div style={{ padding: '0.8rem' }}>
         <p>Угадайте загаданное слово дня в игре Вордли (Wordle) с шести попыток.</p>
@@ -105,6 +105,6 @@ export default function RulesBanner({ closeHandler }) {
         </p>
         <p>Да, каждый день слово для всех одинаковое.</p>
       </div>
-    </Wrapper>
+    </BannersWrapper>
   );
 }
