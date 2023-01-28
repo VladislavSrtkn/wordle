@@ -14,7 +14,7 @@ import saveStatisticsData from '../saveStatisticsData';
 import StatisticsBanner from './StatisticsBanner';
 import Wrapper from './Wrapper';
 import _ from 'lodash';
-import changeKeyboardButtonStatus from '../changeKeyboardButtonStatus';
+import checkLettersMatch from '../checkLettersMatch';
 
 export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
@@ -45,45 +45,6 @@ export default function App() {
     setTimeout(() => setErrorBannerText(null), 2000);
   }, [errorBannerText]);
 
-  function checkLettersMatch(word) {
-    const check = [];
-    const matched = [];
-
-    for (let i = 0; i < word.length; i++) {
-      const letter = word[i].value;
-      const currentLetter = progressCopy.results[currentTry][i];
-
-      if (!puzzle.includes(letter)) {
-        currentLetter.status = 'notInPuzzle';
-
-        changeKeyboardButtonStatus(letter, 'notInPuzzle', progressCopy.keyboard);
-      } else if (puzzle.includes(letter) && puzzle[i] === letter) {
-        matched.push(letter);
-
-        currentLetter.status = 'inPlace';
-        changeKeyboardButtonStatus(letter, 'inPlace', progressCopy.keyboard);
-      } else {
-        check.push({ value: letter, position: i });
-      }
-    }
-
-    for (let i = 0; i < check.length; i++) {
-      const letter = check[i];
-      const currentLetter = progressCopy.results[currentTry][letter.position];
-      const countInPuzzle = [...puzzle].filter((symb) => symb === letter.value).length;
-      const countInMatched = [...matched].filter((symb) => symb === letter.value).length;
-
-      if (countInPuzzle > countInMatched) {
-        currentLetter.status = 'inPuzzle';
-        changeKeyboardButtonStatus(letter.value, 'inPuzzle', progressCopy.keyboard);
-        matched.push(letter.value);
-      } else {
-        currentLetter.status = 'notInPuzzle';
-      }
-    }
-    setCurrentProgress(progressCopy);
-  }
-
   function checkWordsMatch(word) {
     if (word === puzzle) {
       return true;
@@ -110,7 +71,13 @@ export default function App() {
       return;
     }
 
-    checkLettersMatch(results[currentTry]);
+    const checkedProgressCopy = checkLettersMatch(
+      results[currentTry],
+      puzzle,
+      progressCopy,
+      currentTry
+    );
+    setCurrentProgress(checkedProgressCopy);
 
     if (checkWordsMatch(word.join(''))) {
       setTimeout(() => setIsVisibleEndBanner(true), 2000);
