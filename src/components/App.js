@@ -15,6 +15,7 @@ import StatisticsBanner from './StatisticsBanner';
 import Wrapper from './Wrapper';
 import _ from 'lodash';
 import checkLettersMatch from '../checkLettersMatch';
+import LetterRow from './LetterRow';
 
 export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
@@ -153,6 +154,7 @@ export default function App() {
         showRulesHandler={() => setIsVisibleRules(true)}
         showStatisticsHandler={() => setIsVisibleStatistics(true)}
       />
+
       <GameField result={results} />
       <Keyboard handleClick={handleClick} keyboard={keyboard} />
 
