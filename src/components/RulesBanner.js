@@ -16,7 +16,7 @@ export default function RulesBanner({ closeHandler }) {
           <LetterContainer letter={'Х'} />
           <LetterContainer letter={'Е'} />
           <LetterContainer letter={'М'} />
-          <LetterContainer letter={'А'} cssClass={'inPuzzle'} />
+          <LetterContainer letter={'А'} cssClass={'rules-inPuzzle'} />
         </div>
         <p style={{ borderBottom: '1px solid #d7d7d7', paddingBottom: '1rem' }}>
           Буква <b>А</b> есть в загаданном слове, но стоит в другом месте.
@@ -27,8 +27,8 @@ export default function RulesBanner({ closeHandler }) {
         </p>
         <div style={{ height: '2.2rem', width: '15rem', display: 'flex', gap: '0.3rem' }}>
           <LetterContainer letter={'В'} />
-          <LetterContainer letter={'И'} cssClass={'inPlace'} />
-          <LetterContainer letter={'Р'} cssClass={'inPlace'} />
+          <LetterContainer letter={'И'} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={'Р'} cssClass={'rules-inPlace'} />
           <LetterContainer letter={'У'} />
           <LetterContainer letter={'С'} />
         </div>
@@ -36,11 +36,11 @@ export default function RulesBanner({ closeHandler }) {
           Если слово угадано правильно, то все буквы будут выделены!
         </p>
         <div style={{ height: '2.2rem', width: '15rem', display: 'flex', gap: '0.3rem' }}>
-          <LetterContainer letter={'П'} cssClass={'inPlace'} />
-          <LetterContainer letter={'И'} cssClass={'inPlace'} />
-          <LetterContainer letter={'Р'} cssClass={'inPlace'} />
-          <LetterContainer letter={'А'} cssClass={'inPlace'} />
-          <LetterContainer letter={'Т'} cssClass={'inPlace'} />
+          <LetterContainer letter={'П'} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={'И'} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={'Р'} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={'А'} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={'Т'} cssClass={'rules-inPlace'} />
         </div>
         <p style={{ borderTop: '1px solid #d7d7d7', paddingTop: '1rem' }}>
           Если буквы нет в загаданном слове, то она выделяется серым.
@@ -54,7 +54,7 @@ export default function RulesBanner({ closeHandler }) {
             marginBottom: '1rem',
           }}
         >
-          <LetterContainer letter={'М'} cssClass={'notInPuzzle'} />
+          <LetterContainer letter={'М'} cssClass={'rules-notInPuzzle'} />
           <LetterContainer letter={'И'} />
           <LetterContainer letter={'Р'} />
           <LetterContainer letter={'А'} />

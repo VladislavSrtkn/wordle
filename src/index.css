@@ -29,6 +29,12 @@ button.notInPuzzle {
   transition: 0.7s all cubic-bezier(1, 0, 1, 0);
 }
 
+.rules-notInPuzzle {
+  background-color: #adadad !important;
+  border: 2px solid #adadad !important;
+  color: #fff !important;
+}
+
 .inPuzzle {
   background-color: #dec915 !important;
   border: 2px solid #dec915 !important;
@@ -44,6 +50,12 @@ button.inPuzzle {
   transition: 0.7s all cubic-bezier(1, 0, 1, 0);
 }
 
+.rules-inPuzzle {
+  background-color: #dec915 !important;
+  border: 2px solid #dec915 !important;
+  color: #fff !important;
+}
+
 .inPlace {
   background-color: #5db40a !important;
   border: 2px solid #5db40a !important;
@@ -57,4 +69,10 @@ div.inPlace {
 
 button.inPlace {
   transition: 0.7s all cubic-bezier(1, 0, 1, 0);
+}
+
+.rules-inPlace {
+  background-color: #5db40a !important;
+  border: 2px solid #5db40a !important;
+  color: #fff !important;
 }
