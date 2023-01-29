@@ -6,6 +6,7 @@ export default function getCurrentProgress(dayNumber) {
     return JSON.parse(localStorage.getItem(dayNumber));
   } else {
     const gameStartObj = {
+      theme: 'light',
       results: emptyField,
       keyboard: keyboardRuLang,
       currentTry: 0,

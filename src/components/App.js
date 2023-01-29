@@ -15,7 +15,7 @@ import StatisticsBanner from './StatisticsBanner';
 import Wrapper from './Wrapper';
 import _ from 'lodash';
 import checkLettersMatch from '../checkLettersMatch';
-import LetterRow from './LetterRow';
+import { ThemeContext, themes } from '../theme-context';
 
 export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
@@ -29,6 +29,9 @@ export default function App() {
   const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(currentProgress.isVisibleEndBanner);
   const [errorBannerText, setErrorBannerText] = useState(null);
 
+  const pickedTheme = currentProgress.theme;
+  const [currentTheme, setCurrentTheme] = useState(themes[pickedTheme]);
+
   const results = currentProgress.results;
   const currentTry = currentProgress.currentTry;
   const isWin = currentProgress.isWin;
@@ -36,6 +39,8 @@ export default function App() {
   const isGameOver = currentProgress.isGameOver;
   const finalResults = results.slice(0, currentTry + 1);
   const progressCopy = _.cloneDeep(currentProgress);
+
+  useEffect(() => setCurrentTheme(themes[pickedTheme]), [pickedTheme]);
 
   useEffect(() => {
     setIsVisibleEndBanner(false);
@@ -45,6 +50,12 @@ export default function App() {
   useEffect(() => {
     setTimeout(() => setErrorBannerText(null), 2000);
   }, [errorBannerText]);
+
+  function toggleTheme() {
+    progressCopy.theme = pickedTheme === 'light' ? 'dark' : 'light';
+    setCurrentProgress(progressCopy);
+    saveCurrentProgress(dayNumber, progressCopy);
+  }
 
   function checkWordsMatch(word) {
     if (word === puzzle) {
@@ -149,33 +160,37 @@ export default function App() {
   }
 
   return (
-    <Wrapper>
-      <Header
-        showRulesHandler={() => setIsVisibleRules(true)}
-        showStatisticsHandler={() => setIsVisibleStatistics(true)}
-      />
-
-      <GameField result={results} />
-      <Keyboard handleClick={handleClick} keyboard={keyboard} />
-
-      {errorBannerText && <ErrorBanner text={errorBannerText} />}
-
-      {isVisibleRules && <RulesBanner closeHandler={() => setIsVisibleRules(false)} />}
-
-      {isVisibleStatistics && (
-        <StatisticsBanner closeHandler={() => setIsVisibleStatistics(false)} />
-      )}
-
-      {isVisibleEndBanner && (
-        <EndBanner
-          attempts={currentTry + 1}
-          results={finalResults}
-          isWin={isWin}
-          puzzle={puzzle}
-          closeHandler={() => setIsVisibleEndBanner(false)}
-          dayNum={dayNumber}
+    <ThemeContext.Provider value={currentTheme}>
+      <Wrapper>
+        <Header
+          showRulesHandler={() => setIsVisibleRules(true)}
+          showStatisticsHandler={() => setIsVisibleStatistics(true)}
+          themeToggler={toggleTheme}
+          theme={pickedTheme}
         />
-      )}
-    </Wrapper>
+
+        <GameField result={results} />
+        <Keyboard handleClick={handleClick} keyboard={keyboard} />
+
+        {errorBannerText && <ErrorBanner text={errorBannerText} />}
+
+        {isVisibleRules && <RulesBanner closeHandler={() => setIsVisibleRules(false)} />}
+
+        {isVisibleStatistics && (
+          <StatisticsBanner closeHandler={() => setIsVisibleStatistics(false)} />
+        )}
+
+        {isVisibleEndBanner && (
+          <EndBanner
+            attempts={currentTry + 1}
+            results={finalResults}
+            isWin={isWin}
+            puzzle={puzzle}
+            closeHandler={() => setIsVisibleEndBanner(false)}
+            dayNum={dayNumber}
+          />
+        )}
+      </Wrapper>
+    </ThemeContext.Provider>
   );
 }

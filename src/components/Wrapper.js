@@ -1,5 +1,9 @@
+import { ThemeContext } from '../theme-context';
+import { useContext } from 'react';
+
 export default function Wrapper({ children }) {
   const windowHeight = document.documentElement.clientHeight + 'px';
+  const theme = useContext(ThemeContext);
 
   return (
     <div
@@ -13,6 +17,7 @@ export default function Wrapper({ children }) {
         height: windowHeight,
         position: 'relative',
         backgroundColor: '#fff',
+        ...theme,
       }}
     >
       {children}

@@ -3,11 +3,11 @@ export default function KeyboardButton({ name, cssClass, handleClick }) {
     <button
       onClick={() => handleClick(name)}
       style={{
-        backgroundColor: '#d6d5d5',
+        backgroundColor: '#e7e7e7',
         color: '#000',
         margin: '0.25rem 0.125rem',
         borderRadius: '8px',
-        border: '2px solid #d6d5d5',
+        border: '2px solid #e7e7e7',
         height: '56px',
         flex: 1,
         fontWeight: 'bold',

@@ -1,7 +1,9 @@
 import CountdownContainer from './CountdownContainer';
-import CustomButton from './CustomButton';
+import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
 import makeResultsEmojiLayout from '../makeResultsEmojiLayout';
+import { ThemeContext } from '../theme-context';
+import { useContext } from 'react';
 
 export default function GameDetailsContainer({
   attempts,
@@ -20,6 +22,8 @@ export default function GameDetailsContainer({
   const emojiString = makeResultsEmojiLayout(results).join(`\n`);
   const countOfAttempts = attempts === 6 ? 'X' : attempts;
 
+  const theme = useContext(ThemeContext);
+
   return (
     <div
       style={{
@@ -30,9 +34,13 @@ export default function GameDetailsContainer({
         backgroundColor: 'white',
         position: 'relative',
         textAlign: 'center',
+        ...theme,
       }}
     >
-      <CustomButton text={'X'} clickHandler={closeHandler} />
+      <CloseIcon
+        onClick={closeHandler}
+        sx={{ color: '#b5b5b5', position: 'absolute', right: '20px', top: '10px' }}
+      />
       <h3 style={{ textAlign: 'center' }}>
         WORDLE ДЕНЬ #{dayNum} {countOfAttempts}/6
       </h3>
