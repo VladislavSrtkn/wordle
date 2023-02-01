@@ -1,14 +1,15 @@
 import emptyField from './emptyField';
-import keyboardRuLang from './keyboardRuLang';
+import keyboards from './keyboardRuLang';
 
-export default function getCurrentProgress(dayNumber) {
-  if (localStorage.getItem(dayNumber)) {
-    return JSON.parse(localStorage.getItem(dayNumber));
+export default function getCurrentProgress(dayNumber, language) {
+  const todayDataForCurrentLanguage = language + dayNumber;
+
+  if (localStorage.getItem(todayDataForCurrentLanguage)) {
+    return JSON.parse(localStorage.getItem(todayDataForCurrentLanguage));
   } else {
     const gameStartObj = {
-      theme: 'light',
       results: emptyField,
-      keyboard: keyboardRuLang,
+      keyboard: keyboards[language],
       currentTry: 0,
       isVisibleEndBanner: false,
       isWin: false,

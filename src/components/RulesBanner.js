@@ -1,49 +1,57 @@
 import LetterContainer from './LetterContainer';
 import BannersWrapper from './BannersWrapper';
+import textData from '../textData';
 
 export default function RulesBanner({ closeHandler }) {
   return (
     <BannersWrapper closeHandler={closeHandler}>
-      <h3 style={{ textAlign: 'center' }}>ПРАВИЛА ИГРЫ</h3>
+      <h3 style={{ textAlign: 'center', textTransform: 'uppercase' }}>{textData.gameRules}</h3>
       <div style={{ padding: '0.8rem' }}>
-        <p>Угадайте загаданное слово дня в игре Вордли (Wordle) с шести попыток.</p>
+        <p>{textData.goal}</p>
         <p style={{ borderBottom: '1px solid #d7d7d7', paddingBottom: '1rem' }}>
-          После каждой попытки цвет букв будет меняться, чтобы показать, какие буквы есть в
-          загаданном слове! Например, мы пытаемся отгадать слово <b>ПИРАТ</b> и вводим слово Схема:
+          {textData.formatString(
+            textData.firstExample,
+            <b>{textData.hiddenWord}</b>,
+            textData.firstTry
+          )}
         </p>
         <div style={{ height: '2.2rem', width: '15rem', display: 'flex', gap: '0.3rem' }}>
-          <LetterContainer letter={'С'} />
-          <LetterContainer letter={'Х'} />
-          <LetterContainer letter={'Е'} />
-          <LetterContainer letter={'М'} />
-          <LetterContainer letter={'А'} cssClass={'rules-inPuzzle'} />
+          <LetterContainer letter={textData.firstTry[0]} />
+          <LetterContainer letter={textData.firstTry[1]} />
+          <LetterContainer letter={textData.firstTry[2]} />
+          <LetterContainer letter={textData.firstTry[3]} />
+          <LetterContainer letter={textData.firstTry[4]} cssClass={'rules-inPuzzle'} />
         </div>
         <p style={{ borderBottom: '1px solid #d7d7d7', paddingBottom: '1rem' }}>
-          Буква <b>А</b> есть в загаданном слове, но стоит в другом месте.
+          {textData.formatString(textData.firstOutcome, <b>{textData.firstLetter}</b>)}
         </p>
         <p>
-          Затем ввели слово Вирус. Буквы <b>И</b> и <b>Р</b> есть в загаданном слове и стоят на
-          правильных местах.
+          {textData.formatString(
+            textData.secondExample,
+            textData.secondTry,
+            <b>{textData.secondLetter}</b>,
+            <b>{textData.thirdLetter}</b>
+          )}
         </p>
         <div style={{ height: '2.2rem', width: '15rem', display: 'flex', gap: '0.3rem' }}>
-          <LetterContainer letter={'В'} />
-          <LetterContainer letter={'И'} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={'Р'} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={'У'} />
-          <LetterContainer letter={'С'} />
+          <LetterContainer letter={textData.secondTry[0]} />
+          <LetterContainer letter={textData.secondTry[1]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.secondTry[2]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.secondTry[3]} />
+          <LetterContainer letter={textData.secondTry[4]} />
         </div>
         <p style={{ borderTop: '1px solid #d7d7d7', paddingTop: '1rem' }}>
-          Если слово угадано правильно, то все буквы будут выделены!
+          {textData.thirdExample}
         </p>
         <div style={{ height: '2.2rem', width: '15rem', display: 'flex', gap: '0.3rem' }}>
-          <LetterContainer letter={'П'} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={'И'} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={'Р'} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={'А'} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={'Т'} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.hiddenWord[0]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.hiddenWord[1]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.hiddenWord[2]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.hiddenWord[3]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.hiddenWord[4]} cssClass={'rules-inPlace'} />
         </div>
         <p style={{ borderTop: '1px solid #d7d7d7', paddingTop: '1rem' }}>
-          Если буквы нет в загаданном слове, то она выделяется серым.
+          {textData.fourthExample}
         </p>
         <div
           style={{
@@ -54,11 +62,11 @@ export default function RulesBanner({ closeHandler }) {
             marginBottom: '1rem',
           }}
         >
-          <LetterContainer letter={'М'} cssClass={'rules-notInPuzzle'} />
-          <LetterContainer letter={'И'} />
-          <LetterContainer letter={'Р'} />
-          <LetterContainer letter={'А'} />
-          <LetterContainer letter={'Ж'} />
+          <LetterContainer letter={textData.thirdTry[0]} cssClass={'rules-notInPuzzle'} />
+          <LetterContainer letter={textData.thirdTry[1]} />
+          <LetterContainer letter={textData.thirdTry[2]} />
+          <LetterContainer letter={textData.thirdTry[3]} />
+          <LetterContainer letter={textData.thirdTry[4]} />
         </div>
         <div
           style={{
@@ -69,7 +77,7 @@ export default function RulesBanner({ closeHandler }) {
           }}
         >
           <p>
-            <b>Каждый день загадывается новое слово!</b>
+            <b>{textData.dailyRule}</b>
           </p>
           <button
             onClick={closeHandler}
@@ -85,25 +93,33 @@ export default function RulesBanner({ closeHandler }) {
               margin: '1rem',
             }}
           >
-            ИГРАТЬ!
+            {textData.play}
           </button>
         </div>
         <p style={{ borderTop: '1px solid #d7d7d7', paddingTop: '1rem' }}>
-          <b>Какие слова могут быть загаданы?</b>
+          <b>{textData.firstQuestion}</b>
         </p>
-        <p>В основном загадываются существительные в единственном числе.</p>
+        <p>{textData.firstAnswer}</p>
         <p style={{ borderTop: '1px solid #d7d7d7', paddingTop: '1rem' }}>
-          <b>Могут ли в загадываемом слове быть одинаковые буквы?</b>
+          <b>{textData.secondQuestion}</b>
         </p>
-        <p>Да, в загаданном слове могут быть одинаковые буквы.</p>
+        <p>{textData.secondAnswer}</p>
         <p style={{ borderTop: '1px solid #d7d7d7', paddingTop: '1rem' }}>
-          <b>Есть ли буква Ё в игре?</b>
+          <b>{textData.thirdQuestion}</b>
         </p>
-        <p>По правилам кроссвордов буква Ё в словах заменена на E!</p>
+        <p>{textData.thirdAnswer}</p>
         <p style={{ borderTop: '1px solid #d7d7d7', paddingTop: '1rem' }}>
-          <b>Все отгадывают одинаковое слово?</b>
+          <b>{textData.aboutTitle}</b>
         </p>
-        <p>Да, каждый день слово для всех одинаковое.</p>
+        <p>
+          {textData.formatString(
+            textData.about,
+            <a href='mailto:vladislav_srtkn@gmail.com'> email</a>,
+            <a target='_blank' href='https://github.com/VladislavSrtkn/wordle'>
+              github
+            </a>
+          )}
+        </p>
       </div>
     </BannersWrapper>
   );

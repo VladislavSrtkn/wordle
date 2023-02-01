@@ -2,9 +2,10 @@ import BannersWrapper from './BannersWrapper';
 import getStatisticsData from '../getStatisticsData';
 import countAttempts from '../countAttempts';
 import AttemptsStatistics from './AttemptsStatistics';
+import textData from '../textData';
 
-export default function StatisticsBanner({ closeHandler }) {
-  const statistics = getStatisticsData();
+export default function StatisticsBanner({ language, closeHandler }) {
+  const statistics = getStatisticsData(language);
   const gamesPlayed = statistics.gamesPlayed;
   const winRate = Math.round((statistics.gamesWon / statistics.gamesPlayed) * 100) || 0;
   const winStreak = statistics.winStreak;
@@ -14,7 +15,7 @@ export default function StatisticsBanner({ closeHandler }) {
 
   return (
     <BannersWrapper closeHandler={closeHandler}>
-      <h3 style={{ textAlign: 'center' }}>СТАТИСТИКА</h3>
+      <h3 style={{ textAlign: 'center', textTransform: 'uppercase' }}>{textData.statistic}</h3>
       <div
         style={{
           display: 'flex',
@@ -27,12 +28,12 @@ export default function StatisticsBanner({ closeHandler }) {
         <div style={{ textAlign: 'center' }}>
           <span style={{ fontSize: '1.8rem' }}>{gamesPlayed}</span>
           <br />
-          <span style={{ fontSize: '0.8rem' }}>Сыграно</span>
+          <span style={{ fontSize: '0.8rem' }}>{textData.gamesPlayed}</span>
         </div>
         <div style={{ textAlign: 'center' }}>
           <span style={{ fontSize: '1.8rem' }}>{winRate}%</span>
           <br />
-          <span style={{ fontSize: '0.8rem' }}>Побед всего</span>
+          <span style={{ fontSize: '0.8rem' }}>{textData.totalWins}</span>
         </div>
       </div>
 
@@ -43,22 +44,23 @@ export default function StatisticsBanner({ closeHandler }) {
           borderBottom: '1px solid #d7d7d7',
           paddingBottom: '1rem',
           paddingTop: '1rem',
+          gap: '0.4rem',
         }}
       >
         <div style={{ textAlign: 'center' }}>
           <span style={{ fontSize: '1.8rem' }}>{winStreak}</span>
           <br />
-          <span style={{ fontSize: '0.8rem' }}>Побед подряд сейчас</span>
+          <span style={{ fontSize: '0.8rem' }}>{textData.winStreakNow}</span>
         </div>
         <div style={{ textAlign: 'center' }}>
           <span style={{ fontSize: '1.8rem' }}>{averageAttempts}</span>
           <br />
-          <span style={{ fontSize: '0.8rem' }}>Попыток на игру в среднем</span>
+          <span style={{ fontSize: '0.8rem' }}>{textData.attemptsAverage}</span>
         </div>
         <div style={{ textAlign: 'center' }}>
           <span style={{ fontSize: '1.8rem' }}>{maxWinStreak}</span>
           <br />
-          <span style={{ fontSize: '0.8rem' }}>Подряд максимум</span>
+          <span style={{ fontSize: '0.8rem' }}>{textData.winStreakMax}</span>
         </div>
       </div>
       <AttemptsStatistics attemtptsObj={statistics.attempts} />

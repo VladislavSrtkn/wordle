@@ -4,6 +4,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import makeResultsEmojiLayout from '../makeResultsEmojiLayout';
 import { ThemeContext } from '../theme-context';
 import { useContext } from 'react';
+import textData from '../textData';
 
 export default function GameDetailsContainer({
   attempts,
@@ -42,17 +43,22 @@ export default function GameDetailsContainer({
         sx={{ color: '#b5b5b5', position: 'absolute', right: '20px', top: '10px' }}
       />
       <h3 style={{ textAlign: 'center' }}>
-        WORDLE ДЕНЬ #{dayNum} {countOfAttempts}/6
+        {textData.endBannerHeader}
+        {dayNum} {countOfAttempts}/6
       </h3>
 
       <p style={{ textAlign: 'left' }}>{emojiLayout}</p>
 
-      {!isWin && <h3 style={{ textAlign: 'center' }}>Загаданное слово: {puzzle}</h3>}
+      {!isWin && (
+        <h3 style={{ textAlign: 'center' }}>
+          {textData.hiddenWord} {puzzle}
+        </h3>
+      )}
 
       <CountdownContainer />
 
       <h3 style={{ textAlign: 'center' }}>
-        <b>Бросьте вызов друзьям!</b>
+        <b>{textData.challenge}</b>
       </h3>
 
       <button
@@ -61,7 +67,7 @@ export default function GameDetailsContainer({
             navigator.share({
               title: document.title,
               url: 'https://vladislavsrtkn.github.io/wordle/',
-              text: `Игра Wodrle День #${dayNum} ${attempts}/6 \n${emojiString}\n#вордли \nОтгадайте слово на \nhttps://vladislavsrtkn.github.io/wordle/`,
+              text: textData.formatString(textData.shareText, dayNum, attempts, emojiString),
             });
           }
         }}
@@ -80,7 +86,7 @@ export default function GameDetailsContainer({
         }}
       >
         <ShareIcon sx={{ marginRight: '0.5rem', marginLeft: '0.5rem', fontSize: '1.1.rem' }} />
-        Поделиться
+        {textData.share}
       </button>
     </div>
   );

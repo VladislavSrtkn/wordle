@@ -1,4 +1,5 @@
 import getMaxAttemptsCount from '../getMaxAttemptsCount';
+import textData from '../textData';
 
 export default function AttemptsStatistics({ attemtptsObj }) {
   const attemptsList = [];
@@ -30,7 +31,7 @@ export default function AttemptsStatistics({ attemtptsObj }) {
 
   return (
     <div>
-      <h3 style={{ textAlign: 'center' }}>РАСПРЕДЕЛЕНИЕ ПОПЫТОК</h3>
+      <h3 style={{ textAlign: 'center', textTransform: 'uppercase' }}>{textData.attemptStat}</h3>
       <ul style={{ listStyle: 'none' }}>{attemptsList}</ul>
     </div>
   );

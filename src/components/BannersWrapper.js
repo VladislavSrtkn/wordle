@@ -9,6 +9,7 @@ export default function BannersWrapper({ closeHandler, children }) {
     <div
       style={{
         minHeight: '100%',
+        minWidth: '100%',
         backgroundColor: '#fff',
         zIndex: '99',
         position: 'absolute',

@@ -16,7 +16,7 @@ export default function KeyboardButton({ name, cssClass, handleClick }) {
       }}
       className={cssClass}
     >
-      {name === 'backSpace' ? '⌫' : name}
+      {name === 'backSpace' ? '⌫' : name === 'enter' ? '↵' : name}
     </button>
   );
 }

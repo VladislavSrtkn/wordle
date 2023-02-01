@@ -1,7 +1,7 @@
 import getStatisticsData from './getStatisticsData';
 
-export default function saveStatisticsData(isWin, attempt) {
-  const statistics = getStatisticsData();
+export default function saveStatisticsData(language, isWin, attempt) {
+  const statistics = getStatisticsData(language);
 
   statistics.gamesPlayed++;
 
@@ -18,5 +18,7 @@ export default function saveStatisticsData(isWin, attempt) {
   }
 
   const json = JSON.stringify(statistics);
-  localStorage.setItem('statistics', json);
+  const statsForCurrentLanguage = 'statistics' + language;
+
+  localStorage.setItem(statsForCurrentLanguage, json);
 }

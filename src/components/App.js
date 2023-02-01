@@ -16,20 +16,52 @@ import Wrapper from './Wrapper';
 import _ from 'lodash';
 import checkLettersMatch from '../checkLettersMatch';
 import { ThemeContext, themes } from '../theme-context';
+import getTheme from '../getTheme';
+import saveTheme from '../saveTheme';
+import getLanguage from '../getLanguage';
+import saveLanguage from '../saveLanguage';
+import textData from '../textData';
+import wordsEnLang from '../wordsEnLang';
+
+// localStorage.clear();
 
 export default function App() {
-  const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
-  const puzzle = wordsRuLang[dayNumber].word;
+  const [language, setLanguage] = useState(getLanguage());
+  textData.setLanguage(language);
+  useEffect(() => {
+    document
+      .querySelector("meta[name='description']")
+      .setAttribute('content', textData.description);
 
-  const [currentProgress, setCurrentProgress] = useState(getCurrentProgress(dayNumber));
+    document
+      .querySelector("meta[property='og:description']")
+      .setAttribute('content', textData.description);
+  }, [language]);
+
+  const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
+  const wordsLibrary = language === 'ru-RU' ? wordsRuLang : wordsEnLang;
+  const puzzle = wordsLibrary[dayNumber].word;
+
+  const [currentProgress, setCurrentProgress] = useState(getCurrentProgress(dayNumber, language));
+  useEffect(() => setCurrentProgress(getCurrentProgress(dayNumber, language)), [language]);
+
   const [currentLetter, setCurrentLetter] = useState(0);
 
   const [isVisibleRules, setIsVisibleRules] = useState(false);
   const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
-  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(currentProgress.isVisibleEndBanner);
-  const [errorBannerText, setErrorBannerText] = useState(null);
 
-  const pickedTheme = currentProgress.theme;
+  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(currentProgress.isVisibleEndBanner);
+  useEffect(() => {
+    setIsVisibleEndBanner(false);
+    setTimeout(() => setIsVisibleEndBanner(currentProgress.isVisibleEndBanner), 2000);
+  }, []);
+
+  const [errorBannerText, setErrorBannerText] = useState(null);
+  useEffect(() => {
+    setTimeout(() => setErrorBannerText(null), 2000);
+  }, [errorBannerText]);
+
+  let pickedTheme = getTheme();
   const [currentTheme, setCurrentTheme] = useState(themes[pickedTheme]);
 
   const results = currentProgress.results;
@@ -40,21 +72,18 @@ export default function App() {
   const finalResults = results.slice(0, currentTry + 1);
   const progressCopy = _.cloneDeep(currentProgress);
 
-  useEffect(() => setCurrentTheme(themes[pickedTheme]), [pickedTheme]);
-
-  useEffect(() => {
-    setIsVisibleEndBanner(false);
-    setTimeout(() => setIsVisibleEndBanner(currentProgress.isVisibleEndBanner), 2000);
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => setErrorBannerText(null), 2000);
-  }, [errorBannerText]);
-
   function toggleTheme() {
-    progressCopy.theme = pickedTheme === 'light' ? 'dark' : 'light';
-    setCurrentProgress(progressCopy);
-    saveCurrentProgress(dayNumber, progressCopy);
+    pickedTheme = pickedTheme === 'light' ? 'dark' : 'light';
+    setCurrentTheme(themes[pickedTheme]);
+    saveTheme(pickedTheme);
+  }
+
+  function changeLanguage() {
+    const anotherLanguage = language !== 'en-EN' ? 'en-EN' : 'ru-RU';
+
+    saveLanguage(anotherLanguage);
+    setLanguage(getLanguage());
+    setCurrentLetter(0);
   }
 
   function checkWordsMatch(word) {
@@ -72,14 +101,12 @@ export default function App() {
     }
 
     if (word.includes('')) {
-      setErrorBannerText('В слове не должно быть пустых букв.');
+      setErrorBannerText(textData.emptyLetter);
       return;
     }
 
-    if (!checkWordInLibrary(word.join(''), wordsRuLang)) {
-      setErrorBannerText(
-        'В словаре игры нет такого слова. Попробуйте какое-нибудь другое. Например, АВТОР'
-      );
+    if (!checkWordInLibrary(word.join(''), wordsLibrary)) {
+      setErrorBannerText(textData.wordNotFound);
       return;
     }
 
@@ -99,8 +126,8 @@ export default function App() {
       progressCopy.isVisibleEndBanner = true;
       setCurrentProgress(progressCopy);
 
-      saveCurrentProgress(dayNumber, progressCopy);
-      saveStatisticsData(true, currentTry + 1);
+      saveCurrentProgress(dayNumber, language, progressCopy);
+      saveStatisticsData(language, true, currentTry + 1);
 
       return;
     }
@@ -111,8 +138,8 @@ export default function App() {
       progressCopy.isGameOver = true;
 
       setCurrentProgress(progressCopy);
-      saveCurrentProgress(dayNumber, progressCopy);
-      saveStatisticsData(false);
+      saveCurrentProgress(dayNumber, language, progressCopy);
+      saveStatisticsData(language, false);
 
       return;
     }
@@ -120,7 +147,7 @@ export default function App() {
     progressCopy.currentTry += 1;
     setCurrentProgress(progressCopy);
     setCurrentLetter(0);
-    saveCurrentProgress(dayNumber, progressCopy);
+    saveCurrentProgress(dayNumber, language, progressCopy);
   }
 
   function removeSymbol() {
@@ -144,7 +171,7 @@ export default function App() {
   function handleClick(buttonName) {
     if (isGameOver) return;
 
-    if (buttonName === 'ввод') {
+    if (buttonName === 'enter') {
       submitWord();
       return;
     }
@@ -167,6 +194,8 @@ export default function App() {
           showStatisticsHandler={() => setIsVisibleStatistics(true)}
           themeToggler={toggleTheme}
           theme={pickedTheme}
+          changeLanguage={changeLanguage}
+          language={language}
         />
 
         <GameField result={results} />
@@ -177,7 +206,10 @@ export default function App() {
         {isVisibleRules && <RulesBanner closeHandler={() => setIsVisibleRules(false)} />}
 
         {isVisibleStatistics && (
-          <StatisticsBanner closeHandler={() => setIsVisibleStatistics(false)} />
+          <StatisticsBanner
+            language={language}
+            closeHandler={() => setIsVisibleStatistics(false)}
+          />
         )}
 
         {isVisibleEndBanner && (
