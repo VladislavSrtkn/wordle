@@ -1,4 +1,4 @@
-# Wordle game (RU language )
+# Wordle game (EN / RU languages)
 
 This project was created with React.
 

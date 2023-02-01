@@ -1,5 +1,5 @@
 const keyboards = {
-  'ru-RU': [
+  ru: [
     [
       { value: 'й', status: '' },
       { value: 'ц', status: '' },
@@ -41,7 +41,7 @@ const keyboards = {
       { value: 'enter', status: '' },
     ],
   ],
-  'en-EN': [
+  en: [
     [
       { value: 'q', status: '' },
       { value: 'w', status: '' },

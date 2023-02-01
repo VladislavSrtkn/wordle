@@ -11,7 +11,7 @@ const textData = new LocalizedStrings({
     attemptStat: 'Attempt statistics',
     gameRules: 'game rules',
     goal: 'Guess the hidden word of the day in the game Wordle in six attempts.',
-    hiddenWord: 'BRIEF',
+    exampleHiddenWord: 'BRIEF',
     firstTry: 'Apple',
     secondTry: 'Crimp',
     thirdTry: 'Coral',
@@ -45,7 +45,7 @@ const textData = new LocalizedStrings({
     challenge: 'Challenge your friends!',
     share: 'Share',
     shareText:
-      'Game Wodrle day #${0} ${1}/6 \n${2}\n#wordle \nGuess the word at \nhttps://vladislavsrtkn.github.io/wordle/',
+      'Game Wodrle day #{0} {1}/6 \n{2}\n#wordle \nGuess the word at \nhttps://vladislavsrtkn.github.io/wordle/',
     description: 'Game Wordle - guess the word of the day!',
   },
   ru: {
@@ -58,7 +58,7 @@ const textData = new LocalizedStrings({
     attemptStat: 'Распределение попыток',
     gameRules: 'правила игры',
     goal: 'Угадайте загаданное слово дня в игре Вордли (Wordle) с шести попыток.',
-    hiddenWord: 'ПИРАТ',
+    exampleHiddenWord: 'ПИРАТ',
     firstTry: 'Схема',
     secondTry: 'Вирус',
     thirdTry: 'Мираж',
@@ -92,7 +92,7 @@ const textData = new LocalizedStrings({
     challenge: 'Бросьте вызов друзьям!',
     share: 'Поделиться',
     shareText:
-      'Игра Wodrle День #${0} ${1}/6 \n${2}\n#вордли \nОтгадайте слово на \nhttps://vladislavsrtkn.github.io/wordle/',
+      'Игра Wodrle День #{0} {1}/6 \n{2}\n#вордли \nОтгадайте слово на \nhttps://vladislavsrtkn.github.io/wordle/',
     description: 'Игра Wordle (Вордли) - угадай слово дня!',
   },
 });

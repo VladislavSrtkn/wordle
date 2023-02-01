@@ -23,8 +23,6 @@ import saveLanguage from '../saveLanguage';
 import textData from '../textData';
 import wordsEnLang from '../wordsEnLang';
 
-// localStorage.clear();
-
 export default function App() {
   const [language, setLanguage] = useState(getLanguage());
   textData.setLanguage(language);
@@ -39,7 +37,8 @@ export default function App() {
   }, [language]);
 
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
-  const wordsLibrary = language === 'ru-RU' ? wordsRuLang : wordsEnLang;
+
+  const wordsLibrary = language === 'ru' ? wordsRuLang : wordsEnLang;
   const puzzle = wordsLibrary[dayNumber].word;
 
   const [currentProgress, setCurrentProgress] = useState(getCurrentProgress(dayNumber, language));
@@ -79,7 +78,7 @@ export default function App() {
   }
 
   function changeLanguage() {
-    const anotherLanguage = language !== 'en-EN' ? 'en-EN' : 'ru-RU';
+    const anotherLanguage = language !== 'en' ? 'en' : 'ru';
 
     saveLanguage(anotherLanguage);
     setLanguage(getLanguage());

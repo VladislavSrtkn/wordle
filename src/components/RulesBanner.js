@@ -11,7 +11,7 @@ export default function RulesBanner({ closeHandler }) {
         <p style={{ borderBottom: '1px solid #d7d7d7', paddingBottom: '1rem' }}>
           {textData.formatString(
             textData.firstExample,
-            <b>{textData.hiddenWord}</b>,
+            <b>{textData.exampleHiddenWord}</b>,
             textData.firstTry
           )}
         </p>
@@ -44,11 +44,11 @@ export default function RulesBanner({ closeHandler }) {
           {textData.thirdExample}
         </p>
         <div style={{ height: '2.2rem', width: '15rem', display: 'flex', gap: '0.3rem' }}>
-          <LetterContainer letter={textData.hiddenWord[0]} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={textData.hiddenWord[1]} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={textData.hiddenWord[2]} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={textData.hiddenWord[3]} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={textData.hiddenWord[4]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.exampleHiddenWord[0]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.exampleHiddenWord[1]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.exampleHiddenWord[2]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.exampleHiddenWord[3]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.exampleHiddenWord[4]} cssClass={'rules-inPlace'} />
         </div>
         <p style={{ borderTop: '1px solid #d7d7d7', paddingTop: '1rem' }}>
           {textData.fourthExample}
