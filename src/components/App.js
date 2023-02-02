@@ -69,6 +69,10 @@ export default function App() {
 
   let pickedTheme = getTheme();
   const [currentTheme, setCurrentTheme] = useState(themes[pickedTheme]);
+  useEffect(() => {
+    const backgroundColor = themes[pickedTheme]['background'];
+    document.querySelector("meta[name='theme-color']").setAttribute('content', backgroundColor);
+  });
 
   const results = currentProgress.results;
   const currentTry = currentProgress.currentTry;
