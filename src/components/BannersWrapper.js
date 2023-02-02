@@ -11,7 +11,7 @@ export default function BannersWrapper({ closeHandler, children }) {
         minHeight: '100%',
         minWidth: '100%',
         backgroundColor: '#fff',
-        zIndex: '99',
+        zIndex: '3',
         position: 'absolute',
         paddingLeft: '1rem',
         paddingRight: '1rem',

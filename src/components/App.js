@@ -42,22 +42,29 @@ export default function App() {
   const puzzle = wordsLibrary[dayNumber].word;
 
   const [currentProgress, setCurrentProgress] = useState(getCurrentProgress(dayNumber, language));
-  useEffect(() => setCurrentProgress(getCurrentProgress(dayNumber, language)), [language]);
+  useEffect(
+    () => setCurrentProgress(getCurrentProgress(dayNumber, language)),
+    [language, dayNumber]
+  );
 
   const [currentLetter, setCurrentLetter] = useState(0);
 
   const [isVisibleRules, setIsVisibleRules] = useState(false);
   const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
 
-  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(currentProgress.isVisibleEndBanner);
+  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
   useEffect(() => {
-    setIsVisibleEndBanner(false);
-    setTimeout(() => setIsVisibleEndBanner(currentProgress.isVisibleEndBanner), 2000);
-  }, []);
+    const timerId = setTimeout(
+      () => setIsVisibleEndBanner(currentProgress.isVisibleEndBanner),
+      2000
+    );
+    return () => clearTimeout(timerId);
+  }, [currentProgress]);
 
   const [errorBannerText, setErrorBannerText] = useState(null);
   useEffect(() => {
-    setTimeout(() => setErrorBannerText(null), 2000);
+    const timerId = setTimeout(() => setErrorBannerText(null), 2000);
+    return () => clearTimeout(timerId);
   }, [errorBannerText]);
 
   let pickedTheme = getTheme();
@@ -135,6 +142,7 @@ export default function App() {
       setTimeout(() => setIsVisibleEndBanner(true), 2000);
 
       progressCopy.isGameOver = true;
+      progressCopy.isVisibleEndBanner = true;
 
       setCurrentProgress(progressCopy);
       saveCurrentProgress(dayNumber, language, progressCopy);
