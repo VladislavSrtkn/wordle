@@ -21,7 +21,7 @@ export default function GameDetailsContainer({
   ));
 
   const emojiString = makeResultsEmojiLayout(results).join(`\n`);
-  const countOfAttempts = attempts === 6 ? 'X' : attempts;
+  const countOfAttempts = isWin ? attempts : 'X';
 
   const theme = useContext(ThemeContext);
 

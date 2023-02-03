@@ -22,6 +22,7 @@ import getLanguage from '../getLanguage';
 import saveLanguage from '../saveLanguage';
 import textData from '../textData';
 import wordsEnLang from '../wordsEnLang';
+import getTodayPuzzle from '../getTodayPuzzle';
 
 export default function App() {
   const [language, setLanguage] = useState(getLanguage());
@@ -39,7 +40,7 @@ export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
 
   const wordsLibrary = language === 'ru' ? wordsRuLang : wordsEnLang;
-  const puzzle = wordsLibrary[dayNumber].word;
+  const puzzle = getTodayPuzzle(wordsLibrary, dayNumber);
 
   const [currentProgress, setCurrentProgress] = useState(getCurrentProgress(dayNumber, language));
   useEffect(
@@ -72,7 +73,7 @@ export default function App() {
   useEffect(() => {
     const backgroundColor = themes[pickedTheme]['background'];
     document.querySelector("meta[name='theme-color']").setAttribute('content', backgroundColor);
-  });
+  }, [pickedTheme]);
 
   const results = currentProgress.results;
   const currentTry = currentProgress.currentTry;
