@@ -1,24 +1,64 @@
-import GameDetailsContainer from './GameDetailsContainer';
+import { Button, Modal, ModalBody, ModalHeader, ModalTitle } from 'react-bootstrap';
 
-export default function EndBanner({ attempts, results, closeHandler, isWin, puzzle, dayNum }) {
+import { ThemeContext } from '../theme-context';
+import { useContext } from 'react';
+
+import makeResultsEmojiLayout from '../makeResultsEmojiLayout';
+
+import textData from '../textData';
+
+import CountdownContainer from './CountdownContainer';
+
+export default function EndBanner({ attempts, results, onHide, isWin, puzzle, dayNum }) {
+  const countOfAttempts = isWin ? attempts : 'X';
+
+  const emojiLayout = makeResultsEmojiLayout(results).map((str, index) => (
+    <span key={index}>
+      {str} <br />
+    </span>
+  ));
+  const emojiString = makeResultsEmojiLayout(results).join(`\n`);
+
+  const theme = useContext(ThemeContext);
+
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#04042c',
-        position: 'absolute',
-        zIndex: 2,
-      }}
-    >
-      <GameDetailsContainer
-        attempts={attempts}
-        results={results}
-        closeHandler={closeHandler}
-        isWin={isWin}
-        puzzle={puzzle}
-        dayNum={dayNum}
-      />
-    </div>
+    <Modal show={true} onHide={onHide}>
+      <ModalHeader closeButton style={{ ...theme }}>
+        <ModalTitle>
+          {textData.endBannerHeader}
+          {dayNum} {countOfAttempts}/6
+        </ModalTitle>
+      </ModalHeader>
+      <ModalBody style={{ ...theme }}>
+        <p>{emojiLayout}</p>
+
+        {!isWin && (
+          <h4 className='text-center py-3'>
+            {textData.hiddenWord} {puzzle}
+          </h4>
+        )}
+
+        <CountdownContainer />
+
+        <h4 className='text-center'>{textData.challenge}</h4>
+
+        <div className='text-center py-3'>
+          <Button
+            onClick={async () => {
+              if (navigator.share !== undefined) {
+                navigator.share({
+                  title: document.title,
+                  url: 'https://vladislavsrtkn.github.io/wordle/',
+                  text: textData.formatString(textData.shareText, dayNum, attempts, emojiString),
+                });
+              }
+            }}
+          >
+            <i className='bi bi-share-fill me-2'></i>
+            {textData.share}
+          </Button>
+        </div>
+      </ModalBody>
+    </Modal>
   );
 }

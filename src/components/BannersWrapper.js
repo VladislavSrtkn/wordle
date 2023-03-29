@@ -1,28 +1,16 @@
-import CloseIcon from '@mui/icons-material/Close';
+import { Modal, ModalBody, ModalHeader, ModalTitle } from 'react-bootstrap';
+
 import { ThemeContext } from '../theme-context';
 import { useContext } from 'react';
 
-export default function BannersWrapper({ closeHandler, children }) {
+export default function BannersWrapper({ onHide, children, title }) {
   const theme = useContext(ThemeContext);
-
   return (
-    <div
-      style={{
-        minHeight: '100%',
-        minWidth: '100%',
-        backgroundColor: '#fff',
-        zIndex: '3',
-        position: 'absolute',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
-        ...theme,
-      }}
-    >
-      <CloseIcon
-        onClick={closeHandler}
-        sx={{ color: '#b5b5b5', position: 'absolute', right: '20px', top: '10px' }}
-      />
-      {children}
-    </div>
+    <Modal show={true} fullscreen={true} onHide={onHide}>
+      <ModalHeader closeButton style={{ ...theme }}>
+        <ModalTitle className='text-uppercase'>{title}</ModalTitle>
+      </ModalHeader>
+      <ModalBody style={{ ...theme }}>{children}</ModalBody>
+    </Modal>
   );
 }

@@ -1,27 +1,9 @@
+import { Col } from 'react-bootstrap';
+
 import LetterRow from './LetterRow';
 
 export default function GameField({ result }) {
-  const table = [];
+  const input = result.map((word, i) => <LetterRow key={i} word={word} />);
 
-  for (let i = 0; i < result.length; i++) {
-    table.push(<LetterRow key={i} word={result[i]} />);
-  }
-
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        flex: '1 1 auto',
-        gap: '0.5rem',
-        width: '80%',
-        height: '100%',
-        minHeight: '240px',
-        maxHeight: '480px',
-        fontSize: '1.8rem',
-      }}
-    >
-      {table}
-    </div>
-  );
+  return <Col className='d-flex flex-column flex-grow-1 letter-field'>{input}</Col>;
 }

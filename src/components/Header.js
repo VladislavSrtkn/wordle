@@ -1,55 +1,33 @@
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import LanguageIcon from '@mui/icons-material/Language';
+import { Col, Row } from 'react-bootstrap';
 
 export default function Header({
-  showRulesHandler,
-  showStatisticsHandler,
-  themeToggler,
+  handleShowRules,
+  handleShowStatistics,
+  handleChangeTheme,
+  handleChangeLanguage,
   theme,
-  changeLanguage,
   language,
 }) {
   const displayedLanguage = language.slice(0, 2);
 
   return (
-    <header
-      style={{
-        borderBottom: '1px solid #d7d7d7',
-        width: '100%',
-        textAlign: 'center',
-        marginBottom: '1rem',
-      }}
-    >
-      <h1 style={{ margin: '0.5rem' }}>
-        <HelpOutlineIcon
-          onClick={showRulesHandler}
-          sx={{ color: '#b5b5b5', position: 'absolute', left: '10px', top: '15px' }}
-        />
+    <Row className='justify-content-between border-bottom py-2 mb-3'>
+      <Col xs='auto'>
+        <i className='bi bi-question-circle px-1 fs-4 icon-color' onClick={handleShowRules} />
         {theme === 'light' && (
-          <DarkModeIcon
-            onClick={themeToggler}
-            sx={{ color: '#b5b5b5', position: 'absolute', left: '50px', top: '15px' }}
-          />
+          <i className='bi bi-moon-fill px-1 fs-4 icon-color' onClick={handleChangeTheme} />
         )}
         {theme === 'dark' && (
-          <LightModeIcon
-            onClick={themeToggler}
-            sx={{ color: '#b5b5b5', position: 'absolute', left: '50px', top: '15px' }}
-          />
+          <i className='bi bi-sun-fill px-1 fs-4 icon-color' onClick={handleChangeTheme} />
         )}
+      </Col>
+      <Col xs='auto' as='h4' className='header'>
         Wordle ({displayedLanguage})
-        <LanguageIcon
-          onClick={changeLanguage}
-          sx={{ color: '#b5b5b5', position: 'absolute', right: '50px', top: '15px' }}
-        />
-        <BarChartIcon
-          onClick={showStatisticsHandler}
-          sx={{ color: '#b5b5b5', position: 'absolute', right: '10px', top: '15px' }}
-        />
-      </h1>
-    </header>
+      </Col>
+      <Col xs='auto'>
+        <i className='bi bi-globe px-1 fs-4 icon-color' onClick={handleChangeLanguage} />
+        <i className='bi bi-reception-4 px-1 fs-4 icon-color' onClick={handleShowStatistics} />
+      </Col>
+    </Row>
   );
 }

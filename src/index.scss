@@ -1,0 +1,114 @@
+@import './custom.scss';
+
+$notInPuzzle: #adadad;
+$inPuzzle: #dec915;
+$inPlace: #5db40a;
+
+.full-height {
+  min-height: 100vh;
+}
+
+div.notInPuzzle,
+div.inPuzzle,
+div.inPlace {
+  transform: rotateX(360deg);
+  transition: 0.9s all;
+  color: #fff !important;
+}
+
+button.notInPuzzle,
+button.inPlace,
+button.inPuzzle {
+  transition: 0.7s all cubic-bezier(1, 0, 1, 0);
+}
+
+.notInPuzzle {
+  background-color: $notInPuzzle !important;
+  border: 2px solid $notInPuzzle !important;
+}
+
+.inPuzzle {
+  background-color: $inPuzzle !important;
+  border: 2px solid $inPuzzle !important;
+}
+
+.inPlace {
+  background-color: $inPlace !important;
+  border: 2px solid $inPlace !important;
+}
+
+.keyboard-btn {
+  margin: 0.25rem 0.125rem;
+  height: 56px;
+  border: none !important;
+  font-size: small;
+  flex: 1;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0px;
+}
+
+.letter-field {
+  max-height: 480px;
+  width: 90%;
+  margin: auto;
+}
+
+.letter-row {
+  height: 100%;
+}
+
+.letter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #bebebe;
+  text-transform: uppercase;
+  font-weight: bold;
+  min-height: 37px;
+}
+
+.example-row {
+  display: flex;
+  gap: 0.3rem;
+  max-width: 23rem;
+}
+
+.rules-notInPuzzle {
+  background-color: $notInPuzzle !important;
+  border: 2px solid $notInPuzzle !important;
+  color: #fff !important;
+}
+
+.rules-inPuzzle {
+  background-color: $inPuzzle !important;
+  border: 2px solid $inPuzzle !important;
+  color: #fff !important;
+}
+
+.rules-inPlace {
+  background-color: $inPlace !important;
+  border: 2px solid $inPlace !important;
+  color: #fff !important;
+}
+
+.small-fs {
+  font-size: 0.8rem;
+}
+
+.list-style-none {
+  list-style: none;
+}
+.li-number {
+  width: 1rem;
+}
+
+.icon-color {
+  color: #a09ea8;
+}
+
+@media only screen and (max-width: 280px) {
+  .header {
+    font-size: 1.3rem;
+  }
+}

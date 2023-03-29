@@ -1,21 +1,20 @@
-export default function ErrorBanner({ text }) {
+import { Toast, ToastBody, ToastContainer, ToastHeader } from 'react-bootstrap';
+
+import { ThemeContext } from '../theme-context';
+import { useContext } from 'react';
+
+export default function ErrorBanner({ text, onClose }) {
+  const theme = useContext(ThemeContext);
+
   return (
-    <div
-      style={{
-        position: 'absolute',
-        top: '1rem',
-        margin: 'auto',
-        width: '80%',
-        backgroundColor: '#000',
-        color: '#fff',
-        borderRadius: '10px',
-        padding: '1rem',
-        fontWeight: 'bold',
-        minHeight: '60px',
-        zIndex: 2,
-      }}
-    >
-      {text}
-    </div>
+    <ToastContainer position='top-center' className='mt-1'>
+      <Toast onClose={onClose}>
+        <ToastHeader className='justify-content-between' style={{ ...theme }}>
+          <i className='bi bi-exclamation-circle-fill'></i>
+          <strong>Wordle</strong>
+        </ToastHeader>
+        <ToastBody style={{ ...theme }}>{text}</ToastBody>
+      </Toast>
+    </ToastContainer>
   );
 }

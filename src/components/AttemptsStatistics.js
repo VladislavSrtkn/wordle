@@ -2,37 +2,29 @@ import getMaxAttemptsCount from '../getMaxAttemptsCount';
 import textData from '../textData';
 
 export default function AttemptsStatistics({ attemtptsObj }) {
-  const attemptsList = [];
   const maxAttempts = getMaxAttemptsCount(attemtptsObj);
 
-  for (const key in attemtptsObj) {
-    const attempts = key;
-    const count = attemtptsObj[key];
+  const input = Object.entries(attemtptsObj).map(([attempts, count]) => {
     const rowWidth = 100 * (count / maxAttempts) || 15;
     const bgColor = count !== 0 ? 'rgb(17, 157, 4)' : 'rgb(173, 173, 173)';
 
-    attemptsList.push(
-      <li key={attempts} style={{ marginBottom: '0.3rem' }}>
-        <div style={{ display: 'inline-block', width: '15px', fontWeight: 'bold' }}>{attempts}</div>
+    return (
+      <li key={attempts} className='mb-1'>
+        <div className='d-inline-block fw-bold mx-1 li-number'>{attempts}</div>
         <div
-          style={{
-            backgroundColor: bgColor,
-            display: 'inline-block',
-            width: rowWidth + 'px',
-            color: '#fff',
-            padding: '0.2rem',
-          }}
+          className='p-1 pr-3 text-light d-inline-block'
+          style={{ backgroundColor: bgColor, width: rowWidth + 'px' }}
         >
           {count}
         </div>
       </li>
     );
-  }
+  });
 
   return (
-    <div>
-      <h3 style={{ textAlign: 'center', textTransform: 'uppercase' }}>{textData.attemptStat}</h3>
-      <ul style={{ listStyle: 'none' }}>{attemptsList}</ul>
-    </div>
+    <>
+      <h4 className='text-center text-uppercase py-3'>{textData.attemptStat}</h4>
+      <ul className='list-style-none'>{input}</ul>
+    </>
   );
 }

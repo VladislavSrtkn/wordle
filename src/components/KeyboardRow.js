@@ -1,18 +1,11 @@
+import { Row } from 'react-bootstrap';
+
 import KeyboardButton from './KeyboardButton';
 
-export default function KeyboardRow({ symbolsArray, handleClick }) {
-  let row = [];
+export default function KeyboardRow({ symbolsArray, onClick }) {
+  const input = symbolsArray.map((symb) => (
+    <KeyboardButton key={symb.value} name={symb.value} onClick={onClick} cssClass={symb.status} />
+  ));
 
-  for (let i = 0; i < symbolsArray.length; i++) {
-    row.push(
-      <KeyboardButton
-        key={i}
-        name={symbolsArray[i].value}
-        handleClick={handleClick}
-        cssClass={symbolsArray[i].status}
-      />
-    );
-  }
-
-  return <div style={{ display: 'flex', justifyContent: 'space-between' }}>{row}</div>;
+  return <Row>{input}</Row>;
 }

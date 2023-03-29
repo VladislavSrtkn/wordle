@@ -1,22 +1,13 @@
-export default function KeyboardButton({ name, cssClass, handleClick }) {
+import { Button } from 'react-bootstrap';
+
+export default function KeyboardButton({ name, cssClass, onClick }) {
   return (
-    <button
-      onClick={() => handleClick(name)}
-      style={{
-        backgroundColor: '#e7e7e7',
-        color: '#000',
-        margin: '0.25rem 0.125rem',
-        borderRadius: '8px',
-        border: '2px solid #e7e7e7',
-        height: '56px',
-        flex: 1,
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-        padding: '0px',
-      }}
-      className={cssClass}
+    <Button
+      variant='secondary'
+      onClick={() => onClick(name)}
+      className={`${cssClass} keyboard-btn`}
     >
       {name === 'backSpace' ? '⌫' : name === 'enter' ? '↵' : name}
-    </button>
+    </Button>
   );
 }

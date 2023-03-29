@@ -1,10 +1,14 @@
-import BannersWrapper from './BannersWrapper';
-import getStatisticsData from '../getStatisticsData';
-import countAttempts from '../countAttempts';
-import AttemptsStatistics from './AttemptsStatistics';
+import { Stack } from 'react-bootstrap';
+
 import textData from '../textData';
 
-export default function StatisticsBanner({ language, closeHandler }) {
+import getStatisticsData from '../getStatisticsData';
+import countAttempts from '../countAttempts';
+
+import BannersWrapper from './BannersWrapper';
+import AttemptsStatistics from './AttemptsStatistics';
+
+export default function StatisticsBanner({ language, onHide }) {
   const statistics = getStatisticsData(language);
   const gamesPlayed = statistics.gamesPlayed;
   const winRate = Math.round((statistics.gamesWon / statistics.gamesPlayed) * 100) || 0;
@@ -14,56 +18,40 @@ export default function StatisticsBanner({ language, closeHandler }) {
   const averageAttempts = Math.round(totalAttempts / gamesPlayed) || 0;
 
   return (
-    <BannersWrapper closeHandler={closeHandler}>
-      <h3 style={{ textAlign: 'center', textTransform: 'uppercase' }}>{textData.statistic}</h3>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          borderBottom: '1px solid #d7d7d7',
-          paddingBottom: '1rem',
-          paddingTop: '1rem',
-        }}
-      >
-        <div style={{ textAlign: 'center' }}>
-          <span style={{ fontSize: '1.8rem' }}>{gamesPlayed}</span>
-          <br />
-          <span style={{ fontSize: '0.8rem' }}>{textData.gamesPlayed}</span>
+    <BannersWrapper onHide={onHide} title={textData.statistic}>
+      <Stack>
+        <div className='d-flex justify-content-around border-bottom py-3'>
+          <div className='text-center'>
+            <span className='fs-2'>{gamesPlayed}</span>
+            <br />
+            <span>{textData.gamesPlayed}</span>
+          </div>
+          <div className='text-center'>
+            <span className='fs-2'>{winRate}%</span>
+            <br />
+            <span>{textData.totalWins}</span>
+          </div>
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <span style={{ fontSize: '1.8rem' }}>{winRate}%</span>
-          <br />
-          <span style={{ fontSize: '0.8rem' }}>{textData.totalWins}</span>
-        </div>
-      </div>
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          borderBottom: '1px solid #d7d7d7',
-          paddingBottom: '1rem',
-          paddingTop: '1rem',
-          gap: '0.4rem',
-        }}
-      >
-        <div style={{ textAlign: 'center' }}>
-          <span style={{ fontSize: '1.8rem' }}>{winStreak}</span>
-          <br />
-          <span style={{ fontSize: '0.8rem' }}>{textData.winStreakNow}</span>
+        <div className='d-flex justify-content-around border-bottom py-3'>
+          <div className='text-center'>
+            <span className='fs-2'>{winStreak}</span>
+            <br />
+            <span className='small-fs'>{textData.winStreakNow}</span>
+          </div>
+          <div className='text-center'>
+            <span className='fs-2'>{averageAttempts}</span>
+            <br />
+            <span className='small-fs'>{textData.attemptsAverage}</span>
+          </div>
+          <div className='text-center'>
+            <span className='fs-2'>{maxWinStreak}</span>
+            <br />
+            <span className='small-fs'>{textData.winStreakMax}</span>
+          </div>
         </div>
-        <div style={{ textAlign: 'center' }}>
-          <span style={{ fontSize: '1.8rem' }}>{averageAttempts}</span>
-          <br />
-          <span style={{ fontSize: '0.8rem' }}>{textData.attemptsAverage}</span>
-        </div>
-        <div style={{ textAlign: 'center' }}>
-          <span style={{ fontSize: '1.8rem' }}>{maxWinStreak}</span>
-          <br />
-          <span style={{ fontSize: '0.8rem' }}>{textData.winStreakMax}</span>
-        </div>
-      </div>
-      <AttemptsStatistics attemtptsObj={statistics.attempts} />
+        <AttemptsStatistics attemtptsObj={statistics.attempts} />
+      </Stack>
     </BannersWrapper>
   );
 }

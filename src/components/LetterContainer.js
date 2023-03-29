@@ -1,19 +1,16 @@
+import { Col } from 'react-bootstrap';
+
+import { useEffect, useState } from 'react';
+
 export default function LetterContainer({ letter, cssClass }) {
-  return (
-    <div
-      style={{
-        border: '2px solid #bebebe',
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textTransform: 'uppercase',
-        fontWeight: 'bold',
-        minHeight: '37px',
-      }}
-      className={cssClass}
-    >
-      {letter}
-    </div>
-  );
+  const [className, setClassName] = useState(null);
+
+  useEffect(() => {
+    setClassName(null);
+    let timerID = setTimeout(() => setClassName(cssClass), 100);
+
+    return () => clearTimeout(timerID);
+  }, [cssClass, letter]);
+
+  return <Col className={`${className} letter-container text-center`}>{letter}</Col>;
 }

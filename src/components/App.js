@@ -1,28 +1,33 @@
-import { useEffect, useState } from 'react';
-import GameField from './Game_field';
-import Header from './Header';
-import Keyboard from './Keyboard';
-import EndBanner from './EndBanner';
-import wordsRuLang from '../wordsRuLang';
+import { Col, Container, Row } from 'react-bootstrap';
+
+import _ from 'lodash';
+
 import differenceInDays from 'date-fns/differenceInDays';
+
+import { useEffect, useState } from 'react';
+import { ThemeContext, themes } from '../theme-context';
+
 import checkWordInLibrary from '../checkWordInLibrary';
-import ErrorBanner from './ErrorBanner';
-import RulesBanner from './RulesBanner';
 import saveCurrentProgress from '../saveCurrentProgress';
 import getCurrentProgress from '../getCurrentProgress';
 import saveStatisticsData from '../saveStatisticsData';
-import StatisticsBanner from './StatisticsBanner';
-import Wrapper from './Wrapper';
-import _ from 'lodash';
 import checkLettersMatch from '../checkLettersMatch';
-import { ThemeContext, themes } from '../theme-context';
 import getTheme from '../getTheme';
 import saveTheme from '../saveTheme';
 import getLanguage from '../getLanguage';
 import saveLanguage from '../saveLanguage';
 import textData from '../textData';
-import wordsEnLang from '../wordsEnLang';
 import getTodayPuzzle from '../getTodayPuzzle';
+import wordsRuLang from '../wordsRuLang';
+import wordsEnLang from '../wordsEnLang';
+
+import StatisticsBanner from './StatisticsBanner';
+import GameField from './Game_field';
+import Header from './Header';
+import Keyboard from './Keyboard';
+import EndBanner from './EndBanner';
+import ErrorBanner from './ErrorBanner';
+import RulesBanner from './RulesBanner';
 
 export default function App() {
   const [language, setLanguage] = useState(getLanguage());
@@ -48,6 +53,14 @@ export default function App() {
     [language, dayNumber]
   );
 
+  const results = currentProgress.results;
+  const currentTry = currentProgress.currentTry;
+  const isWin = currentProgress.isWin;
+  const keyboard = currentProgress.keyboard;
+  const isGameOver = currentProgress.isGameOver;
+  const finalResults = results.slice(0, currentTry + 1);
+  const progressCopy = _.cloneDeep(currentProgress);
+
   const [currentLetter, setCurrentLetter] = useState(0);
 
   const [isVisibleRules, setIsVisibleRules] = useState(false);
@@ -64,7 +77,7 @@ export default function App() {
 
   const [errorBannerText, setErrorBannerText] = useState(null);
   useEffect(() => {
-    const timerId = setTimeout(() => setErrorBannerText(null), 2000);
+    const timerId = setTimeout(() => setErrorBannerText(null), 3000);
     return () => clearTimeout(timerId);
   }, [errorBannerText]);
 
@@ -74,14 +87,6 @@ export default function App() {
     const backgroundColor = themes[pickedTheme]['background'];
     document.querySelector("meta[name='theme-color']").setAttribute('content', backgroundColor);
   }, [pickedTheme]);
-
-  const results = currentProgress.results;
-  const currentTry = currentProgress.currentTry;
-  const isWin = currentProgress.isWin;
-  const keyboard = currentProgress.keyboard;
-  const isGameOver = currentProgress.isGameOver;
-  const finalResults = results.slice(0, currentTry + 1);
-  const progressCopy = _.cloneDeep(currentProgress);
 
   function toggleTheme() {
     pickedTheme = pickedTheme === 'light' ? 'dark' : 'light';
@@ -200,41 +205,44 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={currentTheme}>
-      <Wrapper>
-        <Header
-          showRulesHandler={() => setIsVisibleRules(true)}
-          showStatisticsHandler={() => setIsVisibleStatistics(true)}
-          themeToggler={toggleTheme}
-          theme={pickedTheme}
-          changeLanguage={changeLanguage}
-          language={language}
-        />
+      <Container fluid style={{ ...currentTheme }}>
+        <Row className='justify-content-center full-height'>
+          <Col xs sm={8} md={6} lg={4} className='d-flex flex-column justify-content-between'>
+            <Header
+              handleShowRules={() => setIsVisibleRules(true)}
+              handleShowStatistics={() => setIsVisibleStatistics(true)}
+              handleChangeTheme={toggleTheme}
+              theme={pickedTheme}
+              handleChangeLanguage={changeLanguage}
+              language={language}
+            />
 
-        <GameField result={results} />
-        <Keyboard handleClick={handleClick} keyboard={keyboard} />
+            <GameField result={results} />
+            <Keyboard onClick={handleClick} keyboard={keyboard} />
 
-        {errorBannerText && <ErrorBanner text={errorBannerText} />}
+            {errorBannerText && (
+              <ErrorBanner text={errorBannerText} onClose={() => setErrorBannerText(null)} />
+            )}
 
-        {isVisibleRules && <RulesBanner closeHandler={() => setIsVisibleRules(false)} />}
+            {isVisibleRules && <RulesBanner onHide={() => setIsVisibleRules(false)} />}
 
-        {isVisibleStatistics && (
-          <StatisticsBanner
-            language={language}
-            closeHandler={() => setIsVisibleStatistics(false)}
-          />
-        )}
+            {isVisibleStatistics && (
+              <StatisticsBanner language={language} onHide={() => setIsVisibleStatistics(false)} />
+            )}
 
-        {isVisibleEndBanner && (
-          <EndBanner
-            attempts={currentTry + 1}
-            results={finalResults}
-            isWin={isWin}
-            puzzle={puzzle}
-            closeHandler={() => setIsVisibleEndBanner(false)}
-            dayNum={dayNumber}
-          />
-        )}
-      </Wrapper>
+            {isVisibleEndBanner && (
+              <EndBanner
+                attempts={currentTry + 1}
+                results={finalResults}
+                isWin={isWin}
+                puzzle={puzzle}
+                onHide={() => setIsVisibleEndBanner(false)}
+                dayNum={dayNumber}
+              />
+            )}
+          </Col>
+        </Row>
+      </Container>
     </ThemeContext.Provider>
   );
 }

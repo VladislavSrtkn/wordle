@@ -1,17 +1,11 @@
+import { Row } from 'react-bootstrap';
+
 import LetterContainer from './LetterContainer';
 
 export default function LetterRow({ word }) {
-  const row = [];
+  const input = word.map((letter, i) => (
+    <LetterContainer key={i} letter={letter.value} cssClass={letter.status} />
+  ));
 
-  for (let i = 0; i < word.length; i++) {
-    row.push(<LetterContainer key={i} letter={word[i].value} cssClass={word[i].status} />);
-  }
-
-  return (
-    <div
-      style={{ display: 'flex', gap: '0.3rem', width: '100%', height: '100%', flex: '1 1 auto' }}
-    >
-      {row}
-    </div>
-  );
+  return <Row className='my-1 gap-1 letter-row'>{input}</Row>;
 }
