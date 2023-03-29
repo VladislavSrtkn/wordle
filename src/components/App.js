@@ -205,7 +205,7 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={currentTheme}>
-      <Container fluid style={{ ...currentTheme }}>
+      <Container fluid className='mh-100' style={{ ...currentTheme }}>
         <Row className='justify-content-center full-height'>
           <Col xs sm={8} md={6} lg={4} className='d-flex flex-column justify-content-between'>
             <Header
