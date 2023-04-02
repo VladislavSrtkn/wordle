@@ -196,11 +196,11 @@ export default function App() {
     applySymbol(buttonName);
   }
 
-  console.log(JSON.parse(localStorage.getItem('ru81')));
+  const windowHeight = document.documentElement.clientHeight + 'px';
 
   return (
     <ThemeContext.Provider value={currentTheme}>
-      <Container fluid className='full-height d-flex flex-column' style={{ ...currentTheme }}>
+      <Container fluid className='d-flex' style={{ ...currentTheme, height: windowHeight }}>
         <Row className='justify-content-center flex-grow-1'>
           <Col xs sm={8} md={6} lg={4} className='d-flex flex-column justify-content-between'>
             <Header
