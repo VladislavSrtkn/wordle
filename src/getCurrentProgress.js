@@ -11,7 +11,6 @@ export default function getCurrentProgress(dayNumber, language) {
       results: emptyField,
       keyboard: keyboards[language],
       currentTry: 0,
-      isVisibleEndBanner: false,
       isWin: false,
       isGameOver: false,
     };

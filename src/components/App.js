@@ -53,11 +53,8 @@ export default function App() {
     [language, dayNumber]
   );
 
-  const results = currentProgress.results;
-  const currentTry = currentProgress.currentTry;
-  const isWin = currentProgress.isWin;
-  const keyboard = currentProgress.keyboard;
-  const isGameOver = currentProgress.isGameOver;
+  const { results, currentTry, isWin, isGameOver, keyboard } = currentProgress;
+
   const finalResults = results.slice(0, currentTry + 1);
   const progressCopy = _.cloneDeep(currentProgress);
 
@@ -65,13 +62,9 @@ export default function App() {
 
   const [isVisibleRules, setIsVisibleRules] = useState(false);
   const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
-
   const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
   useEffect(() => {
-    const timerId = setTimeout(
-      () => setIsVisibleEndBanner(currentProgress.isVisibleEndBanner),
-      2000
-    );
+    const timerId = setTimeout(() => setIsVisibleEndBanner(currentProgress.isGameOver), 2000);
     return () => clearTimeout(timerId);
   }, [currentProgress]);
 
@@ -86,7 +79,7 @@ export default function App() {
   useEffect(() => {
     const backgroundColor = themes[pickedTheme]['background'];
     document.querySelector("meta[name='theme-color']").setAttribute('content', backgroundColor);
-  }, [pickedTheme]);
+  }, [pickedTheme, currentTheme]);
 
   function toggleTheme() {
     pickedTheme = pickedTheme === 'light' ? 'dark' : 'light';
@@ -182,7 +175,7 @@ export default function App() {
     currentSquare.value = name;
 
     setCurrentProgress(progressCopy);
-    setCurrentLetter(currentLetter + 1);
+    setCurrentLetter((prev) => prev + 1);
   }
 
   function handleClick(buttonName) {
@@ -202,6 +195,8 @@ export default function App() {
 
     applySymbol(buttonName);
   }
+
+  console.log(JSON.parse(localStorage.getItem('ru81')));
 
   return (
     <ThemeContext.Provider value={currentTheme}>
