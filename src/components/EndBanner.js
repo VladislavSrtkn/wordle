@@ -13,8 +13,12 @@ export default function EndBanner({ attempts, results, onHide, isWin, puzzle, da
   const countOfAttempts = isWin ? attempts : 'X';
   const slicedResults = results.slice(0, attempts);
 
-  const emojiLayout = makeResultsEmojiLayout(slicedResults);
-  const emojiString = makeResultsEmojiLayout(slicedResults).join(`\n`);
+  const layoutForShare = makeResultsEmojiLayout(slicedResults).join(`\n`);
+  const emojiLayout = makeResultsEmojiLayout(slicedResults).map((string, i) => (
+    <span key={i}>
+      {string} <br />
+    </span>
+  ));
 
   const theme = useContext(ThemeContext);
 
@@ -46,7 +50,7 @@ export default function EndBanner({ attempts, results, onHide, isWin, puzzle, da
                 navigator.share({
                   title: document.title,
                   url: 'https://vladislavsrtkn.github.io/wordle/',
-                  text: textData.formatString(textData.shareText, dayNum, attempts, emojiString),
+                  text: textData.formatString(textData.shareText, dayNum, attempts, layoutForShare),
                 });
               }
             }}
