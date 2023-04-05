@@ -8,7 +8,7 @@ import BannersWrapper from './BannersWrapper';
 export default function RulesBanner({ onHide }) {
   return (
     <BannersWrapper onHide={onHide} title={textData.gameRules}>
-      <Stack>
+      <Stack className='no-transform'>
         <p>{textData.goal}</p>
         <p className='border-bottom pb-2'>
           {textData.formatString(

@@ -11,9 +11,13 @@ body * {
 div.notInPuzzle,
 div.inPuzzle,
 div.inPlace {
+  color: #fff !important;
   transform: rotateX(360deg);
   transition: 0.9s all;
-  color: #fff !important;
+}
+
+.no-transform * {
+  transform: none !important;
 }
 
 button.notInPuzzle,
