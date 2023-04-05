@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 export default function LetterContainer({ letter, cssClass }) {
   const [className, setClassName] = useState(null);
 
+  // Update CSS class to display animation correctly on re-render
   useEffect(() => {
     setClassName(null);
     let timerID = setTimeout(() => setClassName(cssClass), 100);
@@ -12,5 +13,5 @@ export default function LetterContainer({ letter, cssClass }) {
     return () => clearTimeout(timerID);
   }, [cssClass, letter]);
 
-  return <Col className={`${className} letter-container text-center`}>{letter}</Col>;
+  return <Col className={`${className} letter-container`}>{letter}</Col>;
 }

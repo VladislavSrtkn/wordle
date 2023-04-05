@@ -1,5 +1,9 @@
 import makeResultsEmojiString from './makeResultsEmojiString';
 
-export default function makeResultsEmojiLayout(resultsArray) {
-  return resultsArray.map((string) => makeResultsEmojiString(string));
+export default function makeResultsEmojiLayout(results) {
+  return results.map((string, i) => (
+    <span key={i}>
+      {makeResultsEmojiString(string)} <br />
+    </span>
+  ));
 }

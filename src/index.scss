@@ -4,6 +4,10 @@ $notInPuzzle: #adadad;
 $inPuzzle: #dec915;
 $inPlace: #5db40a;
 
+body * {
+  transition: background-color 0.6s ease;
+}
+
 div.notInPuzzle,
 div.inPuzzle,
 div.inPlace {
@@ -19,17 +23,17 @@ button.inPuzzle {
 }
 
 .notInPuzzle {
-  background-color: $notInPuzzle !important;
+  background-color: $notInPuzzle;
   border: 2px solid $notInPuzzle !important;
 }
 
 .inPuzzle {
-  background-color: $inPuzzle !important;
+  background-color: $inPuzzle;
   border: 2px solid $inPuzzle !important;
 }
 
 .inPlace {
-  background-color: $inPlace !important;
+  background-color: $inPlace;
   border: 2px solid $inPlace !important;
 }
 
@@ -51,7 +55,7 @@ button.inPuzzle {
 }
 
 .letter-row {
-  height: 100%;
+  flex: 1;
 }
 
 .letter-container {
@@ -68,25 +72,7 @@ button.inPuzzle {
 .example-row {
   display: flex;
   gap: 0.3rem;
-  max-width: 23rem;
-}
-
-.rules-notInPuzzle {
-  background-color: $notInPuzzle !important;
-  border: 2px solid $notInPuzzle !important;
-  color: #fff !important;
-}
-
-.rules-inPuzzle {
-  background-color: $inPuzzle !important;
-  border: 2px solid $inPuzzle !important;
-  color: #fff !important;
-}
-
-.rules-inPlace {
-  background-color: $inPlace !important;
-  border: 2px solid $inPlace !important;
-  color: #fff !important;
+  max-width: 20rem;
 }
 
 .small-fs {
@@ -96,6 +82,7 @@ button.inPuzzle {
 .list-style-none {
   list-style: none;
 }
+
 .li-number {
   width: 1rem;
 }

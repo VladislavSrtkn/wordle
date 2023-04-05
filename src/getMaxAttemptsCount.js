@@ -1,9 +1,3 @@
-export default function getMaxAttemptsCount(attemtptsObj) {
-  const attempts = [];
-
-  for (const key in attemtptsObj) {
-    attempts.push(attemtptsObj[key]);
-  }
-
-  return Math.max(...attempts);
+export default function getMaxAttemptsCount(attemtpts) {
+  return Math.max(...Object.values(attemtpts));
 }

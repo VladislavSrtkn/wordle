@@ -1,12 +1,12 @@
 import getMaxAttemptsCount from '../getMaxAttemptsCount';
 import textData from '../textData';
 
-export default function AttemptsStatistics({ attemtptsObj }) {
-  const maxAttempts = getMaxAttemptsCount(attemtptsObj);
+export default function AttemptsChart({ attempts }) {
+  const maxAttempts = getMaxAttemptsCount(attempts);
 
-  const input = Object.entries(attemtptsObj).map(([attempts, count]) => {
-    const rowWidth = 100 * (count / maxAttempts) || 15;
-    const bgColor = count !== 0 ? 'rgb(17, 157, 4)' : 'rgb(173, 173, 173)';
+  const input = Object.entries(attempts).map(([attempts, count]) => {
+    const rowWidth = 100 * (count / maxAttempts) + 18;
+    const bgColor = count !== 0 ? '#5db40c' : '#adadad';
 
     return (
       <li key={attempts} className='mb-1'>

@@ -22,7 +22,7 @@ export default function RulesBanner({ onHide }) {
           <LetterContainer letter={textData.firstTry[1]} />
           <LetterContainer letter={textData.firstTry[2]} />
           <LetterContainer letter={textData.firstTry[3]} />
-          <LetterContainer letter={textData.firstTry[4]} cssClass={'rules-inPuzzle'} />
+          <LetterContainer letter={textData.firstTry[4]} cssClass={'inPuzzle'} />
         </div>
         <p className='border-bottom pb-2'>
           {textData.formatString(textData.firstOutcome, <b>{textData.firstLetter}</b>)}
@@ -37,22 +37,22 @@ export default function RulesBanner({ onHide }) {
         </p>
         <div className='example-row mb-2'>
           <LetterContainer letter={textData.secondTry[0]} />
-          <LetterContainer letter={textData.secondTry[1]} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={textData.secondTry[2]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.secondTry[1]} cssClass={'inPlace'} />
+          <LetterContainer letter={textData.secondTry[2]} cssClass={'inPlace'} />
           <LetterContainer letter={textData.secondTry[3]} />
           <LetterContainer letter={textData.secondTry[4]} />
         </div>
         <p className='py-2 border-top'>{textData.thirdExample}</p>
         <div className='example-row mb-2'>
-          <LetterContainer letter={textData.exampleHiddenWord[0]} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={textData.exampleHiddenWord[1]} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={textData.exampleHiddenWord[2]} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={textData.exampleHiddenWord[3]} cssClass={'rules-inPlace'} />
-          <LetterContainer letter={textData.exampleHiddenWord[4]} cssClass={'rules-inPlace'} />
+          <LetterContainer letter={textData.exampleHiddenWord[0]} cssClass={'inPlace'} />
+          <LetterContainer letter={textData.exampleHiddenWord[1]} cssClass={'inPlace'} />
+          <LetterContainer letter={textData.exampleHiddenWord[2]} cssClass={'inPlace'} />
+          <LetterContainer letter={textData.exampleHiddenWord[3]} cssClass={'inPlace'} />
+          <LetterContainer letter={textData.exampleHiddenWord[4]} cssClass={'inPlace'} />
         </div>
         <p className='py-2 border-top'>{textData.fourthExample}</p>
         <div className='example-row mb-2'>
-          <LetterContainer letter={textData.thirdTry[0]} cssClass={'rules-notInPuzzle'} />
+          <LetterContainer letter={textData.thirdTry[0]} cssClass={'notInPuzzle'} />
           <LetterContainer letter={textData.thirdTry[1]} />
           <LetterContainer letter={textData.thirdTry[2]} />
           <LetterContainer letter={textData.thirdTry[3]} />
@@ -62,7 +62,7 @@ export default function RulesBanner({ onHide }) {
           <p>
             <b>{textData.dailyRule}</b>
           </p>
-          <Button variant='success' onClick={onHide}>
+          <Button variant='success' onClick={onHide} className='text-white ms-4'>
             {textData.play}
           </Button>
         </div>

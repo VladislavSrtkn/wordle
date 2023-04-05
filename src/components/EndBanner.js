@@ -11,13 +11,10 @@ import CountdownContainer from './CountdownContainer';
 
 export default function EndBanner({ attempts, results, onHide, isWin, puzzle, dayNum }) {
   const countOfAttempts = isWin ? attempts : 'X';
+  const slicedResults = results.slice(0, attempts);
 
-  const emojiLayout = makeResultsEmojiLayout(results).map((str, index) => (
-    <span key={index}>
-      {str} <br />
-    </span>
-  ));
-  const emojiString = makeResultsEmojiLayout(results).join(`\n`);
+  const emojiLayout = makeResultsEmojiLayout(slicedResults);
+  const emojiString = makeResultsEmojiLayout(slicedResults).join(`\n`);
 
   const theme = useContext(ThemeContext);
 

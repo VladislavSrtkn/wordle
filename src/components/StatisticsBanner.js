@@ -3,19 +3,20 @@ import { Stack } from 'react-bootstrap';
 import textData from '../textData';
 
 import getStatisticsData from '../getStatisticsData';
-import countAttempts from '../countAttempts';
+import countTotalAttempts from '../countTotalAttempts';
+import countWinRate from '../countWinRate';
+import countAverageAttempts from '../countAverageAttempts';
 
 import BannersWrapper from './BannersWrapper';
-import AttemptsStatistics from './AttemptsStatistics';
+import AttemptsChart from './AttemptsChart';
 
 export default function StatisticsBanner({ language, onHide }) {
   const statistics = getStatisticsData(language);
-  const gamesPlayed = statistics.gamesPlayed;
-  const winRate = Math.round((statistics.gamesWon / statistics.gamesPlayed) * 100) || 0;
-  const winStreak = statistics.winStreak;
-  const maxWinStreak = statistics.maxWinStreak;
-  const totalAttempts = countAttempts(statistics);
-  const averageAttempts = Math.round(totalAttempts / gamesPlayed) || 0;
+  const { attempts, gamesPlayed, gamesWon, winStreak, maxWinStreak } = statistics;
+
+  const winRate = countWinRate(gamesWon, gamesPlayed);
+  const attemptsTotal = countTotalAttempts(attempts);
+  const attemptsAverage = countAverageAttempts(attemptsTotal, gamesPlayed);
 
   return (
     <BannersWrapper onHide={onHide} title={textData.statistic}>
@@ -40,7 +41,7 @@ export default function StatisticsBanner({ language, onHide }) {
             <span className='small-fs'>{textData.winStreakNow}</span>
           </div>
           <div className='text-center'>
-            <span className='fs-2'>{averageAttempts}</span>
+            <span className='fs-2'>{attemptsAverage}</span>
             <br />
             <span className='small-fs'>{textData.attemptsAverage}</span>
           </div>
@@ -50,7 +51,7 @@ export default function StatisticsBanner({ language, onHide }) {
             <span className='small-fs'>{textData.winStreakMax}</span>
           </div>
         </div>
-        <AttemptsStatistics attemtptsObj={statistics.attempts} />
+        <AttemptsChart attempts={attempts} />
       </Stack>
     </BannersWrapper>
   );

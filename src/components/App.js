@@ -30,9 +30,30 @@ import ErrorBanner from './ErrorBanner';
 import RulesBanner from './RulesBanner';
 
 export default function App() {
+  const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
+
   const [language, setLanguage] = useState(getLanguage());
-  textData.setLanguage(language);
+  const [progress, setProgress] = useState(getCurrentProgress(dayNumber, language));
+  const [currentLetter, setCurrentLetter] = useState(0);
+  const [theme, setTheme] = useState(getTheme());
+  const [isVisibleRules, setIsVisibleRules] = useState(false);
+  const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
+  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
+  const [errorBannerText, setErrorBannerText] = useState(null);
+
+  const wordsLibrary = language === 'ru' ? wordsRuLang : wordsEnLang;
+  const puzzle = getTodayPuzzle(wordsLibrary, dayNumber);
+
+  const { results, keyboard, currentTry, isWin, isGameOver } = progress;
+  const progressCopy = _.cloneDeep(progress);
+
+  const windowHeight = document.documentElement.clientHeight + 'px';
+
+  // *** Effects ***
+
   useEffect(() => {
+    textData.setLanguage(language);
+
     document
       .querySelector("meta[name='description']")
       .setAttribute('content', textData.description);
@@ -42,72 +63,29 @@ export default function App() {
       .setAttribute('content', textData.description);
   }, [language]);
 
-  const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
+  useEffect(() => setProgress(getCurrentProgress(dayNumber, language)), [language, dayNumber]);
 
-  const wordsLibrary = language === 'ru' ? wordsRuLang : wordsEnLang;
-  const puzzle = getTodayPuzzle(wordsLibrary, dayNumber);
-
-  const [currentProgress, setCurrentProgress] = useState(getCurrentProgress(dayNumber, language));
-  useEffect(
-    () => setCurrentProgress(getCurrentProgress(dayNumber, language)),
-    [language, dayNumber]
-  );
-
-  const { results, currentTry, isWin, isGameOver, keyboard } = currentProgress;
-
-  const finalResults = results.slice(0, currentTry + 1);
-  const progressCopy = _.cloneDeep(currentProgress);
-
-  const [currentLetter, setCurrentLetter] = useState(0);
-
-  const [isVisibleRules, setIsVisibleRules] = useState(false);
-  const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
-  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
   useEffect(() => {
-    const timerId = setTimeout(() => setIsVisibleEndBanner(currentProgress.isGameOver), 2000);
-    return () => clearTimeout(timerId);
-  }, [currentProgress]);
+    if (isGameOver) {
+      const timerId = setTimeout(() => setIsVisibleEndBanner(true), 2000);
+      return () => clearTimeout(timerId);
+    }
+  }, [isGameOver]);
 
-  const [errorBannerText, setErrorBannerText] = useState(null);
   useEffect(() => {
     const timerId = setTimeout(() => setErrorBannerText(null), 3000);
     return () => clearTimeout(timerId);
   }, [errorBannerText]);
 
-  let pickedTheme = getTheme();
-  const [currentTheme, setCurrentTheme] = useState(themes[pickedTheme]);
   useEffect(() => {
-    const backgroundColor = themes[pickedTheme]['background'];
+    const backgroundColor = themes[theme]['background'];
     document.querySelector("meta[name='theme-color']").setAttribute('content', backgroundColor);
-  }, [pickedTheme, currentTheme]);
+  }, [theme]);
 
-  function toggleTheme() {
-    pickedTheme = pickedTheme === 'light' ? 'dark' : 'light';
-    setCurrentTheme(themes[pickedTheme]);
-    saveTheme(pickedTheme);
-  }
-
-  function changeLanguage() {
-    const anotherLanguage = language !== 'en' ? 'en' : 'ru';
-
-    saveLanguage(anotherLanguage);
-    setLanguage(getLanguage());
-    setCurrentLetter(0);
-  }
-
-  function checkWordsMatch(word) {
-    if (word === puzzle) {
-      return true;
-    }
-    return false;
-  }
+  // *** Functions ***
 
   function submitWord() {
-    const word = [];
-
-    for (let i = 0; i < results[currentTry].length; i++) {
-      word.push(results[currentTry][i].value);
-    }
+    const word = results[currentTry].map((item) => item.value);
 
     if (word.includes('')) {
       setErrorBannerText(textData.emptyLetter);
@@ -119,63 +97,65 @@ export default function App() {
       return;
     }
 
-    const checkedProgressCopy = checkLettersMatch(
-      results[currentTry],
-      puzzle,
-      progressCopy,
-      currentTry
-    );
-    setCurrentProgress(checkedProgressCopy);
+    checkLettersMatch(puzzle, progressCopy);
 
-    if (checkWordsMatch(word.join(''))) {
-      setTimeout(() => setIsVisibleEndBanner(true), 2000);
-
+    if (word.join('') === puzzle) {
       progressCopy.isWin = true;
       progressCopy.isGameOver = true;
-      progressCopy.isVisibleEndBanner = true;
-      setCurrentProgress(progressCopy);
 
+      setProgress(progressCopy);
       saveCurrentProgress(dayNumber, language, progressCopy);
       saveStatisticsData(language, true, currentTry + 1);
-
       return;
     }
 
     if (currentTry === 5) {
-      setTimeout(() => setIsVisibleEndBanner(true), 2000);
-
       progressCopy.isGameOver = true;
-      progressCopy.isVisibleEndBanner = true;
 
-      setCurrentProgress(progressCopy);
+      setProgress(progressCopy);
       saveCurrentProgress(dayNumber, language, progressCopy);
       saveStatisticsData(language, false);
-
       return;
     }
 
     progressCopy.currentTry += 1;
-    setCurrentProgress(progressCopy);
+    setProgress(progressCopy);
     setCurrentLetter(0);
     saveCurrentProgress(dayNumber, language, progressCopy);
   }
 
-  function removeSymbol() {
+  function removeLetter() {
     if (currentLetter === 0) return;
 
     const lastLetter = progressCopy.results[currentTry][currentLetter - 1];
     lastLetter.value = '';
 
-    setCurrentProgress(progressCopy);
-    setCurrentLetter(currentLetter - 1);
+    setProgress(progressCopy);
+    setCurrentLetter((prev) => prev - 1);
   }
 
-  function applySymbol(name) {
+  function applyLetter(name) {
     const currentSquare = progressCopy.results[currentTry][currentLetter];
     currentSquare.value = name;
 
-    setCurrentProgress(progressCopy);
+    setProgress(progressCopy);
     setCurrentLetter((prev) => prev + 1);
+  }
+
+  // *** Handlers ***
+
+  function handleChangeTheme() {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    saveTheme(newTheme);
+  }
+
+  function handleChangeLanguage() {
+    const newLanguage = language === 'ru' ? 'en' : 'ru';
+
+    setLanguage(newLanguage);
+    saveLanguage(newLanguage);
+    setCurrentLetter(0);
   }
 
   function handleClick(buttonName) {
@@ -187,32 +167,31 @@ export default function App() {
     }
 
     if (buttonName === 'backSpace') {
-      removeSymbol();
+      removeLetter();
       return;
     }
 
     if (currentLetter === 5) return;
 
-    applySymbol(buttonName);
+    applyLetter(buttonName);
   }
 
-  const windowHeight = document.documentElement.clientHeight + 'px';
-
   return (
-    <ThemeContext.Provider value={currentTheme}>
-      <Container fluid className='d-flex' style={{ ...currentTheme, height: windowHeight }}>
+    <ThemeContext.Provider value={themes[theme]}>
+      <Container fluid className='d-flex' style={{ ...themes[theme], height: windowHeight }}>
         <Row className='justify-content-center flex-grow-1'>
           <Col xs sm={8} md={6} lg={4} className='d-flex flex-column justify-content-between'>
             <Header
-              handleShowRules={() => setIsVisibleRules(true)}
-              handleShowStatistics={() => setIsVisibleStatistics(true)}
-              handleChangeTheme={toggleTheme}
-              theme={pickedTheme}
-              handleChangeLanguage={changeLanguage}
+              onShowRules={() => setIsVisibleRules(true)}
+              onShowStatistics={() => setIsVisibleStatistics(true)}
+              onChangeTheme={handleChangeTheme}
+              onChangeLanguage={handleChangeLanguage}
+              theme={theme}
               language={language}
             />
 
-            <GameField result={results} />
+            <GameField data={results} />
+
             <Keyboard onClick={handleClick} keyboard={keyboard} />
 
             {errorBannerText && (
@@ -228,7 +207,7 @@ export default function App() {
             {isVisibleEndBanner && (
               <EndBanner
                 attempts={currentTry + 1}
-                results={finalResults}
+                results={results}
                 isWin={isWin}
                 puzzle={puzzle}
                 onHide={() => setIsVisibleEndBanner(false)}
