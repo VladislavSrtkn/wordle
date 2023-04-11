@@ -5,29 +5,29 @@ import _ from 'lodash';
 import differenceInDays from 'date-fns/differenceInDays';
 
 import { useEffect, useState } from 'react';
-import { ThemeContext, themes } from '../theme-context';
+import { ThemeContext, themes } from './features/theme/theme-context';
 
-import checkWordInLibrary from '../checkWordInLibrary';
-import saveCurrentProgress from '../saveCurrentProgress';
-import getCurrentProgress from '../getCurrentProgress';
-import saveStatisticsData from '../saveStatisticsData';
-import checkLettersMatch from '../checkLettersMatch';
-import getTheme from '../getTheme';
-import saveTheme from '../saveTheme';
-import getLanguage from '../getLanguage';
-import saveLanguage from '../saveLanguage';
-import textData from '../textData';
-import getTodayPuzzle from '../getTodayPuzzle';
-import wordsRuLang from '../wordsRuLang';
-import wordsEnLang from '../wordsEnLang';
+import checkWordInLibrary from './features/word-libraries/checkWordInLibrary';
+import saveCurrentProgress from './features/progress/saveCurrentProgress';
+import getCurrentProgress from './features/progress/getCurrentProgress';
+import saveStatisticsData from './features/banners/statistics/saveStatisticsData';
+import checkLettersMatch from './features/gamefield/checkLettersMatch';
+import getTheme from './features/theme/getTheme';
+import saveTheme from './features/theme/saveTheme';
+import getLanguage from './features/language/getLanguage';
+import saveLanguage from './features/language/saveLanguage';
+import textData from './features/language/textData';
+import getTodayPuzzle from './features/word-libraries/getTodayPuzzle';
+import wordsRuLang from './features/word-libraries/wordsRuLang';
+import wordsEnLang from './features/word-libraries/wordsEnLang';
 
-import StatisticsBanner from './StatisticsBanner';
-import GameField from './Game_field';
-import Header from './Header';
-import Keyboard from './Keyboard';
-import EndBanner from './EndBanner';
-import ErrorBanner from './ErrorBanner';
-import RulesBanner from './RulesBanner';
+import StatisticsBanner from './features/banners/statistics/StatisticsBanner';
+import GameField from './features/gamefield/Gamefield';
+import Header from './features/header/Header';
+import Keyboard from './features/keyboard/Keyboard';
+import EndBanner from './features/banners/game-end/EndBanner';
+import ErrorBanner from './features/banners/error/ErrorBanner';
+import RulesBanner from './features/banners/rules/RulesBanner';
 
 export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
@@ -96,6 +96,7 @@ export default function App() {
       setErrorBannerText(textData.wordNotFound);
       return;
     }
+    // Here 
 
     checkLettersMatch(puzzle, progressCopy);
 

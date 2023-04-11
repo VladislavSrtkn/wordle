@@ -27,17 +27,17 @@ button.inPuzzle {
 }
 
 .notInPuzzle {
-  background-color: $notInPuzzle;
+  background-color: $notInPuzzle !important;
   border: 2px solid $notInPuzzle !important;
 }
 
 .inPuzzle {
-  background-color: $inPuzzle;
+  background-color: $inPuzzle !important;
   border: 2px solid $inPuzzle !important;
 }
 
 .inPlace {
-  background-color: $inPlace;
+  background-color: $inPlace !important;
   border: 2px solid $inPlace !important;
 }
 

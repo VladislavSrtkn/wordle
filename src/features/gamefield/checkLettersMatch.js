@@ -1,11 +1,11 @@
-import changeKeyboardButtonStatus from './changeKeyboardButtonStatus';
+import changeKeyboardButtonStatus from '../keyboard/changeKeyboardButtonStatus';
 
 // Function mutates the object, make sure a copy is passed as an argument
 
 export default function checkLettersMatch(puzzle, progressCopy) {
   const { currentTry } = progressCopy;
 
-  const check = [];
+  const lettersToCheck = [];
   const matched = [];
 
   progressCopy.results[currentTry].forEach((letter, index) => {
@@ -26,16 +26,16 @@ export default function checkLettersMatch(puzzle, progressCopy) {
 
     //If the letter is in the puzzle but is in a different place
     else {
-      check.push({ value, position: index });
+      lettersToCheck.push({ value, position: index });
     }
   });
 
   // checking letters that are in puzzle but are not in their place
-  check.forEach((letter) => {
+  lettersToCheck.forEach((letter) => {
     const { value, position } = letter;
 
     const countInPuzzle = [...puzzle].filter((letter) => letter === value).length;
-    const countInMatched = [...matched].filter((letter) => letter === value).length;
+    const countInMatched = matched.filter((letter) => letter === value).length;
 
     if (countInPuzzle > countInMatched) {
       progressCopy.results[currentTry][position].status = 'inPuzzle';

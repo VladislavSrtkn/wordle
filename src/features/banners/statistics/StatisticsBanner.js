@@ -1,13 +1,13 @@
 import { Stack } from 'react-bootstrap';
 
-import textData from '../textData';
+import textData from '../../language/textData';
 
-import getStatisticsData from '../getStatisticsData';
-import countTotalAttempts from '../countTotalAttempts';
-import countWinRate from '../countWinRate';
-import countAverageAttempts from '../countAverageAttempts';
+import getStatisticsData from './getStatisticsData';
+import countTotalAttempts from './countTotalAttempts';
+import countWinRate from './countWinRate';
+import countAverageAttempts from './countAverageAttempts';
 
-import BannersWrapper from './BannersWrapper';
+import BannersWrapper from '../BannersWrapper';
 import AttemptsChart from './AttemptsChart';
 
 export default function StatisticsBanner({ language, onHide }) {

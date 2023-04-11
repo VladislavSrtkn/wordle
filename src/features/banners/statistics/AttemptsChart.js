@@ -1,5 +1,5 @@
-import getMaxAttemptsCount from '../getMaxAttemptsCount';
-import textData from '../textData';
+import getMaxAttemptsCount from './getMaxAttemptsCount';
+import textData from '../../language/textData';
 
 export default function AttemptsChart({ attempts }) {
   const maxAttempts = getMaxAttemptsCount(attempts);

@@ -1,5 +1,5 @@
-import emptyField from './emptyField';
-import keyboards from './keyboards';
+import emptyField from '../gamefield/emptyField';
+import keyboards from '../keyboard/keyboards';
 
 export default function getCurrentProgress(dayNumber, language) {
   const todayDataForCurrentLanguage = language + dayNumber;

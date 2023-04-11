@@ -1,11 +1,11 @@
 import { Button, Modal, ModalBody, ModalHeader, ModalTitle } from 'react-bootstrap';
 
-import { ThemeContext } from '../theme-context';
+import { ThemeContext } from '../../theme/theme-context';
 import { useContext } from 'react';
 
-import makeResultsEmojiLayout from '../makeResultsEmojiLayout';
+import makeResultsEmojiLayout from './makeResultsEmojiLayout';
 
-import textData from '../textData';
+import textData from '../../language/textData';
 
 import CountdownContainer from './CountdownContainer';
 

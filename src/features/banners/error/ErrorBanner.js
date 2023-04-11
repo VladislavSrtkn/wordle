@@ -2,7 +2,7 @@ import { Toast, ToastBody, ToastContainer, ToastHeader } from 'react-bootstrap';
 
 import { useContext } from 'react';
 
-import { ThemeContext } from '../theme-context';
+import { ThemeContext } from '../../theme/theme-context';
 
 export default function ErrorBanner({ text, onClose }) {
   const theme = useContext(ThemeContext);

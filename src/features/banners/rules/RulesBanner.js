@@ -1,9 +1,9 @@
 import { Button, Stack } from 'react-bootstrap';
 
-import textData from '../textData';
+import textData from '../../language/textData';
 
-import LetterContainer from './LetterContainer';
-import BannersWrapper from './BannersWrapper';
+import LetterContainer from '../../gamefield/LetterContainer';
+import BannersWrapper from '../BannersWrapper';
 
 export default function RulesBanner({ onHide }) {
   return (
@@ -84,8 +84,15 @@ export default function RulesBanner({ onHide }) {
         <p>
           {textData.formatString(
             textData.about,
-            <a href='mailto:vladislav_srtkn@gmail.com'> email</a>,
-            <a target='_blank' rel='noreferrer' href='https://github.com/VladislavSrtkn/wordle'>
+            <a href='mailto:vladislav_srtkn@gmail.com' className='link-info'>
+              email
+            </a>,
+            <a
+              target='_blank'
+              rel='noreferrer'
+              className='link-info'
+              href='https://github.com/VladislavSrtkn/wordle'
+            >
               github
             </a>
           )}
