@@ -4,14 +4,14 @@ import _ from 'lodash';
 
 import differenceInDays from 'date-fns/differenceInDays';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { ThemeContext, themes } from './features/theme/theme-context';
 
 import checkWordInLibrary from './features/word-libraries/checkWordInLibrary';
 import saveCurrentProgress from './features/progress/saveCurrentProgress';
 import getCurrentProgress from './features/progress/getCurrentProgress';
 import saveStatisticsData from './features/banners/statistics/saveStatisticsData';
-import checkLettersMatch from './features/gamefield/checkLettersMatch';
+import changeLettersStatus from './features/gamefield/changeLettersStatus';
 import getTheme from './features/theme/getTheme';
 import saveTheme from './features/theme/saveTheme';
 import getLanguage from './features/language/getLanguage';
@@ -31,11 +31,21 @@ import RulesBanner from './features/banners/rules/RulesBanner';
 
 export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
+  const [language, setLanguage] = useState(() => getLanguage());
 
-  const [language, setLanguage] = useState(getLanguage());
-  const [progress, setProgress] = useState(getCurrentProgress(dayNumber, language));
+  const todayProgressFromStorage = useMemo(
+    () => getCurrentProgress(dayNumber, language),
+    [dayNumber, language]
+  );
+
+  const [results, setResults] = useState(todayProgressFromStorage.results);
+  const [keyboard, setKeyboard] = useState(todayProgressFromStorage.keyboard);
+  const [currentTry, setCurrentTry] = useState(todayProgressFromStorage.currentTry);
+  const [isGameOver, setIsGameOver] = useState(todayProgressFromStorage.isGameOver);
+  const [isWin, setIsWin] = useState(todayProgressFromStorage.isWin);
+
   const [currentLetter, setCurrentLetter] = useState(0);
-  const [theme, setTheme] = useState(getTheme());
+  const [theme, setTheme] = useState(() => getTheme());
   const [isVisibleRules, setIsVisibleRules] = useState(false);
   const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
   const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
@@ -44,10 +54,9 @@ export default function App() {
   const wordsLibrary = language === 'ru' ? wordsRuLang : wordsEnLang;
   const puzzle = getTodayPuzzle(wordsLibrary, dayNumber);
 
-  const { results, keyboard, currentTry, isWin, isGameOver } = progress;
-  const progressCopy = _.cloneDeep(progress);
-
   const windowHeight = document.documentElement.clientHeight + 'px';
+
+  // localStorage.clear();
 
   // *** Effects ***
 
@@ -63,7 +72,18 @@ export default function App() {
       .setAttribute('content', textData.description);
   }, [language]);
 
-  useEffect(() => setProgress(getCurrentProgress(dayNumber, language)), [language, dayNumber]);
+  useEffect(() => {
+    setResults(todayProgressFromStorage.results);
+    setKeyboard(todayProgressFromStorage.keyboard);
+    setCurrentTry(todayProgressFromStorage.currentTry);
+    setIsGameOver(todayProgressFromStorage.isGameOver);
+    setIsWin(todayProgressFromStorage.isWin);
+  }, [todayProgressFromStorage]);
+
+  useEffect(() => {
+    saveCurrentProgress(dayNumber, language, results, keyboard, currentTry, isGameOver, isWin);
+    // eslint-disable-next-line
+  }, [keyboard]);
 
   useEffect(() => {
     if (isGameOver) {
@@ -96,50 +116,46 @@ export default function App() {
       setErrorBannerText(textData.wordNotFound);
       return;
     }
-    // Here 
 
-    checkLettersMatch(puzzle, progressCopy);
+    const resultsCopy = _.cloneDeep(results);
+    const keyboardCopy = _.cloneDeep(keyboard);
+
+    changeLettersStatus(puzzle, currentTry, resultsCopy, keyboardCopy);
+    setResults(resultsCopy);
+    setKeyboard(keyboardCopy);
 
     if (word.join('') === puzzle) {
-      progressCopy.isWin = true;
-      progressCopy.isGameOver = true;
-
-      setProgress(progressCopy);
-      saveCurrentProgress(dayNumber, language, progressCopy);
+      setIsWin(true);
+      setIsGameOver(true);
       saveStatisticsData(language, true, currentTry + 1);
       return;
     }
 
     if (currentTry === 5) {
-      progressCopy.isGameOver = true;
-
-      setProgress(progressCopy);
-      saveCurrentProgress(dayNumber, language, progressCopy);
+      setIsGameOver(true);
       saveStatisticsData(language, false);
       return;
     }
 
-    progressCopy.currentTry += 1;
-    setProgress(progressCopy);
+    setCurrentTry((prev) => prev + 1);
     setCurrentLetter(0);
-    saveCurrentProgress(dayNumber, language, progressCopy);
   }
 
   function removeLetter() {
     if (currentLetter === 0) return;
 
-    const lastLetter = progressCopy.results[currentTry][currentLetter - 1];
-    lastLetter.value = '';
+    const resultsCopy = _.cloneDeep(results);
+    resultsCopy[currentTry][currentLetter - 1].value = '';
 
-    setProgress(progressCopy);
+    setResults(resultsCopy);
     setCurrentLetter((prev) => prev - 1);
   }
 
   function applyLetter(name) {
-    const currentSquare = progressCopy.results[currentTry][currentLetter];
-    currentSquare.value = name;
+    const resultsCopy = _.cloneDeep(results);
+    resultsCopy[currentTry][currentLetter].value = name;
 
-    setProgress(progressCopy);
+    setResults(resultsCopy);
     setCurrentLetter((prev) => prev + 1);
   }
 
@@ -212,7 +228,7 @@ export default function App() {
                 isWin={isWin}
                 puzzle={puzzle}
                 onHide={() => setIsVisibleEndBanner(false)}
-                dayNum={dayNumber}
+                dayNumber={dayNumber}
               />
             )}
           </Col>

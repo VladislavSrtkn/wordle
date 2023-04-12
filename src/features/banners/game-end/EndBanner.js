@@ -9,7 +9,7 @@ import textData from '../../language/textData';
 
 import CountdownContainer from './CountdownContainer';
 
-export default function EndBanner({ attempts, results, onHide, isWin, puzzle, dayNum }) {
+export default function EndBanner({ attempts, results, onHide, isWin, puzzle, dayNumber }) {
   const countOfAttempts = isWin ? attempts : 'X';
   const slicedResults = results.slice(0, attempts);
 
@@ -27,7 +27,7 @@ export default function EndBanner({ attempts, results, onHide, isWin, puzzle, da
       <ModalHeader closeButton style={{ ...theme }}>
         <ModalTitle>
           {textData.endBannerHeader}
-          {dayNum} {countOfAttempts}/6
+          {dayNumber} {countOfAttempts}/6
         </ModalTitle>
       </ModalHeader>
       <ModalBody style={{ ...theme }}>
@@ -50,7 +50,12 @@ export default function EndBanner({ attempts, results, onHide, isWin, puzzle, da
                 navigator.share({
                   title: document.title,
                   url: 'https://vladislavsrtkn.github.io/wordle/',
-                  text: textData.formatString(textData.shareText, dayNum, attempts, layoutForShare),
+                  text: textData.formatString(
+                    textData.shareText,
+                    dayNumber,
+                    attempts,
+                    layoutForShare
+                  ),
                 });
               }
             }}

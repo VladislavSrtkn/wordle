@@ -1,27 +1,25 @@
 import changeKeyboardButtonStatus from '../keyboard/changeKeyboardButtonStatus';
 
-// Function mutates the object, make sure a copy is passed as an argument
+// Function mutates objects, make sure a copy is passed as an arguments
 
-export default function checkLettersMatch(puzzle, progressCopy) {
-  const { currentTry } = progressCopy;
-
+export default function changeLettersStatus(puzzle, currentTry, results, keyboard) {
   const lettersToCheck = [];
   const matched = [];
 
-  progressCopy.results[currentTry].forEach((letter, index) => {
+  results[currentTry].forEach((letter, index) => {
     const { value } = letter;
 
     // If there is no such letter in puzzle
     if (!puzzle.includes(value)) {
       letter.status = 'notInPuzzle';
-      changeKeyboardButtonStatus(value, 'notInPuzzle', progressCopy.keyboard);
+      changeKeyboardButtonStatus(value, 'notInPuzzle', keyboard);
     }
 
     // If the letter is in the puzzle and is in the same place
     else if (puzzle[index] === value) {
       matched.push(value);
       letter.status = 'inPlace';
-      changeKeyboardButtonStatus(value, 'inPlace', progressCopy.keyboard);
+      changeKeyboardButtonStatus(value, 'inPlace', keyboard);
     }
 
     //If the letter is in the puzzle but is in a different place
@@ -38,11 +36,11 @@ export default function checkLettersMatch(puzzle, progressCopy) {
     const countInMatched = matched.filter((letter) => letter === value).length;
 
     if (countInPuzzle > countInMatched) {
-      progressCopy.results[currentTry][position].status = 'inPuzzle';
-      changeKeyboardButtonStatus(value, 'inPuzzle', progressCopy.keyboard);
+      results[currentTry][position].status = 'inPuzzle';
+      changeKeyboardButtonStatus(value, 'inPuzzle', keyboard);
       matched.push(value);
     } else {
-      progressCopy.results[currentTry][position].status = 'notInPuzzle';
+      results[currentTry][position].status = 'notInPuzzle';
     }
   });
 }
