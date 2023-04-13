@@ -28,6 +28,7 @@ import Keyboard from './features/keyboard/Keyboard';
 import EndBanner from './features/banners/game-end/EndBanner';
 import ErrorBanner from './features/banners/error/ErrorBanner';
 import RulesBanner from './features/banners/rules/RulesBanner';
+import checkCharacterIsOnKeyboard from './features/keyboard/checkCharacterIsOnKeyboard';
 
 export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
@@ -101,6 +102,18 @@ export default function App() {
     const backgroundColor = themes[theme]['background'];
     document.querySelector("meta[name='theme-color']").setAttribute('content', backgroundColor);
   }, [theme]);
+
+  useEffect(() => {
+    function onKeydown(e) {
+      const lowerCaseCharacter = e.key.toLowerCase();
+      if (checkCharacterIsOnKeyboard(lowerCaseCharacter, keyboard)) {
+        handleClick(lowerCaseCharacter);
+      }
+    }
+
+    document.addEventListener('keydown', onKeydown);
+    return () => document.removeEventListener('keydown', onKeydown);
+  });
 
   // *** Functions ***
 
@@ -183,7 +196,7 @@ export default function App() {
       return;
     }
 
-    if (buttonName === 'backSpace') {
+    if (buttonName === 'backspace') {
       removeLetter();
       return;
     }
@@ -195,18 +208,21 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={themes[theme]}>
-      <Container fluid className='d-flex' style={{ ...themes[theme], height: windowHeight }}>
+      <Container
+        fluid
+        className='d-flex flex-column'
+        style={{ ...themes[theme], height: windowHeight }}
+      >
+        <Header
+          onShowRules={() => setIsVisibleRules(true)}
+          onShowStatistics={() => setIsVisibleStatistics(true)}
+          onChangeTheme={handleChangeTheme}
+          onChangeLanguage={handleChangeLanguage}
+          theme={theme}
+          language={language}
+        />
         <Row className='justify-content-center flex-grow-1'>
           <Col xs sm={8} md={6} lg={4} className='d-flex flex-column justify-content-between'>
-            <Header
-              onShowRules={() => setIsVisibleRules(true)}
-              onShowStatistics={() => setIsVisibleStatistics(true)}
-              onChangeTheme={handleChangeTheme}
-              onChangeLanguage={handleChangeLanguage}
-              theme={theme}
-              language={language}
-            />
-
             <GameField data={results} />
 
             <Keyboard onClick={handleClick} keyboard={keyboard} />

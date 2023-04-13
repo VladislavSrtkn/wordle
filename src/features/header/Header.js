@@ -11,7 +11,7 @@ export default function Header({
   return (
     <Row className='justify-content-between border-bottom py-2 mb-3'>
       <Col xs='auto'>
-        <i className='bi bi-question-circle px-1 fs-4 icon-color' onClick={onShowRules} />
+        <i className='bi bi-question-circle px-1 fs-4 me-2 icon-color' onClick={onShowRules} />
         {theme === 'light' && (
           <i className='bi bi-moon-fill px-1 fs-4 icon-color' onClick={onChangeTheme} />
         )}
@@ -24,7 +24,7 @@ export default function Header({
       </Col>
       <Col xs='auto'>
         <i className='bi bi-globe px-1 fs-4 icon-color' onClick={onChangeLanguage} />
-        <i className='bi bi-reception-4 px-1 fs-4 icon-color' onClick={onShowStatistics} />
+        <i className='bi bi-reception-4 px-1 fs-4 ms-2 icon-color' onClick={onShowStatistics} />
       </Col>
     </Row>
   );

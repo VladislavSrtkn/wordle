@@ -7,7 +7,7 @@ export default function KeyboardButton({ name, cssClass, onClick }) {
       onClick={() => onClick(name)}
       className={`${cssClass} keyboard-btn`}
     >
-      {name === 'backSpace' ? '⌫' : name === 'enter' ? '↵' : name}
+      {name === 'backspace' ? '⌫' : name === 'enter' ? '↵' : name}
     </Button>
   );
 }

@@ -6,7 +6,7 @@ export default function AttemptsChart({ attempts }) {
 
   const input = Object.entries(attempts).map(([attempts, count]) => {
     const rowWidth = 100 * (count / maxAttempts) + 18;
-    const bgColor = count !== 0 ? '#5db40c' : '#adadad';
+    const bgColor = count === 0 ? '#adadad' : '#5db40c';
 
     return (
       <li key={attempts} className='mb-1'>

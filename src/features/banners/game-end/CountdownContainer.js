@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import textData from '../../language/textData';
 
 export default function CountdownContainer() {
-  const [timeNow, setTimeNow] = useState(new Date());
+  const [timeNow, setTimeNow] = useState(() => new Date());
 
   useEffect(() => {
-    const timerId = setInterval(() => setTimeNow(new Date()), 1000);
+    const timerId = setInterval(() => setTimeNow(() => new Date()), 1000);
     return () => clearInterval(timerId);
   }, []);
 

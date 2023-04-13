@@ -28,7 +28,7 @@ const keyboards = {
       { value: 'э', status: '' },
     ],
     [
-      { value: 'backSpace', status: '' },
+      { value: 'backspace', status: '' },
       { value: 'я', status: '' },
       { value: 'ч', status: '' },
       { value: 'с', status: '' },
@@ -66,7 +66,7 @@ const keyboards = {
       { value: 'l', status: '' },
     ],
     [
-      { value: 'backSpace', status: '' },
+      { value: 'backspace', status: '' },
       { value: 'z', status: '' },
       { value: 'x', status: '' },
       { value: 'c', status: '' },

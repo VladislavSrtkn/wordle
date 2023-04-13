@@ -16,10 +16,6 @@ div.inPlace {
   transition: 0.9s all;
 }
 
-.no-transform * {
-  transform: none !important;
-}
-
 button.notInPuzzle,
 button.inPlace,
 button.inPuzzle {
@@ -39,6 +35,10 @@ button.inPuzzle {
 .inPlace {
   background-color: $inPlace !important;
   border: 2px solid $inPlace !important;
+}
+
+.no-transform * {
+  transform: none !important;
 }
 
 .keyboard-btn {
@@ -93,10 +93,4 @@ button.inPuzzle {
 
 .icon-color {
   color: #a09ea8;
-}
-
-@media only screen and (max-width: 280px) {
-  .header {
-    font-size: 1.3rem;
-  }
 }
