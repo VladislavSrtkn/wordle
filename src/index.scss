@@ -91,6 +91,9 @@ button.inPuzzle {
   width: 1rem;
 }
 
-.icon-color {
+.header-icon {
   color: #a09ea8;
+  &:hover {
+    cursor: pointer;
+  }
 }

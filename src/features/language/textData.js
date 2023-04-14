@@ -47,6 +47,11 @@ const textData = new LocalizedStrings({
     shareText:
       'Game Wodrle day #{0} {1}/6 \n{2}\n#wordle \nGuess the word at \nhttps://vladislavsrtkn.github.io/wordle/',
     description: 'Game Wordle - guess the word of the day!',
+    tooltipRules: 'Game rules',
+    tooltipThemeDark: 'Dark theme',
+    tooltipThemeLight: 'Light theme',
+    tooltipLanguage: 'Language',
+    tooltipStatistics: 'My stats',
   },
   ru: {
     statistic: 'статистика',
@@ -94,6 +99,11 @@ const textData = new LocalizedStrings({
     shareText:
       'Игра Wodrle День #{0} {1}/6 \n{2}\n#вордли \nОтгадайте слово на \nhttps://vladislavsrtkn.github.io/wordle/',
     description: 'Игра Wordle (Вордли) - угадай слово дня!',
+    tooltipRules: 'Правила игры',
+    tooltipThemeDark: 'Темная тема',
+    tooltipThemeLight: 'Светлая тема',
+    tooltipLanguage: 'Язык приложения',
+    tooltipStatistics: 'Моя статистика',
   },
 });
 

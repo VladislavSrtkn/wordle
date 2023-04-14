@@ -4,6 +4,8 @@ import _ from 'lodash';
 
 import differenceInDays from 'date-fns/differenceInDays';
 
+import { useMediaQuery } from 'react-responsive';
+
 import { useEffect, useState, useMemo } from 'react';
 import { ThemeContext, themes } from './features/theme/theme-context';
 
@@ -12,6 +14,7 @@ import saveCurrentProgress from './features/progress/saveCurrentProgress';
 import getCurrentProgress from './features/progress/getCurrentProgress';
 import saveStatisticsData from './features/banners/statistics/saveStatisticsData';
 import changeLettersStatus from './features/gamefield/changeLettersStatus';
+import checkCharacterOnKeyboard from './features/keyboard/checkCharacterOnKeyboard';
 import getTheme from './features/theme/getTheme';
 import saveTheme from './features/theme/saveTheme';
 import getLanguage from './features/language/getLanguage';
@@ -23,27 +26,27 @@ import wordsEnLang from './features/word-libraries/wordsEnLang';
 
 import StatisticsBanner from './features/banners/statistics/StatisticsBanner';
 import GameField from './features/gamefield/Gamefield';
-import Header from './features/header/Header';
+import MobileHeader from './features/header/MobileHeader';
 import Keyboard from './features/keyboard/Keyboard';
 import EndBanner from './features/banners/game-end/EndBanner';
 import ErrorBanner from './features/banners/error/ErrorBanner';
 import RulesBanner from './features/banners/rules/RulesBanner';
-import checkCharacterIsOnKeyboard from './features/keyboard/checkCharacterIsOnKeyboard';
+import DesktopHeader from './features/header/DesktopHeader';
 
 export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
   const [language, setLanguage] = useState(() => getLanguage());
 
-  const todayProgressFromStorage = useMemo(
+  const todayProgress = useMemo(
     () => getCurrentProgress(dayNumber, language),
     [dayNumber, language]
   );
 
-  const [results, setResults] = useState(todayProgressFromStorage.results);
-  const [keyboard, setKeyboard] = useState(todayProgressFromStorage.keyboard);
-  const [currentTry, setCurrentTry] = useState(todayProgressFromStorage.currentTry);
-  const [isGameOver, setIsGameOver] = useState(todayProgressFromStorage.isGameOver);
-  const [isWin, setIsWin] = useState(todayProgressFromStorage.isWin);
+  const [results, setResults] = useState(todayProgress.results);
+  const [keyboard, setKeyboard] = useState(todayProgress.keyboard);
+  const [currentTry, setCurrentTry] = useState(todayProgress.currentTry);
+  const [isGameOver, setIsGameOver] = useState(todayProgress.isGameOver);
+  const [isWin, setIsWin] = useState(todayProgress.isWin);
 
   const [currentLetter, setCurrentLetter] = useState(0);
   const [theme, setTheme] = useState(() => getTheme());
@@ -56,6 +59,7 @@ export default function App() {
   const puzzle = getTodayPuzzle(wordsLibrary, dayNumber);
 
   const windowHeight = document.documentElement.clientHeight + 'px';
+  const isDesktopOrLaptop = useMediaQuery({ query: '(min-width: 1224px)' });
 
   // localStorage.clear();
 
@@ -74,12 +78,12 @@ export default function App() {
   }, [language]);
 
   useEffect(() => {
-    setResults(todayProgressFromStorage.results);
-    setKeyboard(todayProgressFromStorage.keyboard);
-    setCurrentTry(todayProgressFromStorage.currentTry);
-    setIsGameOver(todayProgressFromStorage.isGameOver);
-    setIsWin(todayProgressFromStorage.isWin);
-  }, [todayProgressFromStorage]);
+    setResults(todayProgress.results);
+    setKeyboard(todayProgress.keyboard);
+    setCurrentTry(todayProgress.currentTry);
+    setIsGameOver(todayProgress.isGameOver);
+    setIsWin(todayProgress.isWin);
+  }, [todayProgress]);
 
   useEffect(() => {
     saveCurrentProgress(dayNumber, language, results, keyboard, currentTry, isGameOver, isWin);
@@ -106,7 +110,7 @@ export default function App() {
   useEffect(() => {
     function onKeydown(e) {
       const lowerCaseCharacter = e.key.toLowerCase();
-      if (checkCharacterIsOnKeyboard(lowerCaseCharacter, keyboard)) {
+      if (checkCharacterOnKeyboard(lowerCaseCharacter, keyboard)) {
         handleClick(lowerCaseCharacter);
       }
     }
@@ -213,14 +217,25 @@ export default function App() {
         className='d-flex flex-column'
         style={{ ...themes[theme], height: windowHeight }}
       >
-        <Header
-          onShowRules={() => setIsVisibleRules(true)}
-          onShowStatistics={() => setIsVisibleStatistics(true)}
-          onChangeTheme={handleChangeTheme}
-          onChangeLanguage={handleChangeLanguage}
-          theme={theme}
-          language={language}
-        />
+        {isDesktopOrLaptop ? (
+          <DesktopHeader
+            onShowRules={() => setIsVisibleRules(true)}
+            onShowStatistics={() => setIsVisibleStatistics(true)}
+            onChangeTheme={handleChangeTheme}
+            onChangeLanguage={handleChangeLanguage}
+            theme={theme}
+            language={language}
+          />
+        ) : (
+          <MobileHeader
+            onShowRules={() => setIsVisibleRules(true)}
+            onShowStatistics={() => setIsVisibleStatistics(true)}
+            onChangeTheme={handleChangeTheme}
+            onChangeLanguage={handleChangeLanguage}
+            theme={theme}
+            language={language}
+          />
+        )}
         <Row className='justify-content-center flex-grow-1'>
           <Col xs sm={8} md={6} lg={4} className='d-flex flex-column justify-content-between'>
             <GameField data={results} />

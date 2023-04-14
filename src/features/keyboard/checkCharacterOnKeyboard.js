@@ -1,4 +1,4 @@
-export default function checkCharacterIsOnKeyboard(character, keyboard) {
+export default function checkCharacterOnKeyboard(character, keyboard) {
   let result = false;
 
   keyboard.forEach((row) => {
