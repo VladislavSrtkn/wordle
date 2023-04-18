@@ -66,11 +66,11 @@ export default function App() {
 
     document
       .querySelector("meta[name='description']")
-      .setAttribute('content', textData.description);
+      .setAttribute('content', textData.end.description);
 
     document
       .querySelector("meta[property='og:description']")
-      .setAttribute('content', textData.description);
+      .setAttribute('content', textData.end.description);
 
     document
       .querySelector("meta[property='og:image']")
