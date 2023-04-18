@@ -1,18 +1,9 @@
 import clearOldProgress from './clearOldProgress';
 
-export default function saveCurrentProgress(
-  dayNumber,
-  language,
-  results,
-  keyboard,
-  currentTry,
-  isGameOver,
-  isWin
-) {
+export default function saveCurrentProgress(dayNumber, language, progress) {
   const todayDataForCurrentLanguage = language + dayNumber;
 
-  const progressObject = { results, keyboard, currentTry, isGameOver, isWin };
-  const json = JSON.stringify(progressObject);
+  const json = JSON.stringify(progress);
   localStorage.setItem(todayDataForCurrentLanguage, json);
 
   clearOldProgress(language, dayNumber);

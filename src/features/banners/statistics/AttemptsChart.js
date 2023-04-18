@@ -1,5 +1,5 @@
 import getMaxAttemptsCount from './getMaxAttemptsCount';
-import textData from '../../language/textData';
+import textData from '../language/textData';
 
 export default function AttemptsChart({ attempts }) {
   const maxAttempts = getMaxAttemptsCount(attempts);
@@ -23,7 +23,7 @@ export default function AttemptsChart({ attempts }) {
 
   return (
     <>
-      <h4 className='text-center text-uppercase py-3'>{textData.attemptStat}</h4>
+      <h4 className='text-center text-uppercase py-3'>{textData.stats.attemptStat}</h4>
       <ul className='list-style-none'>{input}</ul>
     </>
   );

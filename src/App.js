@@ -4,8 +4,6 @@ import _ from 'lodash';
 
 import differenceInDays from 'date-fns/differenceInDays';
 
-import { useMediaQuery } from 'react-responsive';
-
 import { useEffect, useState, useMemo } from 'react';
 import { ThemeContext, themes } from './features/theme/theme-context';
 
@@ -17,21 +15,21 @@ import changeLettersStatus from './features/gamefield/changeLettersStatus';
 import checkCharacterOnKeyboard from './features/keyboard/checkCharacterOnKeyboard';
 import getTheme from './features/theme/getTheme';
 import saveTheme from './features/theme/saveTheme';
-import getLanguage from './features/language/getLanguage';
-import saveLanguage from './features/language/saveLanguage';
-import textData from './features/language/textData';
+import getLanguage from './features/banners/language/getLanguage';
+import saveLanguage from './features/banners/language/saveLanguage';
+import textData from './features/banners/language/textData';
 import getTodayPuzzle from './features/word-libraries/getTodayPuzzle';
 import wordsRuLang from './features/word-libraries/wordsRuLang';
 import wordsEnLang from './features/word-libraries/wordsEnLang';
 
 import StatisticsBanner from './features/banners/statistics/StatisticsBanner';
 import GameField from './features/gamefield/Gamefield';
-import MobileHeader from './features/header/MobileHeader';
+import Header from './features/header/Header';
 import Keyboard from './features/keyboard/Keyboard';
 import EndBanner from './features/banners/game-end/EndBanner';
 import ErrorBanner from './features/banners/error/ErrorBanner';
 import RulesBanner from './features/banners/rules/RulesBanner';
-import DesktopHeader from './features/header/DesktopHeader';
+import LanguageBanner from './features/banners/language/LanguageBanner';
 
 export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
@@ -53,15 +51,13 @@ export default function App() {
   const [isVisibleRules, setIsVisibleRules] = useState(false);
   const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
   const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
+  const [isVisibleLanguageBanner, setIsVisibleLanguageBanner] = useState(false);
   const [errorBannerText, setErrorBannerText] = useState(null);
 
   const wordsLibrary = language === 'ru' ? wordsRuLang : wordsEnLang;
   const puzzle = getTodayPuzzle(wordsLibrary, dayNumber);
 
   const windowHeight = document.documentElement.clientHeight + 'px';
-  const isDesktopOrLaptop = useMediaQuery({ query: '(min-width: 1224px)' });
-
-  // localStorage.clear();
 
   // *** Effects ***
 
@@ -86,7 +82,8 @@ export default function App() {
   }, [todayProgress]);
 
   useEffect(() => {
-    saveCurrentProgress(dayNumber, language, results, keyboard, currentTry, isGameOver, isWin);
+    const progressObject = { results, keyboard, currentTry, isGameOver, isWin };
+    saveCurrentProgress(dayNumber, language, progressObject);
     // eslint-disable-next-line
   }, [keyboard]);
 
@@ -125,12 +122,12 @@ export default function App() {
     const word = results[currentTry].map((item) => item.value);
 
     if (word.includes('')) {
-      setErrorBannerText(textData.emptyLetter);
+      setErrorBannerText(textData.err.emptyLetter);
       return;
     }
 
     if (!checkWordInLibrary(word.join(''), wordsLibrary)) {
-      setErrorBannerText(textData.wordNotFound);
+      setErrorBannerText(textData.err.wordNotFound);
       return;
     }
 
@@ -184,9 +181,7 @@ export default function App() {
     saveTheme(newTheme);
   }
 
-  function handleChangeLanguage() {
-    const newLanguage = language === 'ru' ? 'en' : 'ru';
-
+  function handleChangeLanguage(newLanguage) {
     setLanguage(newLanguage);
     saveLanguage(newLanguage);
     setCurrentLetter(0);
@@ -217,25 +212,14 @@ export default function App() {
         className='d-flex flex-column'
         style={{ ...themes[theme], height: windowHeight }}
       >
-        {isDesktopOrLaptop ? (
-          <DesktopHeader
-            onShowRules={() => setIsVisibleRules(true)}
-            onShowStatistics={() => setIsVisibleStatistics(true)}
-            onChangeTheme={handleChangeTheme}
-            onChangeLanguage={handleChangeLanguage}
-            theme={theme}
-            language={language}
-          />
-        ) : (
-          <MobileHeader
-            onShowRules={() => setIsVisibleRules(true)}
-            onShowStatistics={() => setIsVisibleStatistics(true)}
-            onChangeTheme={handleChangeTheme}
-            onChangeLanguage={handleChangeLanguage}
-            theme={theme}
-            language={language}
-          />
-        )}
+        <Header
+          onShowRules={() => setIsVisibleRules(true)}
+          onShowStatistics={() => setIsVisibleStatistics(true)}
+          onShowLanguageBanner={() => setIsVisibleLanguageBanner(true)}
+          onChangeTheme={handleChangeTheme}
+          theme={theme}
+        />
+
         <Row className='justify-content-center flex-grow-1'>
           <Col xs sm={8} md={6} lg={4} className='d-flex flex-column justify-content-between'>
             <GameField data={results} />
@@ -250,6 +234,14 @@ export default function App() {
 
             {isVisibleStatistics && (
               <StatisticsBanner language={language} onHide={() => setIsVisibleStatistics(false)} />
+            )}
+
+            {isVisibleLanguageBanner && (
+              <LanguageBanner
+                onHide={() => setIsVisibleLanguageBanner(false)}
+                onChangeLanguage={handleChangeLanguage}
+                language={language}
+              />
             )}
 
             {isVisibleEndBanner && (

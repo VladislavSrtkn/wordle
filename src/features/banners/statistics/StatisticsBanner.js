@@ -1,6 +1,6 @@
 import { Stack } from 'react-bootstrap';
 
-import textData from '../../language/textData';
+import textData from '../language/textData';
 
 import getStatisticsData from './getStatisticsData';
 import countTotalAttempts from './countTotalAttempts';
@@ -18,19 +18,22 @@ export default function StatisticsBanner({ language, onHide }) {
   const attemptsTotal = countTotalAttempts(attempts);
   const attemptsAverage = countAverageAttempts(attemptsTotal, gamesPlayed);
 
+  const { statistic, played, totalWins, winStreakNow, attemptsPerGame, winStreakMax } =
+    textData.stats;
+
   return (
-    <BannersWrapper onHide={onHide} title={textData.statistic}>
+    <BannersWrapper onHide={onHide} title={statistic}>
       <Stack>
         <div className='d-flex justify-content-around border-bottom py-3'>
           <div className='text-center'>
             <span className='fs-2'>{gamesPlayed}</span>
             <br />
-            <span>{textData.gamesPlayed}</span>
+            <span>{played}</span>
           </div>
           <div className='text-center'>
             <span className='fs-2'>{winRate}%</span>
             <br />
-            <span>{textData.totalWins}</span>
+            <span>{totalWins}</span>
           </div>
         </div>
 
@@ -38,17 +41,17 @@ export default function StatisticsBanner({ language, onHide }) {
           <div className='text-center'>
             <span className='fs-2'>{winStreak}</span>
             <br />
-            <span className='small-fs'>{textData.winStreakNow}</span>
+            <span className='small-fs'>{winStreakNow}</span>
           </div>
           <div className='text-center'>
             <span className='fs-2'>{attemptsAverage}</span>
             <br />
-            <span className='small-fs'>{textData.attemptsAverage}</span>
+            <span className='small-fs'>{attemptsPerGame}</span>
           </div>
           <div className='text-center'>
             <span className='fs-2'>{maxWinStreak}</span>
             <br />
-            <span className='small-fs'>{textData.winStreakMax}</span>
+            <span className='small-fs'>{winStreakMax}</span>
           </div>
         </div>
         <AttemptsChart attempts={attempts} />

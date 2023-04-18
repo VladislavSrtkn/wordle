@@ -1,7 +1,13 @@
 /* make the customizations */
 
+$notInPuzzle: #adadad;
+$inPuzzle: #dec915;
+$inPlace: #5db40a;
+$customGrey: #bebebe;
+
 $secondary: #e7e5e5;
-$success: #5db40c;
+$success: $inPlace;
+$tooltip-bg: $customGrey;
 
 /* import bootstrap to set changes */
 @import '~bootstrap/scss/bootstrap';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import textData from '../../language/textData';
+import textData from '../language/textData';
 
 export default function CountdownContainer() {
   const [timeNow, setTimeNow] = useState(() => new Date());
@@ -19,7 +19,7 @@ export default function CountdownContainer() {
 
   return (
     <h4 className='text-center mb-4'>
-      {textData.nextWord} <br></br>
+      {textData.end.nextWord} <br></br>
       {hoursToNewWord}:{minutesToNewWord}:{secondsToNewWord}
     </h4>
   );
