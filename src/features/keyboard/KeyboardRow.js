@@ -7,5 +7,5 @@ export default function KeyboardRow({ symbols, onClick }) {
     <KeyboardButton key={symb.value} name={symb.value} onClick={onClick} cssClass={symb.status} />
   ));
 
-  return <Row>{input}</Row>;
+  return <Row className='keyboard-row'>{input}</Row>;
 }

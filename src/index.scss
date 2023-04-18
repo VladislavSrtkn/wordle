@@ -37,6 +37,10 @@ button.inPuzzle {
   transform: none !important;
 }
 
+.keyboard-row {
+  max-width: 500px;
+}
+
 .keyboard-btn {
   margin: 0.25rem 0.125rem;
   height: 56px;
@@ -50,6 +54,7 @@ button.inPuzzle {
 
 .letter-field {
   max-height: 480px;
+  max-width: 400px;
   width: 90%;
   margin: auto;
 }

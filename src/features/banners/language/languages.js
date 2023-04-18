@@ -1,10 +1,6 @@
 const languages = [
-  { name: 'en', label: 'English', emoji: `🇬🇧` },
-  {
-    name: 'ru',
-    label: 'Русский',
-    emoji: `🇷🇺`,
-  },
+  { name: 'en', label: 'English' },
+  { name: 'ru', label: 'Русский' },
 ];
 
 export default languages;

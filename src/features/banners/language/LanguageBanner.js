@@ -19,7 +19,7 @@ export default function LanguageBanner({ onHide, onChangeLanguage, currentlangua
       key={lang.name}
       type='radio'
       value={lang.name}
-      label={`${lang.emoji} ${lang.label}`}
+      label={lang.label}
       onChange={() => setLanguage(lang.name)}
       checked={lang.name === language}
       className='border-bottom py-3'

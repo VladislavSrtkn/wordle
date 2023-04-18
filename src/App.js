@@ -71,6 +71,10 @@ export default function App() {
     document
       .querySelector("meta[property='og:description']")
       .setAttribute('content', textData.description);
+
+    document
+      .querySelector("meta[property='og:image']")
+      .setAttribute('content', `%PUBLIC_URL%/${language}_preview.png`);
   }, [language]);
 
   useEffect(() => {
