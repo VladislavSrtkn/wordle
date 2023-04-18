@@ -55,9 +55,10 @@ const textData = new LocalizedStrings({
     },
     // Language banner
     lang: {
-      languageBannerHeader: 'Choose language',
+      languageBannerHeader: 'language settings',
       languageBannerText:
         'Change the language of the application interface and guess the words in any of the available languages!',
+      select: 'Select',
     },
     // Tooltips in header (desktop screens only)
     tips: {
@@ -112,7 +113,7 @@ const textData = new LocalizedStrings({
       thirdAnswer: 'Да, каждый день слово для всех одинаковое.',
       aboutTitle: 'О проекте',
       about:
-        'Это приложение было написано для личного пользования и моих друзей, что бы они могли отвлечься от рутины и немного напрячь мозги) В случае вопросов или предолжений, свяжитесь со мной по {0}. Посмотреть исходный код можно на {1}.',
+        'Это приложение было написано для личного пользования и моих друзей, что бы они могли отвлечься от рутины и немного напрячь мозги) В случае вопросов или предложений, свяжитесь со мной по {0}. Посмотреть исходный код можно на {1}.',
     },
     end: {
       endBannerHeader: 'WORDLE ДЕНЬ #',
@@ -125,9 +126,10 @@ const textData = new LocalizedStrings({
       description: 'Игра Wordle (Вордли) - угадай слово дня!',
     },
     lang: {
-      languageBannerHeader: 'Выберите язык',
+      languageBannerHeader: 'Язык приложения',
       languageBannerText:
         'Меняйте язык интерфейса приложения и отгадывайте слова на любом из доступных языков!',
+      select: 'Выбрать',
     },
     tips: {
       tooltipRules: 'Правила игры',

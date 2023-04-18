@@ -240,7 +240,7 @@ export default function App() {
               <LanguageBanner
                 onHide={() => setIsVisibleLanguageBanner(false)}
                 onChangeLanguage={handleChangeLanguage}
-                language={language}
+                currentlanguage={language}
               />
             )}
 
