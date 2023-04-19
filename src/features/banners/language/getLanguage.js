@@ -3,7 +3,10 @@ import languages from './languages';
 
 export default function getLanguage() {
   if (localStorage.getItem('language')) {
-    return localStorage.getItem('language');
+    const language = localStorage.getItem('language');
+    textData.setLanguage(language);
+
+    return language;
   }
 
   const interfaceLanguage = textData.getLanguage();

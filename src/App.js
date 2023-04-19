@@ -65,8 +65,8 @@ export default function App() {
   useEffect(() => {
     if (!isLanguageSelected) {
       setIsVisibleLanguageBanner(true);
-      saveLanguageWasSelected();
       setIsLanguageSelected(true);
+      saveLanguageWasSelected();
     }
   }, [isLanguageSelected]);
 
