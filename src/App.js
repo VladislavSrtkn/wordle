@@ -60,6 +60,8 @@ export default function App() {
   const wordsLibrary = language === 'ru' ? wordsRuLang : wordsEnLang;
   const puzzle = getTodayPuzzle(wordsLibrary, dayNumber);
 
+  const windowHeight = document.documentElement.clientHeight + 'px';
+
   // *** Effects ***
 
   useEffect(() => {
@@ -216,7 +218,11 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={themes[theme]}>
-      <Container fluid className='d-flex flex-column mh-100vh' style={{ ...themes[theme] }}>
+      <Container
+        fluid
+        className='d-flex flex-column'
+        style={{ ...themes[theme], height: windowHeight }}
+      >
         <Header
           onShowRules={() => setIsVisibleRules(true)}
           onShowStatistics={() => setIsVisibleStatistics(true)}
