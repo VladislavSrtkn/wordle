@@ -2,6 +2,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 import _ from 'lodash';
 
+import { Helmet } from 'react-helmet';
+
 import differenceInDays from 'date-fns/differenceInDays';
 
 import { useEffect, useState, useMemo } from 'react';
@@ -74,18 +76,6 @@ export default function App() {
 
   useEffect(() => {
     textData.setLanguage(language);
-
-    document
-      .querySelector("meta[name='description']")
-      .setAttribute('content', textData.end.description);
-
-    document
-      .querySelector("meta[property='og:description']")
-      .setAttribute('content', textData.end.description);
-
-    document
-      .querySelector("meta[property='og:image']")
-      .setAttribute('content', `%PUBLIC_URL%/${language}_preview.png`);
   }, [language]);
 
   useEffect(() => {
@@ -222,6 +212,17 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={themes[theme]}>
+      <Helmet
+        meta={[
+          { property: 'description', content: textData.end.description },
+          {
+            property: 'og:description',
+            content: textData.end.description,
+          },
+          { property: 'og:image', content: `%PUBLIC_URL%/${language}_preview.png` },
+        ]}
+      />
+
       <Container
         fluid
         className='d-flex flex-column'
