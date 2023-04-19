@@ -7,7 +7,7 @@ export default function CustomTooltip({ children, text }) {
 
   if (isDesktopOrLaptop) {
     return (
-      <OverlayTrigger placement='bottom' overlay={<Tooltip>{text}</Tooltip>}>
+      <OverlayTrigger placement='bottom' overlay={<Tooltip id={text}>{text}</Tooltip>}>
         {children}
       </OverlayTrigger>
     );

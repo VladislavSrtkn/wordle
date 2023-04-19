@@ -216,7 +216,7 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={themes[theme]}>
-      <Container fluid className='d-flex flex-column mh-100' style={{ ...themes[theme] }}>
+      <Container fluid className='d-flex flex-column mh-100vh' style={{ ...themes[theme] }}>
         <Header
           onShowRules={() => setIsVisibleRules(true)}
           onShowStatistics={() => setIsVisibleStatistics(true)}
