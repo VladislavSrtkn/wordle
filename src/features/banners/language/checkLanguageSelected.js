@@ -1,3 +1,3 @@
 export default function checkLanguageSelected() {
-  return localStorage.getItem('isLanguageSelected');
+  return Boolean(localStorage.getItem('isLanguageSelected'));
 }
