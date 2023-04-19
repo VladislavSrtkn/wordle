@@ -30,10 +30,13 @@ import EndBanner from './features/banners/game-end/EndBanner';
 import ErrorBanner from './features/banners/error/ErrorBanner';
 import RulesBanner from './features/banners/rules/RulesBanner';
 import LanguageBanner from './features/banners/language/LanguageBanner';
+import checkLanguageSelected from './features/banners/language/checkLanguageSelected';
+import saveLanguageWasSelected from './features/banners/language/saveLanguageWasSelected';
 
 export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
   const [language, setLanguage] = useState(() => getLanguage());
+  const [isLanguageSelected, setIsLanguageSelected] = useState(() => checkLanguageSelected());
 
   const todayProgress = useMemo(
     () => getCurrentProgress(dayNumber, language),
@@ -60,6 +63,14 @@ export default function App() {
   const windowHeight = document.documentElement.clientHeight + 'px';
 
   // *** Effects ***
+
+  useEffect(() => {
+    if (!isLanguageSelected) {
+      setIsVisibleLanguageBanner(true);
+      saveLanguageWasSelected();
+      setIsLanguageSelected(true);
+    }
+  }, [isLanguageSelected]);
 
   useEffect(() => {
     textData.setLanguage(language);
