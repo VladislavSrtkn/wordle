@@ -4,6 +4,7 @@ body * {
   transition: background-color 0.6s ease;
 }
 
+// Header ***********************************************************
 .header {
   box-shadow: 0px 3px 10px -4px #000000;
 }
@@ -24,20 +25,7 @@ body * {
   }
 }
 
-div.notInPuzzle,
-div.inPuzzle,
-div.inPlace {
-  color: #fff !important;
-  transform: rotateX(360deg);
-  transition: 0.9s all;
-}
-
-button.notInPuzzle,
-button.inPlace,
-button.inPuzzle {
-  transition: 0.7s all cubic-bezier(1, 0, 1, 0);
-}
-
+// Colorize btns and squares ****************************************
 .notInPuzzle {
   background-color: $notInPuzzle !important;
   border: 2px solid $notInPuzzle !important;
@@ -53,29 +41,7 @@ button.inPuzzle {
   border: 2px solid $inPlace !important;
 }
 
-.no-transform * {
-  transform: none !important;
-}
-
-.keyboard-row {
-  max-width: 500px;
-}
-
-.keyboard-btn {
-  margin: 0.25rem 0.125rem;
-  height: 56px;
-  border: none !important;
-  font-size: small;
-  flex: 1;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 0px;
-
-  @media screen and (min-width: 1224px) {
-    font-size: large;
-  }
-}
-
+// Game field *******************************************************
 .letter-field {
   max-height: 480px;
   max-width: 400px;
@@ -102,12 +68,52 @@ button.inPuzzle {
   }
 }
 
+div.notInPuzzle,
+div.inPuzzle,
+div.inPlace {
+  color: #fff !important;
+  transform: rotateX(360deg);
+  transition: 0.9s all;
+}
+
+// Keyboard *********************************************************
+.keyboard-row {
+  max-width: 500px;
+}
+
+.keyboard-btn {
+  margin: 0.25rem 0.125rem;
+  height: 56px;
+  border: none !important;
+  font-size: small;
+  flex: 1;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0px;
+
+  @media screen and (min-width: 1224px) {
+    font-size: large;
+  }
+}
+
+button.notInPuzzle,
+button.inPlace,
+button.inPuzzle {
+  transition: 0.7s all cubic-bezier(1, 0, 1, 0);
+}
+
+// Rules banner *****************************************************
+.no-transform * {
+  transform: none !important;
+}
+
 .example-row {
   display: flex;
   gap: 0.3rem;
   max-width: 20rem;
 }
 
+// Stats banner *****************************************************
 .small-fs {
   font-size: 0.8rem;
 }
@@ -118,4 +124,48 @@ button.inPuzzle {
 
 .li-number {
   width: 1rem;
+}
+
+// Error shake effect************************************************
+@keyframes shake {
+  0% {
+    transform: translate(2px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(0px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(2px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(2px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+
+.error-shake {
+  animation-name: shake;
+  animation-duration: 0.8s;
+  transform-origin: 50% 50%;
+  animation-timing-function: linear;
 }

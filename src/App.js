@@ -21,6 +21,9 @@ import textData from './features/banners/language/textData';
 import getTodayPuzzle from './features/word-libraries/getTodayPuzzle';
 import wordsRuLang from './features/word-libraries/wordsRuLang';
 import wordsEnLang from './features/word-libraries/wordsEnLang';
+import checkLanguageSelected from './features/banners/language/checkLanguageSelected';
+import saveLanguageWasSelected from './features/banners/language/saveLanguageWasSelected';
+import addErrorShakeClass from './features/gamefield/errorEffects';
 
 import StatisticsBanner from './features/banners/statistics/StatisticsBanner';
 import GameField from './features/gamefield/Gamefield';
@@ -30,8 +33,6 @@ import EndBanner from './features/banners/game-end/EndBanner';
 import ErrorBanner from './features/banners/error/ErrorBanner';
 import RulesBanner from './features/banners/rules/RulesBanner';
 import LanguageBanner from './features/banners/language/LanguageBanner';
-import checkLanguageSelected from './features/banners/language/checkLanguageSelected';
-import saveLanguageWasSelected from './features/banners/language/saveLanguageWasSelected';
 
 export default function App() {
   const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
@@ -107,6 +108,7 @@ export default function App() {
 
   useEffect(() => {
     const timerId = setTimeout(() => setErrorBannerText(null), 3000);
+
     return () => clearTimeout(timerId);
   }, [errorBannerText]);
 
@@ -134,11 +136,15 @@ export default function App() {
 
     if (word.includes('')) {
       setErrorBannerText(textData.err.emptyLetter);
+      addErrorShakeClass(currentTry);
+
       return;
     }
 
     if (!checkWordInLibrary(word.join(''), wordsLibrary)) {
       setErrorBannerText(textData.err.wordNotFound);
+      addErrorShakeClass(currentTry);
+
       return;
     }
 
