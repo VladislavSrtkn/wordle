@@ -60,14 +60,6 @@ const textData = new LocalizedStrings({
         'Change the language of the application interface and guess the words in any of the available languages!',
       select: 'Select',
     },
-    // Tooltips in header (desktop screens only)
-    tips: {
-      tooltipRules: 'Game rules',
-      tooltipThemeDark: 'Dark theme',
-      tooltipThemeLight: 'Light theme',
-      tooltipLanguage: 'Language',
-      tooltipStatistics: 'My stats',
-    },
     // Errors
     err: {
       emptyLetter: 'The word must not contain empty letters.',
@@ -130,13 +122,6 @@ const textData = new LocalizedStrings({
       languageBannerText:
         'Меняйте язык интерфейса приложения и отгадывайте слова на любом из доступных языков!',
       select: 'Выбрать',
-    },
-    tips: {
-      tooltipRules: 'Правила игры',
-      tooltipThemeDark: 'Темная тема',
-      tooltipThemeLight: 'Светлая тема',
-      tooltipLanguage: 'Язык приложения',
-      tooltipStatistics: 'Моя статистика',
     },
     err: {
       emptyLetter: 'В слове не должно быть пустых букв.',

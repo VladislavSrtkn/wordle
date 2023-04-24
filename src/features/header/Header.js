@@ -1,9 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
 
-import textData from '../banners/language/textData';
-
-import CustomTooltip from './CustomTooltip';
-
 export default function Header({
   onShowRules,
   onShowStatistics,
@@ -11,26 +7,17 @@ export default function Header({
   onShowLanguageBanner,
   theme,
 }) {
-  const { tooltipRules, tooltipThemeDark, tooltipThemeLight, tooltipLanguage, tooltipStatistics } =
-    textData.tips;
-
   const iconClasses = 'bi px-1 fs-4 me-2 header-icon pb-2';
 
   return (
     <Row className='justify-content-between py-2 mb-3 header'>
       <Col xs='auto'>
-        <CustomTooltip text={tooltipRules}>
-          <i className={`bi-question-circle ${iconClasses}`} onClick={onShowRules} />
-        </CustomTooltip>
+        <i className={`bi-question-circle-fill ${iconClasses}`} onClick={onShowRules} />
 
         {theme === 'light' ? (
-          <CustomTooltip text={tooltipThemeDark}>
-            <i className={` bi-moon-fill ${iconClasses}`} onClick={onChangeTheme} />
-          </CustomTooltip>
+          <i className={` bi-moon-fill ${iconClasses}`} onClick={onChangeTheme} />
         ) : (
-          <CustomTooltip text={tooltipThemeLight}>
-            <i className={`bi-sun-fill ${iconClasses}`} onClick={onChangeTheme} />
-          </CustomTooltip>
+          <i className={`bi-sun-fill ${iconClasses}`} onClick={onChangeTheme} />
         )}
       </Col>
 
@@ -39,13 +26,9 @@ export default function Header({
       </Col>
 
       <Col xs='auto'>
-        <CustomTooltip text={tooltipLanguage}>
-          <i className={`bi-globe ${iconClasses}`} onClick={onShowLanguageBanner} />
-        </CustomTooltip>
+        <i className={`bi-globe ${iconClasses}`} onClick={onShowLanguageBanner} />
 
-        <CustomTooltip text={tooltipStatistics}>
-          <i className={`bi-reception-4 ${iconClasses}`} onClick={onShowStatistics} />
-        </CustomTooltip>
+        <i className={`bi-reception-4 ${iconClasses}`} onClick={onShowStatistics} />
       </Col>
     </Row>
   );
