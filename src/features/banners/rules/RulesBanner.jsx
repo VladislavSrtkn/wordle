@@ -2,8 +2,8 @@ import { Button, Stack } from 'react-bootstrap';
 
 import textData from '../language/textData';
 
-import LetterContainer from '../../gamefield/LetterContainer';
 import BannersWrapper from '../BannersWrapper';
+import ExampleWordRow from './ExampleWordRow';
 
 export default function RulesBanner({ onHide }) {
   const {
@@ -33,24 +33,32 @@ export default function RulesBanner({ onHide }) {
     about,
   } = textData.rules;
 
+  const stylesBorder = 'border-top py-2';
+  const stylesBold = 'fw-semibold';
+
+  const EXAMPLE_WORDS = [
+    { word: firstTry, styles: ['', '', '', '', 'inPuzzle'] },
+    { word: secondTry, styles: ['', 'inPlace', 'inPlace', '', ''] },
+    {
+      word: exampleHiddenWord,
+      styles: ['notInPuzzle', '', '', '', ''],
+    },
+    {
+      word: thirdTry,
+      styles: ['inPlace', 'inPlace', 'inPlace', 'inPlace', 'inPlace'],
+    },
+  ];
+
   return (
     <BannersWrapper onHide={onHide} title={gameRules}>
       <Stack className='no-transform'>
         <p>{goal}</p>
-        <p className='border-bottom pb-2'>
-          {textData.formatString(firstExample, <b>{exampleHiddenWord}</b>, firstTry)}
-        </p>
-        <div className='example-row mb-2'>
-          <LetterContainer letter={firstTry[0]} />
-          <LetterContainer letter={firstTry[1]} />
-          <LetterContainer letter={firstTry[2]} />
-          <LetterContainer letter={firstTry[3]} />
-          <LetterContainer letter={firstTry[4]} cssClass={'inPuzzle'} />
-        </div>
-        <p className='border-bottom pb-2'>
-          {textData.formatString(firstOutcome, <b>{firstLetter}</b>)}
-        </p>
-        <p>
+        <p>{textData.formatString(firstExample, <b>{exampleHiddenWord}</b>)}</p>
+
+        <ExampleWordRow data={EXAMPLE_WORDS[0]} />
+
+        <p>{textData.formatString(firstOutcome, <b>{firstLetter}</b>)}</p>
+        <p className={stylesBorder}>
           {textData.formatString(
             secondExample,
             secondTry,
@@ -58,52 +66,30 @@ export default function RulesBanner({ onHide }) {
             <b>{thirdLetter}</b>
           )}
         </p>
-        <div className='example-row mb-2'>
-          <LetterContainer letter={secondTry[0]} />
-          <LetterContainer letter={secondTry[1]} cssClass={'inPlace'} />
-          <LetterContainer letter={secondTry[2]} cssClass={'inPlace'} />
-          <LetterContainer letter={secondTry[3]} />
-          <LetterContainer letter={secondTry[4]} />
-        </div>
-        <p className='py-2 border-top'>{thirdExample}</p>
-        <div className='example-row mb-2'>
-          <LetterContainer letter={exampleHiddenWord[0]} cssClass={'inPlace'} />
-          <LetterContainer letter={exampleHiddenWord[1]} cssClass={'inPlace'} />
-          <LetterContainer letter={exampleHiddenWord[2]} cssClass={'inPlace'} />
-          <LetterContainer letter={exampleHiddenWord[3]} cssClass={'inPlace'} />
-          <LetterContainer letter={exampleHiddenWord[4]} cssClass={'inPlace'} />
-        </div>
-        <p className='py-2 border-top'>{fourthExample}</p>
-        <div className='example-row mb-2'>
-          <LetterContainer letter={thirdTry[0]} cssClass={'notInPuzzle'} />
-          <LetterContainer letter={thirdTry[1]} />
-          <LetterContainer letter={thirdTry[2]} />
-          <LetterContainer letter={thirdTry[3]} />
-          <LetterContainer letter={thirdTry[4]} />
-        </div>
-        <div className='border-top d-flex gap-2 align-items-center py-2'>
-          <p>
-            <b>{dailyRule}</b>
-          </p>
+
+        <ExampleWordRow data={EXAMPLE_WORDS[1]} />
+
+        <p className={stylesBorder}>{thirdExample}</p>
+
+        <ExampleWordRow data={EXAMPLE_WORDS[2]} />
+
+        <p className={stylesBorder}>{fourthExample}</p>
+
+        <ExampleWordRow data={EXAMPLE_WORDS[3]} />
+
+        <div className={`${stylesBorder} d-flex gap-2 align-items-center`}>
+          <p className={stylesBold}>{dailyRule}</p>
           <Button variant='success' onClick={onHide} className='text-white ms-4'>
             {play}
           </Button>
         </div>
-        <p className='border-top py-2'>
-          <b>{firstQuestion}</b>
-        </p>
+        <p className={`${stylesBorder} ${stylesBold}`}>{firstQuestion}</p>
         <p>{firstAnswer}</p>
-        <p className='border-top py-2'>
-          <b>{secondQuestion}</b>
-        </p>
+        <p className={`${stylesBorder} ${stylesBold}`}>{secondQuestion}</p>
         <p>{secondAnswer}</p>
-        <p className='border-top py-2'>
-          <b>{thirdQuestion}</b>
-        </p>
+        <p className={`${stylesBorder} ${stylesBold}`}>{thirdQuestion}</p>
         <p>{thirdAnswer}</p>
-        <p className='border-top py-2'>
-          <b>{aboutTitle}</b>
-        </p>
+        <p className={`${stylesBorder} ${stylesBold}`}>{aboutTitle}</p>
         <p>
           {textData.formatString(
             about,

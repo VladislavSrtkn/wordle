@@ -1,6 +1,6 @@
-const languages = [
+const LANGUAGES = [
   { name: 'en', label: 'English' },
   { name: 'ru', label: 'Русский' },
 ];
 
-export default languages;
+export default LANGUAGES;

@@ -24,7 +24,7 @@ const textData = new LocalizedStrings({
       secondLetter: 'R',
       thirdLetter: 'I',
       firstExample:
-        'After each attempt, the color of the letters will change to show which letters are in the hidden word! For example, we are trying to guess the word {0} and enter the word {1}:',
+        'After each attempt, the color of the letters will change to show which letters are in the hidden word! For example, we are trying to guess the word {0} and enter the word Apple:',
       firstOutcome: 'The letter {0} is in the hidden word, but it is in a different place.',
       secondExample:
         'Then we will enter the word {0}. The letters {1} and {2} are in the hidden word and are in the right places.',
@@ -89,7 +89,7 @@ const textData = new LocalizedStrings({
       secondLetter: 'И',
       thirdLetter: 'Р',
       firstExample:
-        'После каждой попытки цвет букв будет меняться, чтобы показать, какие буквы есть в загаданном слове! Например, мы пытаемся отгадать слово {0} и вводим слово {1}:',
+        'После каждой попытки цвет букв будет меняться, чтобы показать, какие буквы есть в загаданном слове! Например, мы пытаемся отгадать слово {0} и вводим слово Схема:',
       firstOutcome: 'Буква {0} есть в загаданном слове, но стоит в другом месте.',
       secondExample:
         'Затем ввели слово {0}. Буквы {1} и {2} есть в загаданном слове и стоят на правильных местах.',

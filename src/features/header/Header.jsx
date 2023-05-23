@@ -1,25 +1,27 @@
 import { Col, Row } from 'react-bootstrap';
 
+import { useContext } from 'react';
+
+import { ThemeContext } from '../theme/theme-context';
+
 export default function Header({
   onShowRules,
   onShowStatistics,
-  onChangeTheme,
   onShowLanguageBanner,
-  theme,
+  onChangeTheme,
 }) {
-  const iconClasses = 'bi px-1 fs-4 me-2 header-icon pb-2';
+  const theme = useContext(ThemeContext);
+  const themeIconClass = theme === 'light' ? 'moon' : 'sun';
+
+  const iconClasses = 'bi px-1 fs-4 me-2 pb-2 header-icon';
 
   return (
-    <Row className='py-2 mb-3 header justify-content-center'>
-      <Col className='d-flex justify-content-between'>
+    <Row className={`py-2 justify-content-center mb-2 header ${theme}`}>
+      <Col className='d-flex justify-content-between align-items-center'>
         <Col xs='auto'>
           <i className={`bi-question-circle-fill ${iconClasses}`} onClick={onShowRules} />
 
-          {theme === 'light' ? (
-            <i className={` bi-moon-fill ${iconClasses}`} onClick={onChangeTheme} />
-          ) : (
-            <i className={`bi-sun-fill ${iconClasses}`} onClick={onChangeTheme} />
-          )}
+          <i className={` bi-${themeIconClass}-fill ${iconClasses}`} onClick={onChangeTheme} />
         </Col>
 
         <Col xs='auto' as='h1' className='fs-2'>

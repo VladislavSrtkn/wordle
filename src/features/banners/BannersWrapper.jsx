@@ -6,12 +6,13 @@ import { ThemeContext } from '../theme/theme-context';
 
 export default function BannersWrapper({ onHide, title, children }) {
   const theme = useContext(ThemeContext);
+
   return (
     <Modal show={true} onHide={onHide}>
-      <ModalHeader closeButton style={{ ...theme }}>
+      <ModalHeader closeButton className={theme}>
         <ModalTitle className='text-uppercase'>{title}</ModalTitle>
       </ModalHeader>
-      <ModalBody style={{ ...theme }}>{children}</ModalBody>
+      <ModalBody className={theme}>{children}</ModalBody>
     </Modal>
   );
 }

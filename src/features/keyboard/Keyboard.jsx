@@ -1,9 +1,9 @@
-import { Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 
 import KeyboardRow from './KeyboardRow';
 
 export default function Keyboard({ onClick, keyboard }) {
-  const input = keyboard.map((row, i) => <KeyboardRow key={i} symbols={row} onClick={onClick} />);
+  const rows = keyboard.map((row, i) => <KeyboardRow key={i} data={row} onClick={onClick} />);
 
-  return <Row className='justify-content-center py-4'>{input}</Row>;
+  return <Col className='d-flex flex-column justify-content-end flex-grow-0 py-3 px-2'>{rows}</Col>;
 }

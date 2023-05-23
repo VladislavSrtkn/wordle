@@ -8,15 +8,13 @@ export default function ErrorBanner({ text, onClose }) {
   const theme = useContext(ThemeContext);
 
   return (
-    <ToastContainer position='top-center' className='mt-1'>
+    <ToastContainer position='top-center' className='mt-2'>
       <Toast onClose={onClose}>
-        <ToastHeader className='justify-content-between fs-4' style={{ ...theme }}>
+        <ToastHeader className={`justify-content-between fs-4 ${theme}`}>
           <i className='bi bi-exclamation-circle-fill'></i>
           <strong>Wordle</strong>
         </ToastHeader>
-        <ToastBody style={{ ...theme }} className='fs-6'>
-          {text}
-        </ToastBody>
+        <ToastBody className={`fs-6 ${theme}`}>{text}</ToastBody>
       </Toast>
     </ToastContainer>
   );

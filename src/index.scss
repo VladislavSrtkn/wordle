@@ -4,19 +4,39 @@ body * {
   transition: background-color 0.6s ease;
 }
 
+.mw-600 {
+  max-width: 600px;
+}
+
+// Themes ***********************************************************
+.dark {
+  background: #6b6b6b;
+  color: #ffffff;
+}
+
+.light {
+  background: #ffffff;
+}
+
 // Header ***********************************************************
 .header {
-  box-shadow: 0px 3px 10px -4px #000000;
+  &.light {
+    box-shadow: 0px 3px 10px -4px #aba9a9;
+  }
+
+  &.dark {
+    box-shadow: 0px 3px 10px -4px #434343;
+  }
 
   > :first-child {
-    max-width: 1440px;
+    max-width: 1280px;
   }
 }
 
 .header-icon {
   color: $customGrey;
 
-  @media screen and (min-width: 1224px) {
+  @media screen and (min-width: 1281px) {
     &:hover {
       cursor: pointer;
       opacity: 70%;
@@ -46,18 +66,14 @@ body * {
 }
 
 // Game field *******************************************************
-.letter-field {
+.game-field {
   max-height: 480px;
   max-width: 400px;
   width: 90%;
   margin: auto;
 }
 
-.letter-row {
-  flex: 1;
-}
-
-.letter-container {
+.letter-box {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +81,7 @@ body * {
   text-transform: uppercase;
   font-size: 1.3rem;
   font-weight: bold;
-  min-height: 37px;
+  min-height: 50px;
 
   @media screen and (min-width: 1224px) {
     font-size: 1.8rem;
@@ -81,15 +97,12 @@ div.inPlace {
 }
 
 // Keyboard *********************************************************
-.keyboard-row {
-  max-width: 500px;
-}
 
 .keyboard-btn {
   margin: 0.25rem 0.125rem;
   height: 56px;
   border: none !important;
-  font-size: small;
+  font-size: 0.9rem;
   flex: 1;
   font-weight: bold;
   text-transform: uppercase;
@@ -114,12 +127,18 @@ button.inPuzzle {
 .example-row {
   display: flex;
   gap: 0.3rem;
+  margin-bottom: 2rem;
   max-width: 20rem;
 }
 
 // Stats banner *****************************************************
-.small-fs {
-  font-size: 0.8rem;
+.stats-fs-small > div {
+  margin: 0 0.5rem;
+  @media screen and (max-width: 500px) {
+    & :nth-child(3) {
+      font-size: 0.8rem;
+    }
+  }
 }
 
 .list-style-none {
@@ -128,6 +147,23 @@ button.inPuzzle {
 
 .li-number {
   width: 1rem;
+}
+
+// Language banner **************************************************
+.form-check-input {
+  &:checked {
+    background-color: $customGrey;
+    border-color: $customGrey;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.25rem $customGrey;
+  }
+}
+
+// Error banner *****************************************************
+.toast {
+  --bs-toast-max-width: 428px;
 }
 
 // Error shake effect************************************************

@@ -9,6 +9,7 @@ import countAverageAttempts from './countAverageAttempts';
 
 import BannersWrapper from '../BannersWrapper';
 import AttemptsChart from './AttemptsChart';
+import StatisticsContentBox from './StatisticsContentBox';
 
 export default function StatisticsBanner({ language, onHide }) {
   const statistics = getStatisticsData(language);
@@ -25,35 +26,16 @@ export default function StatisticsBanner({ language, onHide }) {
     <BannersWrapper onHide={onHide} title={statistic}>
       <Stack>
         <div className='d-flex justify-content-around border-bottom py-3'>
-          <div className='text-center'>
-            <span className='fs-2'>{gamesPlayed}</span>
-            <br />
-            <span>{played}</span>
-          </div>
-          <div className='text-center'>
-            <span className='fs-2'>{winRate}%</span>
-            <br />
-            <span>{totalWins}</span>
-          </div>
+          <StatisticsContentBox number={gamesPlayed} text={played} />
+          <StatisticsContentBox number={`${winRate}%`} text={totalWins} />
         </div>
 
-        <div className='d-flex justify-content-around border-bottom py-3'>
-          <div className='text-center'>
-            <span className='fs-2'>{winStreak}</span>
-            <br />
-            <span className='small-fs'>{winStreakNow}</span>
-          </div>
-          <div className='text-center'>
-            <span className='fs-2'>{attemptsAverage}</span>
-            <br />
-            <span className='small-fs'>{attemptsPerGame}</span>
-          </div>
-          <div className='text-center'>
-            <span className='fs-2'>{maxWinStreak}</span>
-            <br />
-            <span className='small-fs'>{winStreakMax}</span>
-          </div>
+        <div className='d-flex justify-content-around border-bottom py-3 stats-fs-small'>
+          <StatisticsContentBox number={winStreak} text={winStreakNow} />
+          <StatisticsContentBox number={attemptsAverage} text={attemptsPerGame} />
+          <StatisticsContentBox number={maxWinStreak} text={winStreakMax} />
         </div>
+
         <AttemptsChart attempts={attempts} />
       </Stack>
     </BannersWrapper>

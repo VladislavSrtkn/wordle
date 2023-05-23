@@ -1,11 +1,3 @@
 export default function checkCharacterOnKeyboard(character, keyboard) {
-  let result = false;
-
-  keyboard.forEach((row) => {
-    row.forEach((button) => {
-      if (button.value === character) result = true;
-    });
-  });
-
-  return result;
+  return keyboard.some((row) => row.find((btn) => btn.value === character));
 }

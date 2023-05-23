@@ -2,7 +2,7 @@ import { Col } from 'react-bootstrap';
 
 import { useEffect, useState } from 'react';
 
-export default function LetterContainer({ letter, cssClass }) {
+export default function LetterBox({ letter, cssClass }) {
   const [className, setClassName] = useState(null);
 
   // Update CSS class to display animation correctly on re-render
@@ -13,5 +13,5 @@ export default function LetterContainer({ letter, cssClass }) {
     return () => clearTimeout(timerID);
   }, [cssClass, letter]);
 
-  return <Col className={`${className} letter-container`}>{letter}</Col>;
+  return <Col className={`${className} letter-box`}>{letter}</Col>;
 }

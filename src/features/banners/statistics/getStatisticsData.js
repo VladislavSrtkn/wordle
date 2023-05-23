@@ -1,8 +1,10 @@
 export default function getStatisticsData(language) {
   const statsForCurrentLanguage = 'statistics' + language;
+
   if (localStorage.getItem(statsForCurrentLanguage)) {
     return JSON.parse(localStorage.getItem(statsForCurrentLanguage));
   }
+
   const statisticsObj = {
     gamesPlayed: 0,
     gamesWon: 0,

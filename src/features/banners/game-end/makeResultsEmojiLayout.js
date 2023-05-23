@@ -1,5 +1,5 @@
-import makeResultsEmojiString from './makeResultsEmojiString';
+import makeResultsEmojiRow from './makeResultsEmojiRow';
 
 export default function makeResultsEmojiLayout(results) {
-  return results.map((string) => makeResultsEmojiString(string));
+  return results.map((word) => makeResultsEmojiRow(word));
 }

@@ -1,10 +1,11 @@
 import getMaxAttemptsCount from './getMaxAttemptsCount';
+
 import textData from '../language/textData';
 
 export default function AttemptsChart({ attempts }) {
   const maxAttempts = getMaxAttemptsCount(attempts);
 
-  const input = Object.entries(attempts).map(([attempts, count]) => {
+  const listItems = Object.entries(attempts).map(([attempts, count]) => {
     const rowWidth = 100 * (count / maxAttempts) + 18;
     const bgColor = count === 0 ? '#adadad' : '#5db40c';
 
@@ -12,7 +13,7 @@ export default function AttemptsChart({ attempts }) {
       <li key={attempts} className='mb-1'>
         <div className='d-inline-block fw-bold mx-1 li-number'>{attempts}</div>
         <div
-          className='p-1 pr-3 text-light d-inline-block'
+          className='p-1 text-light d-inline-block'
           style={{ backgroundColor: bgColor, width: rowWidth + 'px' }}
         >
           {count}
@@ -24,7 +25,7 @@ export default function AttemptsChart({ attempts }) {
   return (
     <>
       <h4 className='text-center text-uppercase py-3'>{textData.stats.attemptStat}</h4>
-      <ul className='list-style-none'>{input}</ul>
+      <ul className='list-style-none'>{listItems}</ul>
     </>
   );
 }

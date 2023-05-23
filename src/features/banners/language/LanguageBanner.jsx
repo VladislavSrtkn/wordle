@@ -1,40 +1,52 @@
 import { Button, Form } from 'react-bootstrap';
 
-import languages from './languages';
+import { useState } from 'react';
+
+import LANGUAGES from './languages';
+
 import textData from './textData';
 
 import BannersWrapper from '../BannersWrapper';
-import { useState } from 'react';
 
 export default function LanguageBanner({ onHide, onChangeLanguage, currentlanguage }) {
+  const { languageBannerHeader, languageBannerText, select } = textData.lang;
+
   const [language, setLanguage] = useState(currentlanguage);
 
-  function handleClick() {
+  function handleSubmit() {
     onChangeLanguage(language);
     onHide();
   }
 
-  const input = languages.map((lang) => (
+  function handleChange(e) {
+    setLanguage(e.target.value);
+  }
+
+  const options = LANGUAGES.map((lang) => (
     <Form.Check
+      name='languages'
       key={lang.name}
       type='radio'
+      id={lang.name}
       value={lang.name}
       label={lang.label}
-      onChange={() => setLanguage(lang.name)}
+      onChange={handleChange}
       checked={lang.name === language}
-      className='border-bottom py-3'
+      className='border-bottom py-3 fw-bold'
     />
   ));
-
-  const { languageBannerHeader, languageBannerText, select } = textData.lang;
 
   return (
     <BannersWrapper onHide={onHide} title={languageBannerHeader}>
       <p>{languageBannerText}</p>
-      <Form.Group className='mb-4'>{input}</Form.Group>
-      <Button variant='secondary' onClick={handleClick}>
-        {select}
-      </Button>
+
+      <Form className='mb-4' onSubmit={handleSubmit}>
+        {options}
+
+        <Button type='submit' variant='secondary' className='mt-3'>
+          {select}
+        </Button>
+      </Form>
     </BannersWrapper>
   );
 }

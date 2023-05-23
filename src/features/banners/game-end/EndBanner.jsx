@@ -11,42 +11,42 @@ export default function EndBanner({ attempts, results, onHide, isWin, puzzle, da
   const countOfAttempts = isWin ? attempts : 'X';
   const slicedResults = results.slice(0, attempts);
 
+  const { endBannerHeader, hiddenWord, challenge, shareText, share } = textData.end;
+
   const layoutForShare = makeResultsEmojiLayout(slicedResults).join(`\n`);
-  const emojiLayout = makeResultsEmojiLayout(slicedResults).map((string, i) => (
-    <span key={i}>
-      {string} <br />
+  const emojiLayout = makeResultsEmojiLayout(slicedResults).map((row, i) => (
+    <span key={i} className='d-block'>
+      {row}
     </span>
   ));
 
-  const { endBannerHeader, hiddenWord, challenge, shareText, share } = textData.end;
+  async function handleShare() {
+    if (navigator.share !== undefined) {
+      navigator.share({
+        title: document.title,
+        url: 'https://vladislavsrtkn.github.io/wordle/',
+        text: textData.formatString(shareText, dayNumber, attempts, layoutForShare),
+      });
+    }
+  }
 
   return (
     <BannersWrapper onHide={onHide} title={`${endBannerHeader} ${dayNumber} ${countOfAttempts}/6`}>
-      <p>{emojiLayout}</p>
+      <section className='mb-3'>{emojiLayout}</section>
 
-      {!isWin && (
-        <h4 className='text-center py-3'>
-          {hiddenWord} {puzzle}
-        </h4>
-      )}
+      <div className='text-center'>
+        {!isWin && (
+          <h4 className='py-3'>
+            {hiddenWord} {puzzle}
+          </h4>
+        )}
 
-      <CountdownContainer />
+        <CountdownContainer />
 
-      <h4 className='text-center'>{challenge}</h4>
+        <h4>{challenge}</h4>
 
-      <div className='text-center py-3'>
-        <Button
-          onClick={async () => {
-            if (navigator.share !== undefined) {
-              navigator.share({
-                title: document.title,
-                url: 'https://vladislavsrtkn.github.io/wordle/',
-                text: textData.formatString(shareText, dayNumber, attempts, layoutForShare),
-              });
-            }
-          }}
-        >
-          <i className='bi bi-share-fill me-2'></i>
+        <Button className='my-3' onClick={handleShare}>
+          <i className='bi bi-share-fill me-2' />
           {share}
         </Button>
       </div>

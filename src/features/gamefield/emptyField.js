@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import { cloneDeep } from 'lodash';
+
+const COUNT_OF_ROWS = 6;
 
 const row = [
   { value: '', status: '' },
@@ -8,12 +10,10 @@ const row = [
   { value: '', status: '' },
 ];
 
-const countOfRows = 6;
-
 const emptyField = [];
 
-for (let i = 0; i < countOfRows; i++) {
-  emptyField.push(_.cloneDeep(row));
+for (let i = 0; i < COUNT_OF_ROWS; i++) {
+  emptyField.push(cloneDeep(row));
 }
 
 export default emptyField;
