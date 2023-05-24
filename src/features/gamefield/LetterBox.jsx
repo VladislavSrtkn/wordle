@@ -1,17 +1,23 @@
 import { Col } from 'react-bootstrap';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
-export default function LetterBox({ letter, cssClass }) {
-  const [className, setClassName] = useState(null);
+import { ThemeContext } from '../theme/theme-context';
+
+export default function LetterBox({ letter, statusClass }) {
+  const [statusClassName, setStatusClassName] = useState(null);
 
   // Update CSS class to display animation correctly on re-render
   useEffect(() => {
-    setClassName(null);
-    let timerID = setTimeout(() => setClassName(cssClass), 100);
+    setStatusClassName(null);
+    let timerID = setTimeout(() => setStatusClassName(statusClass), 100);
 
     return () => clearTimeout(timerID);
-  }, [cssClass, letter]);
+  }, [statusClass, letter]);
 
-  return <Col className={`${className} letter-box`}>{letter}</Col>;
+  const theme = useContext(ThemeContext);
+  const borderClass = theme + '-theme-border';
+  const borderClassName = letter !== '' && statusClass === '' ? borderClass : '';
+
+  return <Col className={`${statusClassName} ${borderClassName} letter-box`}>{letter}</Col>;
 }
