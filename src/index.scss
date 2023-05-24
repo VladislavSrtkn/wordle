@@ -4,6 +4,10 @@ body * {
   transition: background-color 0.6s ease;
 }
 
+body {
+  font-family: 'Jost', sans-serif;
+}
+
 .mw-600 {
   max-width: 600px;
 }
@@ -20,6 +24,8 @@ body * {
 
 // Header ***********************************************************
 .header {
+  font-family: 'Rubik', sans-serif;
+
   &.light {
     box-shadow: 0px 3px 10px -4px #aba9a9;
   }
@@ -79,11 +85,12 @@ body * {
   align-items: center;
   border: 2px solid $customGrey;
   text-transform: uppercase;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   font-weight: bold;
   min-height: 50px;
+  border-radius: 4%;
 
-  @media screen and (min-width: 1224px) {
+  @media screen and (min-width: 1180px) {
     font-size: 1.8rem;
   }
 
@@ -110,15 +117,11 @@ div.inPlace {
   margin: 0.25rem 0.125rem;
   height: 56px;
   border: none !important;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   flex: 1;
   font-weight: bold;
   text-transform: uppercase;
   padding: 0px;
-
-  @media screen and (min-width: 1224px) {
-    font-size: large;
-  }
 }
 
 button.notInPuzzle,
@@ -151,6 +154,10 @@ button.inPuzzle {
 
 .list-style-none {
   list-style: none;
+
+  li :nth-child(2) {
+    border-radius: 0 5px 5px 0;
+  }
 }
 
 .li-number {

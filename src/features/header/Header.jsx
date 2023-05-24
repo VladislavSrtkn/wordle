@@ -24,7 +24,7 @@ export default function Header({
           <i className={` bi-${themeIconClass}-fill ${iconClasses}`} onClick={onChangeTheme} />
         </Col>
 
-        <Col xs='auto' as='h1' className='fs-2 fw-bold'>
+        <Col xs='auto' as='h1' className='fs-2 fw-bold my-1'>
           Wordle
         </Col>
 

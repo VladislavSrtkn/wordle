@@ -5,7 +5,7 @@ export default function ExampleWordRow({ data }) {
 
   const letters = word
     .split('')
-    .map((letter, i) => <LetterBox key={i} letter={letter} cssClass={styles[i]} />);
+    .map((letter, i) => <LetterBox key={i} letter={letter} statusClass={styles[i]} />);
 
   return <div className='example-row'>{letters}</div>;
 }
