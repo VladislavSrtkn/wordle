@@ -7,5 +7,5 @@ export default function LetterRow({ word }) {
     <LetterBox key={i} letter={letter.value} statusClass={letter.status} />
   ));
 
-  return <Row className='my-1 gap-1 flex-grow-1'>{letters}</Row>;
+  return <Row className='my-1 gap-1 flex-grow-1 flex-nowrap'>{letters}</Row>;
 }

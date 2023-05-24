@@ -1,5 +1,9 @@
 @import './custom.scss';
 
+:root {
+  --bs-body-font-size: 1.2rem;
+}
+
 body * {
   transition: background-color 0.6s ease;
 }
@@ -117,11 +121,15 @@ div.inPlace {
   margin: 0.25rem 0.125rem;
   height: 56px;
   border: none !important;
-  font-size: 1.1rem;
+  font-size: 1rem;
   flex: 1;
   font-weight: bold;
   text-transform: uppercase;
   padding: 0px;
+
+  @media screen and (min-width: 1180px) {
+    font-size: 1.1rem;
+  }
 }
 
 button.notInPuzzle,
@@ -147,7 +155,7 @@ button.inPuzzle {
   margin: 0 0.5rem;
   @media screen and (max-width: 500px) {
     & :nth-child(3) {
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
   }
 }
