@@ -53,6 +53,8 @@ export default function App() {
 
   const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
   const [theme, setTheme] = useState(() => getTheme());
+  const [appHeight, setAppHeight] = useState(() => document.documentElement.clientHeight + 'px');
+
   const [isVisibleRules, setIsVisibleRules] = useState(false);
   const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
   const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
@@ -62,9 +64,6 @@ export default function App() {
   const wordsLibrary = language === 'ru' ? wordsRuLang : wordsEnLang;
 
   const puzzle = getTodayPuzzle(wordsLibrary, dayNumber);
-
-  // 585px  - minimal height for page. We have to provide it for correct render when switch album/portrait orientation on mobiles.
-  const windowHeight = Math.max(document.documentElement.clientHeight, 585) + 'px';
 
   // *** Effects ***
 
@@ -135,6 +134,15 @@ export default function App() {
 
     document.addEventListener('keydown', onKeydown);
     return () => document.removeEventListener('keydown', onKeydown);
+  });
+
+  useEffect(() => {
+    function changeAppHeight() {
+      setAppHeight(() => document.documentElement.clientHeight + 'px');
+    }
+
+    window.addEventListener('resize', changeAppHeight);
+    return () => window.removeEventListener('resize', changeAppHeight);
   });
 
   // *** Functions ***
@@ -229,7 +237,7 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={theme}>
-      <Container fluid className={`${theme} d-flex flex-column`} style={{ height: windowHeight }}>
+      <Container fluid className={`${theme} d-flex flex-column`} style={{ height: appHeight }}>
         <Header
           onShowRules={() => setIsVisibleRules(true)}
           onShowStatistics={() => setIsVisibleStatistics(true)}
