@@ -13,10 +13,10 @@ export default function Header({
   const theme = useContext(ThemeContext);
   const themeIconClass = theme === 'light' ? 'moon' : 'sun';
 
-  const iconClasses = 'bi px-1 fs-4 me-2 pb-2 header-icon';
+  const iconClasses = 'bi px-1 fs-4 me-2 pb-2';
 
   return (
-    <Row className={`py-2 justify-content-center mb-2 header ${theme}`}>
+    <Row as='header' className={`py-2 justify-content-center mb-2 ${theme}`}>
       <Col className='d-flex justify-content-between align-items-center'>
         <Col xs='auto'>
           <i className={`bi-question-circle-fill ${iconClasses}`} onClick={onShowRules} />

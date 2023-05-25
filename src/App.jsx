@@ -28,7 +28,7 @@ import showShakeEffect from './features/gamefield/showShakeEffect';
 import clearOldProgress from './features/progress/clearOldProgress';
 
 import StatisticsBanner from './features/banners/statistics/StatisticsBanner';
-import GameField from './features/gamefield/Gamefield';
+import GameField from './features/gamefield/GameField';
 import Header from './features/header/Header';
 import Keyboard from './features/keyboard/Keyboard';
 import EndBanner from './features/banners/game-end/EndBanner';
@@ -245,48 +245,54 @@ export default function App() {
           onChangeTheme={handleChangeTheme}
         />
 
-        <Row className='justify-content-center flex-grow-1'>
-          <Col
-            xs
-            sm={8}
-            md={6}
-            lg={4}
-            className='d-flex flex-column justify-content-between mw-600'
-          >
-            <GameField data={results} />
+        <Container className='d-flex flex-column flex-grow-1'>
+          <Row className='justify-content-center flex-grow-1'>
+            <Col
+              xs
+              sm={8}
+              md={7}
+              lg={5}
+              xl={4}
+              className='d-flex flex-column justify-content-between '
+            >
+              <GameField data={results} />
 
-            <Keyboard onClick={handleClick} keyboard={keyboard} />
+              <Keyboard onClick={handleClick} keyboard={keyboard} />
 
-            {errorBannerText && (
-              <ErrorBanner text={errorBannerText} onClose={() => setErrorBannerText(null)} />
-            )}
+              {errorBannerText && (
+                <ErrorBanner text={errorBannerText} onClose={() => setErrorBannerText(null)} />
+              )}
 
-            {isVisibleRules && <RulesBanner onHide={() => setIsVisibleRules(false)} />}
+              {isVisibleRules && <RulesBanner onHide={() => setIsVisibleRules(false)} />}
 
-            {isVisibleStatistics && (
-              <StatisticsBanner language={language} onHide={() => setIsVisibleStatistics(false)} />
-            )}
+              {isVisibleStatistics && (
+                <StatisticsBanner
+                  language={language}
+                  onHide={() => setIsVisibleStatistics(false)}
+                />
+              )}
 
-            {isVisibleLanguageBanner && (
-              <LanguageBanner
-                currentlanguage={language}
-                onHide={() => setIsVisibleLanguageBanner(false)}
-                onChangeLanguage={handleChangeLanguage}
-              />
-            )}
+              {isVisibleLanguageBanner && (
+                <LanguageBanner
+                  currentlanguage={language}
+                  onHide={() => setIsVisibleLanguageBanner(false)}
+                  onChangeLanguage={handleChangeLanguage}
+                />
+              )}
 
-            {isVisibleEndBanner && (
-              <EndBanner
-                attempts={currentTry + 1}
-                results={results}
-                isWin={isWin}
-                puzzle={puzzle}
-                dayNumber={dayNumber}
-                onHide={() => setIsVisibleEndBanner(false)}
-              />
-            )}
-          </Col>
-        </Row>
+              {isVisibleEndBanner && (
+                <EndBanner
+                  attempts={currentTry + 1}
+                  results={results}
+                  isWin={isWin}
+                  puzzle={puzzle}
+                  dayNumber={dayNumber}
+                  onHide={() => setIsVisibleEndBanner(false)}
+                />
+              )}
+            </Col>
+          </Row>
+        </Container>
       </Container>
     </ThemeContext.Provider>
   );

@@ -1,0 +1,13 @@
+.example-row {
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 2rem;
+  max-width: 20rem;
+
+  .inPlace,
+  .inPuzzle,
+  .notInPuzzle {
+    color: #fff;
+    transition: background-color 0.4s ease;
+  }
+}

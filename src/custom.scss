@@ -1,15 +1,18 @@
-/* make the customizations */
+// Variables ********************************************************
 
 $notInPuzzle: #9a9a9f;
 $inPuzzle: #dec915;
 $inPlace: #5db40a;
 $customGrey: #bebebe;
 
+// Bootstrap customization ******************************************
+
 $secondary: #dedede;
 $success: $inPlace;
+$font-size-base: 1.2rem;
 
-/* import bootstrap to set changes */
+// import bootstrap to set changes **********************************
 @import '~bootstrap/scss/bootstrap';
 
-/* import Icons*/
+// import Icons *****************************************************
 @import 'bootstrap-icons/font/bootstrap-icons.css';

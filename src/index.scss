@@ -1,234 +1,41 @@
 @import './custom.scss';
-
-:root {
-  --bs-body-font-size: 1.2rem;
-}
-
-body * {
-  transition: background-color 0.6s ease;
-}
+@import './features/header/header.scss';
+@import './features/gamefield/gamefield.scss';
+@import './features/keyboard/keyboard.scss';
+@import './features/banners/language/language_banner.scss';
+@import './features/banners/rules/rules_banner.scss';
+@import './features/banners/statistics/statistics_banner.scss';
 
 body {
   font-family: 'Jost', sans-serif;
 }
 
-.mw-600 {
-  max-width: 600px;
-}
-
 // Themes ***********************************************************
 .dark {
   background: #6b6b6b;
-  color: #ffffff;
+  color: #fff;
 }
 
 .light {
-  background: #ffffff;
+  background: #fff;
 }
 
-// Header ***********************************************************
-.header {
-  font-family: 'Rubik', sans-serif;
-
-  &.light {
-    box-shadow: 0px 3px 10px -4px #aba9a9;
-  }
-
-  &.dark {
-    box-shadow: 0px 3px 10px -4px #434343;
-  }
-
-  > :first-child {
-    max-width: 1280px;
-  }
+.container-fluid {
+  transition: background-color 0.4s ease;
 }
 
-.header-icon {
-  color: $customGrey;
-
-  @media screen and (min-width: 1281px) {
-    &:hover {
-      cursor: pointer;
-      opacity: 70%;
-
-      &::before {
-        transform: scale(1.1) translate(0%, -10%);
-        transition: all 0.2s;
-      }
-    }
-  }
-}
-
-// Colorize btns and squares ****************************************
+// Colorize keyboard and gamefield **********************************
 .notInPuzzle {
-  background-color: $notInPuzzle !important;
-  border: 2px solid $notInPuzzle !important;
+  background-color: $notInPuzzle;
+  border: 2px solid $notInPuzzle;
 }
 
 .inPuzzle {
-  background-color: $inPuzzle !important;
-  border: 2px solid $inPuzzle !important;
+  background-color: $inPuzzle;
+  border: 2px solid $inPuzzle;
 }
 
 .inPlace {
-  background-color: $inPlace !important;
-  border: 2px solid $inPlace !important;
-}
-
-// Game field *******************************************************
-.game-field {
-  max-height: 480px;
-  max-width: 400px;
-  width: 90%;
-  margin: auto;
-}
-
-.letter-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid $customGrey;
-  text-transform: uppercase;
-  font-size: 1.6rem;
-  font-weight: bold;
-  min-height: 50px;
-  border-radius: 4%;
-
-  @media screen and (min-width: 1180px) {
-    font-size: 1.8rem;
-  }
-
-  &.dark-theme-border {
-    border: 2px solid #ffffff;
-  }
-
-  &.light-theme-border {
-    border: 2px solid #000000;
-  }
-}
-
-div.notInPuzzle,
-div.inPuzzle,
-div.inPlace {
-  color: #fff !important;
-  transform: rotateX(360deg);
-  transition: 0.9s all;
-}
-
-// Keyboard *********************************************************
-
-.keyboard-btn {
-  margin: 0.25rem 0.125rem;
-  height: 56px;
-  border: none !important;
-  font-size: 1rem;
-  flex: 1;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 0px;
-
-  @media screen and (min-width: 1180px) {
-    font-size: 1.1rem;
-  }
-}
-
-button.notInPuzzle,
-button.inPlace,
-button.inPuzzle {
-  transition: 0.7s all cubic-bezier(1, 0, 1, 0);
-}
-
-// Rules banner *****************************************************
-.no-transform * {
-  transform: none !important;
-}
-
-.example-row {
-  display: flex;
-  gap: 0.3rem;
-  margin-bottom: 2rem;
-  max-width: 20rem;
-}
-
-// Stats banner *****************************************************
-.stats-fs-small > div {
-  margin: 0 0.5rem;
-  @media screen and (max-width: 500px) {
-    & :nth-child(3) {
-      font-size: 0.9rem;
-    }
-  }
-}
-
-.list-style-none {
-  list-style: none;
-
-  li :nth-child(2) {
-    border-radius: 0 5px 5px 0;
-  }
-}
-
-.li-number {
-  width: 1rem;
-}
-
-// Language banner **************************************************
-.form-check-input {
-  &:checked {
-    background-color: $customGrey;
-    border-color: $customGrey;
-  }
-
-  &:focus {
-    box-shadow: 0 0 0 0.25rem $customGrey;
-  }
-}
-
-// Error banner *****************************************************
-.toast {
-  --bs-toast-max-width: 428px;
-}
-
-// Error shake effect************************************************
-@keyframes shake {
-  0% {
-    transform: translate(2px, 1px) rotate(0deg);
-  }
-  10% {
-    transform: translate(-1px, -2px) rotate(-1deg);
-  }
-  20% {
-    transform: translate(-3px, 0px) rotate(1deg);
-  }
-  30% {
-    transform: translate(0px, 2px) rotate(0deg);
-  }
-  40% {
-    transform: translate(1px, -1px) rotate(1deg);
-  }
-  50% {
-    transform: translate(-1px, 2px) rotate(-1deg);
-  }
-  60% {
-    transform: translate(-3px, 1px) rotate(0deg);
-  }
-  70% {
-    transform: translate(2px, 1px) rotate(-1deg);
-  }
-  80% {
-    transform: translate(-1px, -1px) rotate(1deg);
-  }
-  90% {
-    transform: translate(2px, 2px) rotate(0deg);
-  }
-  100% {
-    transform: translate(1px, -2px) rotate(-1deg);
-  }
-}
-
-.error-shake {
-  animation-name: shake;
-  animation-duration: 0.8s;
-  transform-origin: 50% 50%;
-  animation-timing-function: linear;
+  background-color: $inPlace;
+  border: 2px solid $inPlace;
 }

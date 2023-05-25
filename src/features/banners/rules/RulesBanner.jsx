@@ -51,7 +51,7 @@ export default function RulesBanner({ onHide }) {
 
   return (
     <BannersWrapper onHide={onHide} title={gameRules}>
-      <Stack className='no-transform'>
+      <Stack>
         <p>{goal}</p>
         <p>{textData.formatString(firstExample, <b>{exampleHiddenWord}</b>)}</p>
 

@@ -30,7 +30,7 @@ export default function StatisticsBanner({ language, onHide }) {
           <StatisticsContentBox number={`${winRate}%`} text={totalWins} />
         </div>
 
-        <div className='d-flex justify-content-around border-bottom py-3 stats-fs-small'>
+        <div className='d-flex justify-content-around border-bottom py-3 stats-second-box'>
           <StatisticsContentBox number={winStreak} text={winStreakNow} />
           <StatisticsContentBox number={attemptsAverage} text={attemptsPerGame} />
           <StatisticsContentBox number={maxWinStreak} text={winStreakMax} />

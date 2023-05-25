@@ -1,0 +1,21 @@
+.stats-second-box > div {
+  margin: 0 0.5rem;
+
+  @include media-breakpoint-down(sm) {
+    & :nth-child(3) {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.list-style-none {
+  list-style: none;
+
+  li :nth-child(2) {
+    border-radius: 0 5px 5px 0;
+  }
+}
+
+.li-number {
+  width: 1rem;
+}
