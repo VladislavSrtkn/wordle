@@ -1,4 +1,4 @@
-@import './custom.scss';
+@import './bs_custom.scss';
 @import './features/header/header.scss';
 @import './features/gamefield/gamefield.scss';
 @import './features/keyboard/keyboard.scss';
@@ -26,16 +26,16 @@ body {
 
 // Colorize keyboard and gamefield **********************************
 .notInPuzzle {
-  background-color: $notInPuzzle;
+  background-color: $notInPuzzle !important;
   border: 2px solid $notInPuzzle;
 }
 
 .inPuzzle {
-  background-color: $inPuzzle;
+  background-color: $inPuzzle !important;
   border: 2px solid $inPuzzle;
 }
 
 .inPlace {
-  background-color: $inPlace;
+  background-color: $inPlace !important;
   border: 2px solid $inPlace;
 }
