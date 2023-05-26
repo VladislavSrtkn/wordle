@@ -10,9 +10,9 @@ export default function ErrorBanner({ text, onClose }) {
   return (
     <ToastContainer position='top-center' className='mt-2'>
       <Toast onClose={onClose}>
-        <ToastHeader className={`justify-content-between fs-4 ${theme}`}>
+        <ToastHeader className={`justify-content-between fs-4 fw-bold ${theme}`}>
           <i className='bi bi-exclamation-circle-fill'></i>
-          <strong>Wordle</strong>
+          Wordle
         </ToastHeader>
         <ToastBody className={`fs-6 ${theme}`}>{text}</ToastBody>
       </Toast>

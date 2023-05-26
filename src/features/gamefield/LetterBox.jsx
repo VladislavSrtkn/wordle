@@ -19,5 +19,11 @@ export default function LetterBox({ letter, statusClass }) {
   const borderClass = theme + '-theme-border';
   const borderClassName = letter !== '' && statusClass === '' ? borderClass : '';
 
-  return <Col className={`${statusClassName} ${borderClassName} letter-box`}>{letter}</Col>;
+  return (
+    <Col
+      className={`${statusClassName} ${borderClassName} letter-box d-flex justify-content-center align-items-center fw-bold text-uppercase `}
+    >
+      {letter}
+    </Col>
+  );
 }

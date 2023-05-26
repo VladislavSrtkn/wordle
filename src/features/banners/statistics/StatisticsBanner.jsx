@@ -1,4 +1,4 @@
-import { Stack } from 'react-bootstrap';
+import { Col, Stack } from 'react-bootstrap';
 
 import textData from '../language/textData';
 
@@ -25,16 +25,16 @@ export default function StatisticsBanner({ language, onHide }) {
   return (
     <BannersWrapper onHide={onHide} title={statistic}>
       <Stack>
-        <div className='d-flex justify-content-around border-bottom py-3'>
+        <Col className='d-flex justify-content-around border-bottom py-3'>
           <StatisticsContentBox number={gamesPlayed} text={played} />
           <StatisticsContentBox number={`${winRate}%`} text={totalWins} />
-        </div>
+        </Col>
 
-        <div className='d-flex justify-content-around border-bottom py-3 stats-second-box'>
+        <Col className='d-flex justify-content-around border-bottom py-3 stats-second-box'>
           <StatisticsContentBox number={winStreak} text={winStreakNow} />
           <StatisticsContentBox number={attemptsAverage} text={attemptsPerGame} />
           <StatisticsContentBox number={maxWinStreak} text={winStreakMax} />
-        </div>
+        </Col>
 
         <AttemptsChart attempts={attempts} />
       </Stack>

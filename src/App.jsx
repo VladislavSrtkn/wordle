@@ -31,7 +31,7 @@ import StatisticsBanner from './features/banners/statistics/StatisticsBanner';
 import GameField from './features/gamefield/GameField';
 import Header from './features/header/Header';
 import Keyboard from './features/keyboard/Keyboard';
-import EndBanner from './features/banners/game-end/EndBanner';
+import GameEndBanner from './features/banners/game-end/GameEndBanner';
 import ErrorBanner from './features/banners/error/ErrorBanner';
 import RulesBanner from './features/banners/rules/RulesBanner';
 import LanguageBanner from './features/banners/language/LanguageBanner';
@@ -57,7 +57,7 @@ export default function App() {
 
   const [isVisibleRules, setIsVisibleRules] = useState(false);
   const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
-  const [isVisibleEndBanner, setIsVisibleEndBanner] = useState(false);
+  const [isVisibleGameEndBanner, setIsVisibleGameEndBanner] = useState(false);
   const [isVisibleLanguageBanner, setIsVisibleLanguageBanner] = useState(false);
   const [errorBannerText, setErrorBannerText] = useState(null);
 
@@ -107,7 +107,7 @@ export default function App() {
 
   useEffect(() => {
     if (isGameOver) {
-      const timerId = setTimeout(() => setIsVisibleEndBanner(true), 2000);
+      const timerId = setTimeout(() => setIsVisibleGameEndBanner(true), 2000);
       return () => clearTimeout(timerId);
     }
   }, [isGameOver, language]);
@@ -280,14 +280,14 @@ export default function App() {
                 />
               )}
 
-              {isVisibleEndBanner && (
-                <EndBanner
+              {isVisibleGameEndBanner && (
+                <GameEndBanner
                   attempts={currentTry + 1}
                   results={results}
                   isWin={isWin}
                   puzzle={puzzle}
                   dayNumber={dayNumber}
-                  onHide={() => setIsVisibleEndBanner(false)}
+                  onHide={() => setIsVisibleGameEndBanner(false)}
                 />
               )}
             </Col>

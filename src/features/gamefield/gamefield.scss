@@ -2,7 +2,6 @@
   max-height: 480px;
   max-width: 400px;
   width: 90%;
-  margin: auto;
 
   .notInPuzzle,
   .inPuzzle,
@@ -14,15 +13,10 @@
 }
 
 .letter-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 50px;
   border: 2px solid $customGrey;
   font-size: 1.6rem;
-  font-weight: bold;
   border-radius: 4%;
-  text-transform: uppercase;
 
   @include media-breakpoint-up(xl) {
     font-size: 1.8rem;

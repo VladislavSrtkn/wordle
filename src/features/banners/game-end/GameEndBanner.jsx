@@ -1,4 +1,4 @@
-import { Button } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
 
 import makeResultsEmojiLayout from './makeResultsEmojiLayout';
 
@@ -7,7 +7,7 @@ import textData from '../language/textData';
 import CountdownContainer from './CountdownContainer';
 import BannersWrapper from '../BannersWrapper';
 
-export default function EndBanner({ attempts, results, onHide, isWin, puzzle, dayNumber }) {
+export default function GameEndBanner({ attempts, results, onHide, isWin, puzzle, dayNumber }) {
   const countOfAttempts = isWin ? attempts : 'X';
   const slicedResults = results.slice(0, attempts);
 
@@ -34,7 +34,7 @@ export default function EndBanner({ attempts, results, onHide, isWin, puzzle, da
     <BannersWrapper onHide={onHide} title={`${endBannerHeader} ${dayNumber} ${countOfAttempts}/6`}>
       <section className='mb-3'>{emojiLayout}</section>
 
-      <div className='text-center'>
+      <Col className='text-center'>
         {!isWin && (
           <h4 className='py-3'>
             {hiddenWord} {puzzle}
@@ -49,7 +49,7 @@ export default function EndBanner({ attempts, results, onHide, isWin, puzzle, da
           <i className='bi bi-share-fill me-2' />
           {share}
         </Button>
-      </div>
+      </Col>
     </BannersWrapper>
   );
 }

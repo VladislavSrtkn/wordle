@@ -7,5 +7,5 @@ export default function ExampleWordRow({ data }) {
     .split('')
     .map((letter, i) => <LetterBox key={i} letter={letter} statusClass={styles[i]} />);
 
-  return <div className='example-row'>{letters}</div>;
+  return <div className='example-word-row d-flex gap-1 mb-4'>{letters}</div>;
 }

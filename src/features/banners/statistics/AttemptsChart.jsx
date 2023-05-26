@@ -13,7 +13,7 @@ export default function AttemptsChart({ attempts }) {
       <li key={attempts} className='mb-1'>
         <div className='d-inline-block fw-bold mx-1 li-number'>{attempts}</div>
         <div
-          className='p-1 text-light d-inline-block'
+          className='p-1 text-light d-inline-block rounded-end'
           style={{ backgroundColor: bgColor, width: rowWidth + 'px' }}
         >
           {count}

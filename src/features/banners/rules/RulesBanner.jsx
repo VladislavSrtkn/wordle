@@ -1,4 +1,4 @@
-import { Button, Stack } from 'react-bootstrap';
+import { Button, Col, Stack } from 'react-bootstrap';
 
 import textData from '../language/textData';
 
@@ -77,12 +77,12 @@ export default function RulesBanner({ onHide }) {
 
         <ExampleWordRow data={EXAMPLE_WORDS[3]} />
 
-        <div className={`${stylesBorder} d-flex gap-2 align-items-center`}>
+        <Col className={`${stylesBorder} d-flex gap-2 align-items-center`}>
           <p className={stylesBold}>{dailyRule}</p>
           <Button variant='success' onClick={onHide} className='text-white ms-4'>
             {play}
           </Button>
-        </div>
+        </Col>
         <p className={`${stylesBorder} ${stylesBold}`}>{firstQuestion}</p>
         <p>{firstAnswer}</p>
         <p className={`${stylesBorder} ${stylesBold}`}>{secondQuestion}</p>

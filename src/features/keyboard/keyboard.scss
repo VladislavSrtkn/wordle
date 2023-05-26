@@ -2,11 +2,7 @@
   flex: 1;
   height: 56px;
   margin: 0.25rem 0.125rem;
-  padding: 0px;
-  border: none !important;
   font-size: 1rem;
-  font-weight: bold;
-  text-transform: uppercase;
 
   @include media-breakpoint-up(xl) {
     font-size: 1.1rem;
