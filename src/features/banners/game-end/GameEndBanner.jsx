@@ -1,5 +1,7 @@
 import { Button, Col } from 'react-bootstrap';
 
+import { COUNT_OF_TRIES } from '../../../config';
+
 import makeResultsEmojiLayout from './makeResultsEmojiLayout';
 
 import textData from '../language/textData';
@@ -12,6 +14,8 @@ export default function GameEndBanner({ attempts, results, onHide, isWin, puzzle
   const slicedResults = results.slice(0, attempts);
 
   const { endBannerHeader, hiddenWord, challenge, shareText, share } = textData.end;
+
+  const title = `${endBannerHeader} ${dayNumber} ${countOfAttempts}/${COUNT_OF_TRIES}`;
 
   const layoutForShare = makeResultsEmojiLayout(slicedResults).join(`\n`);
   const emojiLayout = makeResultsEmojiLayout(slicedResults).map((row, i) => (
@@ -31,7 +35,7 @@ export default function GameEndBanner({ attempts, results, onHide, isWin, puzzle
   }
 
   return (
-    <BannersWrapper onHide={onHide} title={`${endBannerHeader} ${dayNumber} ${countOfAttempts}/6`}>
+    <BannersWrapper onHide={onHide} title={title}>
       <section className='mb-3'>{emojiLayout}</section>
 
       <Col className='text-center'>

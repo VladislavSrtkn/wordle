@@ -1,3 +1,15 @@
+import { COUNT_OF_TRIES } from '../../../config';
+
+function getAttemptsObject(count) {
+  const attempts = {};
+
+  for (let i = 1; i <= count; i++) {
+    attempts[i] = 0;
+  }
+
+  return attempts;
+}
+
 export default function getStatisticsData(language) {
   const statsForCurrentLanguage = 'statistics' + language;
 
@@ -10,14 +22,7 @@ export default function getStatisticsData(language) {
     gamesWon: 0,
     winStreak: 0,
     maxWinStreak: 0,
-    attempts: {
-      1: 0,
-      2: 0,
-      3: 0,
-      4: 0,
-      5: 0,
-      6: 0,
-    },
+    attempts: getAttemptsObject(COUNT_OF_TRIES),
   };
 
   return statisticsObj;

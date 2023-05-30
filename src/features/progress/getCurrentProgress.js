@@ -1,4 +1,4 @@
-import emptyField from '../gamefield/emptyField';
+import getEmptyField from '../gamefield/emptyField';
 import keyboards from '../keyboard/keyboards';
 
 export default function getCurrentProgress(dayNumber, language) {
@@ -8,7 +8,7 @@ export default function getCurrentProgress(dayNumber, language) {
     return JSON.parse(localStorage.getItem(todayDataForCurrentLanguage));
   } else {
     const gameStartObj = {
-      results: emptyField,
+      results: getEmptyField(),
       keyboard: keyboards[language],
       currentTry: 0,
       isWin: false,

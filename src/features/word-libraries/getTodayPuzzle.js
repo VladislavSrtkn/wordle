@@ -1,8 +1,7 @@
 export default function getTodayPuzzle(library, dayNumber) {
-  if (library.length < dayNumber) {
-    const difference = dayNumber - library.length - 1;
-
-    return library[difference];
+  if (library.length <= dayNumber) {
+    const index = dayNumber % library.length;
+    return library[index];
   }
 
   return library[dayNumber];

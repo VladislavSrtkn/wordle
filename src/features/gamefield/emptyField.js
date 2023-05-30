@@ -1,19 +1,24 @@
-import { cloneDeep } from 'lodash';
+import { COUNT_OF_TRIES, COUNT_OF_LETTERS } from '../../config';
 
-const COUNT_OF_ROWS = 6;
-
-const row = [
-  { value: '', status: '' },
-  { value: '', status: '' },
-  { value: '', status: '' },
-  { value: '', status: '' },
-  { value: '', status: '' },
-];
-
-const emptyField = [];
-
-for (let i = 0; i < COUNT_OF_ROWS; i++) {
-  emptyField.push(cloneDeep(row));
+function getEmptyLetter() {
+  return { value: '', status: '' };
 }
 
-export default emptyField;
+function getEmptyRow() {
+  const row = [];
+
+  while (row.length < COUNT_OF_LETTERS) {
+    row.push(getEmptyLetter());
+  }
+
+  return row;
+}
+
+export default function getEmptyField() {
+  const emptyField = [];
+
+  while (emptyField.length < COUNT_OF_TRIES) {
+    emptyField.push(getEmptyRow());
+  }
+  return emptyField;
+}

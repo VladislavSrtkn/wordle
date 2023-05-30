@@ -41,11 +41,11 @@ export default function RulesBanner({ onHide }) {
     { word: secondTry, styles: ['', 'inPlace', 'inPlace', '', ''] },
     {
       word: exampleHiddenWord,
-      styles: ['notInPuzzle', '', '', '', ''],
+      styles: ['inPlace', 'inPlace', 'inPlace', 'inPlace', 'inPlace'],
     },
     {
       word: thirdTry,
-      styles: ['inPlace', 'inPlace', 'inPlace', 'inPlace', 'inPlace'],
+      styles: ['notInPuzzle', '', '', '', ''],
     },
   ];
 

@@ -15,7 +15,7 @@ const textData = new LocalizedStrings({
     // Rules banner
     rules: {
       gameRules: 'game rules',
-      goal: 'Guess the hidden word of the day in the game Wordle in six attempts.',
+      goal: 'Guess the hidden word of the day in the game Wordle!',
       exampleHiddenWord: 'BRIEF',
       firstTry: 'Apple',
       secondTry: 'Crimp',
@@ -65,6 +65,7 @@ const textData = new LocalizedStrings({
       emptyLetter: 'The word must not contain empty letters.',
       wordNotFound:
         "There is no such word in the game's dictionary. Try something else. For example, TABLE",
+      fetchError: 'Failed to load word library. Check your internet connection.',
     },
   },
   // *** RU ***
@@ -80,7 +81,7 @@ const textData = new LocalizedStrings({
     },
     rules: {
       gameRules: 'правила игры',
-      goal: 'Угадайте загаданное слово дня в игре Вордли (Wordle) с шести попыток.',
+      goal: 'Угадайте загаданное слово дня в игре Wordle!',
       exampleHiddenWord: 'ПИРАТ',
       firstTry: 'Схема',
       secondTry: 'Вирус',
@@ -127,6 +128,7 @@ const textData = new LocalizedStrings({
       emptyLetter: 'В слове не должно быть пустых букв.',
       wordNotFound:
         'В словаре игры нет такого слова. Попробуйте какое-нибудь другое. Например, АВТОР',
+      fetchError: 'Не удалось загрузить библиотеку слов. Проверьте соединение с интернетом.',
     },
   },
 });

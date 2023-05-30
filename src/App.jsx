@@ -8,6 +8,8 @@ import { useEffect, useState, useMemo } from 'react';
 
 import { ThemeContext } from './features/theme/theme-context';
 
+import { COUNT_OF_LETTERS, COUNT_OF_TRIES, GAME_RELEASE_DATE } from './config';
+
 import checkWordInLibrary from './features/word-libraries/checkWordInLibrary';
 import saveCurrentProgress from './features/progress/saveCurrentProgress';
 import getCurrentProgress from './features/progress/getCurrentProgress';
@@ -20,12 +22,11 @@ import getLanguage from './features/banners/language/getLanguage';
 import saveLanguage from './features/banners/language/saveLanguage';
 import textData from './features/banners/language/textData';
 import getTodayPuzzle from './features/word-libraries/getTodayPuzzle';
-import wordsRuLang from './features/word-libraries/wordsRuLang';
-import wordsEnLang from './features/word-libraries/wordsEnLang';
 import checkLanguageSelected from './features/banners/language/checkLanguageSelected';
 import saveLanguageWasSelected from './features/banners/language/saveLanguageWasSelected';
 import showShakeEffect from './features/gamefield/showShakeEffect';
 import clearOldProgress from './features/progress/clearOldProgress';
+import fetchLibrary from './features/word-libraries/fetchLibrary';
 
 import StatisticsBanner from './features/banners/statistics/StatisticsBanner';
 import GameField from './features/gamefield/GameField';
@@ -37,8 +38,9 @@ import RulesBanner from './features/banners/rules/RulesBanner';
 import LanguageBanner from './features/banners/language/LanguageBanner';
 
 export default function App() {
-  const dayNumber = differenceInDays(new Date(), new Date(2023, 0, 7));
+  const dayNumber = differenceInDays(new Date(), GAME_RELEASE_DATE);
   const [language, setLanguage] = useState(() => getLanguage());
+  const [wordsLibrary, setWordsLibrary] = useState([]);
 
   const todayProgress = useMemo(
     () => getCurrentProgress(dayNumber, language),
@@ -53,15 +55,12 @@ export default function App() {
 
   const [currentLetterIndex, setCurrentLetterIndex] = useState(0);
   const [theme, setTheme] = useState(() => getTheme());
-  const [appHeight, setAppHeight] = useState(() => document.documentElement.clientHeight + 'px');
 
   const [isVisibleRules, setIsVisibleRules] = useState(false);
   const [isVisibleStatistics, setIsVisibleStatistics] = useState(false);
   const [isVisibleGameEndBanner, setIsVisibleGameEndBanner] = useState(false);
   const [isVisibleLanguageBanner, setIsVisibleLanguageBanner] = useState(false);
   const [errorBannerText, setErrorBannerText] = useState(null);
-
-  const wordsLibrary = language === 'ru' ? wordsRuLang : wordsEnLang;
 
   const puzzle = getTodayPuzzle(wordsLibrary, dayNumber);
 
@@ -74,6 +73,21 @@ export default function App() {
       saveLanguageWasSelected();
     }
   }, []);
+
+  useEffect(() => {
+    fetchLibrary(language)
+      .then((response) => {
+        if (response.ok) {
+          return response.json().then((json) => setWordsLibrary(json));
+        } else {
+          console.log('Word library request failed. Response body: ' + response.body);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorBannerText(textData.err.fetchError);
+      });
+  }, [language]);
 
   useEffect(() => {
     textData.setLanguage(language);
@@ -136,15 +150,6 @@ export default function App() {
     return () => document.removeEventListener('keydown', onKeydown);
   });
 
-  useEffect(() => {
-    function changeAppHeight() {
-      setAppHeight(() => document.documentElement.clientHeight + 'px');
-    }
-
-    window.addEventListener('resize', changeAppHeight);
-    return () => window.removeEventListener('resize', changeAppHeight);
-  });
-
   // *** Functions ***
 
   function submitWord() {
@@ -153,6 +158,11 @@ export default function App() {
     if (word.includes('')) {
       setErrorBannerText(textData.err.emptyLetter);
       showShakeEffect(currentTry);
+      return;
+    }
+
+    if (wordsLibrary.length === 0) {
+      setErrorBannerText(textData.err.fetchError);
       return;
     }
 
@@ -176,7 +186,7 @@ export default function App() {
       return;
     }
 
-    if (currentTry === 5) {
+    if (currentTry === COUNT_OF_TRIES - 1) {
       setIsGameOver(true);
       saveStatisticsData(language, false);
       return;
@@ -230,14 +240,14 @@ export default function App() {
       return;
     }
 
-    if (currentLetterIndex === 5) return;
+    if (currentLetterIndex === COUNT_OF_LETTERS) return;
 
     applyLetter(buttonName);
   }
 
   return (
     <ThemeContext.Provider value={theme}>
-      <Container fluid className={`${theme} d-flex flex-column`} style={{ height: appHeight }}>
+      <Container fluid className={`${theme} d-flex flex-column`}>
         <Header
           onShowRules={() => setIsVisibleRules(true)}
           onShowStatistics={() => setIsVisibleStatistics(true)}
