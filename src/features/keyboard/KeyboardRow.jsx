@@ -1,4 +1,4 @@
-import { Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 
 import KeyboardButton from './KeyboardButton';
 
@@ -12,5 +12,5 @@ export default function KeyboardRow({ data, onClick }) {
     />
   ));
 
-  return <Row>{buttons}</Row>;
+  return <Col className='col-12 d-flex'>{buttons}</Col>;
 }

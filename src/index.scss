@@ -40,3 +40,14 @@ body {
   background-color: $inPlace !important;
   border: 2px solid $inPlace;
 }
+
+@keyframes testanimation {
+  0% {
+    color: black;
+    transform: translateX(-300px);
+  }
+
+  100% {
+    color: rebeccapurple;
+  }
+}

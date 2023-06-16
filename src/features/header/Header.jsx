@@ -16,10 +16,10 @@ export default function Header({
   const iconClasses = 'bi px-1 fs-4 me-2 pb-2';
 
   return (
-    <Row as='header' className={`py-2 justify-content-center mb-2 ${theme}`}>
-      <Col className='d-flex justify-content-between align-items-center'>
+    <header className={`py-2 mb-2 flex-grow-0 ${theme}`}>
+      <Row className='mx-auto justify-content-between align-items-center'>
         <Col xs='auto'>
-          <i className={`bi-question-circle-fill ${iconClasses}`} onClick={onShowRules} />
+          <i className={`bi-question-circle-fill ${iconClasses} ms-2`} onClick={onShowRules} />
 
           <i className={` bi-${themeIconClass}-fill ${iconClasses}`} onClick={onChangeTheme} />
         </Col>
@@ -33,7 +33,7 @@ export default function Header({
 
           <i className={`bi-reception-4 ${iconClasses}`} onClick={onShowStatistics} />
         </Col>
-      </Col>
-    </Row>
+      </Row>
+    </header>
   );
 }

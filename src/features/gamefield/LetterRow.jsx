@@ -1,4 +1,4 @@
-import { Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 
 import LetterBox from './LetterBox';
 
@@ -7,5 +7,5 @@ export default function LetterRow({ word }) {
     <LetterBox key={i} letter={letter.value} statusClass={letter.status} />
   ));
 
-  return <Row className='my-1 gap-1 flex-grow-1 flex-nowrap'>{letters}</Row>;
+  return <Col className='d-flex my-1 gap-1 flex-grow-1 flex-nowrap col-12'>{letters}</Col>;
 }

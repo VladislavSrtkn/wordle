@@ -41,6 +41,7 @@ export default function App() {
   const dayNumber = differenceInDays(new Date(), GAME_RELEASE_DATE);
   const [language, setLanguage] = useState(() => getLanguage());
   const [wordsLibrary, setWordsLibrary] = useState([]);
+  const [puzzle, setPuzzle] = useState(null);
 
   const todayProgress = useMemo(
     () => getCurrentProgress(dayNumber, language),
@@ -62,7 +63,7 @@ export default function App() {
   const [isVisibleLanguageBanner, setIsVisibleLanguageBanner] = useState(false);
   const [errorBannerText, setErrorBannerText] = useState(null);
 
-  const puzzle = getTodayPuzzle(wordsLibrary, dayNumber);
+  const [isLoadingLibrary, setIsLoadingLibrary] = useState(false);
 
   // *** Effects ***
 
@@ -78,7 +79,11 @@ export default function App() {
     fetchLibrary(language)
       .then((response) => {
         if (response.ok) {
-          return response.json().then((json) => setWordsLibrary(json));
+          setIsLoadingLibrary(true);
+          return response.json().then((library) => {
+            setWordsLibrary(library);
+            setPuzzle(() => getTodayPuzzle(library, dayNumber));
+          });
         } else {
           console.log('Word library request failed. Response body: ' + response.body);
         }
@@ -87,7 +92,7 @@ export default function App() {
         console.log(err);
         setErrorBannerText(textData.err.fetchError);
       });
-  }, [language]);
+  }, [language, dayNumber]);
 
   useEffect(() => {
     textData.setLanguage(language);
@@ -161,7 +166,7 @@ export default function App() {
       return;
     }
 
-    if (wordsLibrary.length === 0) {
+    if (!isLoadingLibrary) {
       setErrorBannerText(textData.err.fetchError);
       return;
     }
@@ -247,7 +252,7 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={theme}>
-      <Container fluid className={`${theme} d-flex flex-column`}>
+      <div className={`${theme} d-flex flex-column w-100`}>
         <Header
           onShowRules={() => setIsVisibleRules(true)}
           onShowStatistics={() => setIsVisibleStatistics(true)}
@@ -255,55 +260,43 @@ export default function App() {
           onChangeTheme={handleChangeTheme}
         />
 
-        <Container className='d-flex flex-column flex-grow-1'>
-          <Row className='justify-content-center flex-grow-1'>
-            <Col
-              xs
-              sm={8}
-              md={7}
-              lg={5}
-              xl={4}
-              className='d-flex flex-column justify-content-between '
-            >
-              <GameField data={results} />
+        <Container className='flex-grow-1'>
+          <Row className='flex-column justify-content-center h-100'>
+            <GameField data={results} />
 
-              <Keyboard onClick={handleClick} keyboard={keyboard} />
+            <Keyboard onClick={handleClick} keyboard={keyboard} />
 
-              {errorBannerText && (
-                <ErrorBanner text={errorBannerText} onClose={() => setErrorBannerText(null)} />
-              )}
+            {errorBannerText && (
+              <ErrorBanner text={errorBannerText} onClose={() => setErrorBannerText(null)} />
+            )}
 
-              {isVisibleRules && <RulesBanner onHide={() => setIsVisibleRules(false)} />}
+            {isVisibleRules && <RulesBanner onHide={() => setIsVisibleRules(false)} />}
 
-              {isVisibleStatistics && (
-                <StatisticsBanner
-                  language={language}
-                  onHide={() => setIsVisibleStatistics(false)}
-                />
-              )}
+            {isVisibleStatistics && (
+              <StatisticsBanner language={language} onHide={() => setIsVisibleStatistics(false)} />
+            )}
 
-              {isVisibleLanguageBanner && (
-                <LanguageBanner
-                  currentlanguage={language}
-                  onHide={() => setIsVisibleLanguageBanner(false)}
-                  onChangeLanguage={handleChangeLanguage}
-                />
-              )}
+            {isVisibleLanguageBanner && (
+              <LanguageBanner
+                currentlanguage={language}
+                onHide={() => setIsVisibleLanguageBanner(false)}
+                onChangeLanguage={handleChangeLanguage}
+              />
+            )}
 
-              {isVisibleGameEndBanner && (
-                <GameEndBanner
-                  attempts={currentTry + 1}
-                  results={results}
-                  isWin={isWin}
-                  puzzle={puzzle}
-                  dayNumber={dayNumber}
-                  onHide={() => setIsVisibleGameEndBanner(false)}
-                />
-              )}
-            </Col>
+            {isVisibleGameEndBanner && (
+              <GameEndBanner
+                attempts={currentTry + 1}
+                results={results}
+                isWin={isWin}
+                puzzle={puzzle}
+                dayNumber={dayNumber}
+                onHide={() => setIsVisibleGameEndBanner(false)}
+              />
+            )}
           </Row>
         </Container>
-      </Container>
+      </div>
     </ThemeContext.Provider>
   );
 }

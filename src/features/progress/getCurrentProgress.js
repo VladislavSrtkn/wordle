@@ -4,9 +4,7 @@ import keyboards from '../keyboard/keyboards';
 export default function getCurrentProgress(dayNumber, language) {
   const todayDataForCurrentLanguage = language + dayNumber;
 
-  if (localStorage.getItem(todayDataForCurrentLanguage)) {
-    return JSON.parse(localStorage.getItem(todayDataForCurrentLanguage));
-  } else {
+  if (!localStorage.getItem(todayDataForCurrentLanguage)) {
     const gameStartObj = {
       results: getEmptyField(),
       keyboard: keyboards[language],
@@ -14,7 +12,8 @@ export default function getCurrentProgress(dayNumber, language) {
       isWin: false,
       isGameOver: false,
     };
-
-    return gameStartObj;
+    localStorage.setItem(todayDataForCurrentLanguage, JSON.stringify(gameStartObj));
   }
+
+  return JSON.parse(localStorage.getItem(todayDataForCurrentLanguage));
 }
