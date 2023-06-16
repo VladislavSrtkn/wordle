@@ -7,7 +7,7 @@ export default function Keyboard({ onClick, keyboard }) {
 
   return (
     <Col xs='12' className='d-flex flex-wrap align-content-end flex-grow-0 py-3'>
-      <Row>{rows}</Row>
+      <Row className='flex-grow-1'>{rows}</Row>
     </Col>
   );
 }

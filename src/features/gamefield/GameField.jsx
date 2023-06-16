@@ -7,7 +7,7 @@ export default function GameField({ data }) {
 
   return (
     <Col xs='11' className='d-flex flex-wrap game-field flex-grow-1 m-auto'>
-      <Row>{rows}</Row>
+      <Row className='flex-grow-1'>{rows}</Row>
     </Col>
   );
 }
