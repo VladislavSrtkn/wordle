@@ -5,8 +5,14 @@
   .inPuzzle,
   .inPlace {
     color: #fff;
+    animation-name: rotate;
+    animation-duration: 0.9s;
+  }
+}
+
+@keyframes rotate {
+  100% {
     transform: rotateX(360deg);
-    transition: 0.9s all;
   }
 }
 

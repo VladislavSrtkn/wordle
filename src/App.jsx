@@ -63,7 +63,7 @@ export default function App() {
   const [isVisibleLanguageBanner, setIsVisibleLanguageBanner] = useState(false);
   const [errorBannerText, setErrorBannerText] = useState(null);
 
-  const [isLoadingLibrary, setIsLoadingLibrary] = useState(false);
+  const [isLibraryLoaded, setIsLibraryLoaded] = useState(false);
 
   // *** Effects ***
 
@@ -79,7 +79,7 @@ export default function App() {
     fetchLibrary(language)
       .then((response) => {
         if (response.ok) {
-          setIsLoadingLibrary(true);
+          setIsLibraryLoaded(true);
           return response.json().then((library) => {
             setWordsLibrary(library);
             setPuzzle(() => getTodayPuzzle(library, dayNumber));
@@ -166,7 +166,7 @@ export default function App() {
       return;
     }
 
-    if (!isLoadingLibrary) {
+    if (!isLibraryLoaded) {
       setErrorBannerText(textData.err.fetchError);
       return;
     }
