@@ -1,10 +1,10 @@
 const ERROR_CLASS = 'error-shake';
 
 export default function showShakeEffect(index) {
-  const elements = document.querySelector('.game-field').children;
-  elements[index].classList.add(ERROR_CLASS);
+  const element = document.querySelector(`[data-gamefield-row="${index}"]`);
+  element.classList.add(ERROR_CLASS);
 
   setTimeout(() => {
-    elements[index].classList.remove(ERROR_CLASS);
+    element.classList.remove(ERROR_CLASS);
   }, 800);
 }

@@ -3,7 +3,7 @@ import { Col, Row } from 'react-bootstrap';
 import LetterRow from './LetterRow';
 
 export default function GameField({ data }) {
-  const rows = data.map((word, i) => <LetterRow key={i} word={word} />);
+  const rows = data.map((word, i) => <LetterRow key={i} word={word} index={i} />);
 
   return (
     <Col xs='11' className='d-flex flex-wrap game-field flex-grow-1 m-auto'>
